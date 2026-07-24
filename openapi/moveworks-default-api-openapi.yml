@@ -1,0 +1,2034 @@
+openapi: 3.1.0
+info:
+  title: (Beta) Conversations authentication  API
+  version: 1.0.0
+servers:
+- url: https://api.moveworks.ai/rest/v1beta1
+  description: US production server
+- url: https://api.jp.moveworks.com/rest/v1beta1
+  description: Japan production server
+- url: https://api.uk.moveworks.com/rest/v1beta1
+  description: UK production server
+- url: https://api.prod4.us.moveworks.com/rest/v1beta1
+  description: US Prod 4 production server
+- url: https://api.prod3.us.moveworks.com/rest/v1beta1
+  description: US Prod 3 production server
+tags:
+- name: ''
+paths:
+  /files:
+    get:
+      operationId: list-files
+      summary: List files
+      description: 'Retrieve files in a specific node, providing features like querying, filtering, and detailed navigational information including parent folder details and direct download URLs.
+
+        '
+      tags:
+      - ''
+      parameters:
+      - name: $filter
+        in: query
+        description: Filter content items by a condition.
+        required: false
+        schema:
+          type: string
+      - name: $select
+        in: query
+        description: Select which properties to include in the response for the content items.
+        required: false
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        description: Order content items by specific fields.
+        required: false
+        schema:
+          type: string
+      - name: $top
+        in: query
+        description: Specify the number of content results to return.
+        required: false
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        description: Skip the first n content results.
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successfully retrieved list of content items with enhanced information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ODataContentResponse'
+        '400':
+          description: Bad Request - The request could not be understood due to malformed syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Authentication is required and has failed or has not yet been provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - Server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /files/{id}:
+    get:
+      operationId: get-file-metadata-and-html-content-body
+      summary: Get file metadata and HTML content body
+      description: 'Retrieves metadata and content for a specific file. When the content type is HTML (mime_type: text/html), this endpoint returns the actual HTML content in the response body. For other file types, it provides download path information.
+
+        '
+      tags:
+      - ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved metadata of content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ODataContentMetadataResponse'
+        '400':
+          description: Bad Request - The request could not be understood by the server due to malformed syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Authentication is required and has failed or has not yet been provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - Server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested file could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - The server encountered an unexpected condition that prevented it from fulfilling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /files/{id}/download:
+    get:
+      operationId: download-file
+      summary: Download file
+      description: 'Retrieves and downloads the entire media file based on the specified file ID.
+
+
+        The response body is the raw binary content of the file. Treat the response body as a byte stream and write it directly to disk or pass it to a file handler.
+
+
+        The `Content-Type` response header indicates the MIME type of the file (e.g. `application/pdf`, `text/html`). Use this to determine how to handle or display the file.
+
+
+        The `Checksum-SHA256` response header provides a SHA-256 hash of the file contents. Verify this value against the downloaded bytes to confirm the file was not corrupted in transit.
+
+        '
+      tags:
+      - ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved the file. The response body is the raw binary content of the file.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request - The request could not be understood by the server due to malformed syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Authentication is required and has failed or has not yet been provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - Server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested file could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - The server encountered an unexpected condition that prevented it from fulfilling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /users:
+    get:
+      operationId: list-users
+      summary: List users
+      description: Retrieve a paginated list of users using OData parameters.
+      tags:
+      - ''
+      parameters:
+      - name: $top
+        in: query
+        description: Number of items to return per page (default pagination)
+        required: false
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        description: Number of items to skip (default pagination offset)
+        required: false
+        schema:
+          type: integer
+      - name: $skiptoken
+        in: query
+        description: Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.
+        required: false
+        schema:
+          type: string
+      - name: $filter
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: $select
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: User list response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCollection'
+        '400':
+          description: Bad Request - The request was invalid or cannot be served.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - The request requires user authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - The server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - The server encountered an unexpected condition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable - The server is currently unable to handle the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /groups:
+    get:
+      operationId: list-groups
+      summary: List groups
+      description: Retrieve a paginated list of groups using OData parameters.
+      tags:
+      - ''
+      parameters:
+      - name: $top
+        in: query
+        description: Number of items to return per page (default pagination)
+        required: false
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        description: Number of items to skip (default pagination offset)
+        required: false
+        schema:
+          type: integer
+      - name: $skiptoken
+        in: query
+        description: Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.
+        required: false
+        schema:
+          type: string
+      - name: $filter
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: $select
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Group list response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupCollection'
+        '400':
+          description: Bad Request - The request was invalid or cannot be served.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - The request requires user authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - The server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - The server encountered an unexpected condition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable - The server is currently unable to handle the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /groups/{groupId}/members:
+    get:
+      operationId: list-group-members
+      summary: List group members
+      description: List direct members (users or groups) of a group. No recursion supported.
+      tags:
+      - ''
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: $top
+        in: query
+        description: Number of items to return per page (default pagination)
+        required: false
+        schema:
+          type: integer
+      - name: $skiptoken
+        in: query
+        description: Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.
+        required: false
+        schema:
+          type: string
+      - name: $filter
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: $select
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Group members list response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupMemberCollection'
+        '400':
+          description: Bad Request - The request was invalid or cannot be served.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - The request requires user authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - The server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - The server encountered an unexpected condition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable - The server is currently unable to handle the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /files/permissions/metadata:
+    get:
+      operationId: get-permission-model-metadata
+      summary: Get permission model metadata
+      description: 'Returns the current permission evaluation model. NOTE: `resource_permissions` is the only supported model at this time.'
+      tags:
+      - ''
+      responses:
+        '200':
+          description: Permissions metadata response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionsMetadata'
+        '400':
+          description: Bad Request - The request was invalid or cannot be served.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - The request requires user authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - The server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - The server encountered an unexpected condition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable - The server is currently unable to handle the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /files/{id}/permissions:
+    get:
+      operationId: get-content-permissions
+      summary: Get content permissions
+      description: Returns all user/group permissions on content. If permission model is 'hierarchy_permission', then `permissions_hierarchy` must be provided in the response.
+      tags:
+      - ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: $top
+        in: query
+        description: Number of items to return per page (default pagination)
+        required: false
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        description: Number of items to skip (default pagination offset)
+        required: false
+        schema:
+          type: integer
+      - name: $skiptoken
+        in: query
+        description: Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.
+        required: false
+        schema:
+          type: string
+      - name: $filter
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: $select
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Content permission response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionCollection'
+        '400':
+          description: Bad Request - The request was invalid or cannot be served.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - The request requires user authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - The server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - The server encountered an unexpected condition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable - The server is currently unable to handle the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /conversations:
+    get:
+      operationId: list-conversations
+      summary: List conversations
+      description: Retrieve all conversations occurring with the Moveworks AI Assistant.
+      tags:
+      - ''
+      parameters:
+      - name: $filter
+        in: query
+        description: This option allows the client to filter the resource that is address by request URL
+        required: false
+        schema:
+          type: string
+      - name: $select
+        in: query
+        description: This option allow the client to request a limited set of properties of an entity
+        required: false
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        description: This option allow the client to request resources in either ascending or descending order
+        required: false
+        schema:
+          type: string
+      - name: $top
+        in: query
+        description: This option request the number of items to be included in the result
+        required: false
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        description: This query option requests the number of items in the queried collection that are to be skipped and not included in the result.
+        required: false
+        schema:
+          type: integer
+      - name: $count
+        in: query
+        description: This option allows clients to request a count of the matching resources included with the resources in the result
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved list of conversations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conversations'
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+        '403':
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ErrorResponse'
+        '404':
+          description: URL not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404ErrorResponse'
+        '429':
+          description: Rate limiting exceeding error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ErrorResponse'
+  /interactions:
+    get:
+      operationId: list-interactions
+      summary: List interactions
+      description: Retrieve all interactions occurring with the Moveworks AI Assistant.
+      tags:
+      - ''
+      parameters:
+      - name: $filter
+        in: query
+        description: This option allows the client to filter the resource that is address by request URL
+        required: false
+        schema:
+          type: string
+      - name: $select
+        in: query
+        description: This option allow the client to request a limited set of properties of an entity
+        required: false
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        description: This option allow the client to request resources in either ascending or descending order
+        required: false
+        schema:
+          type: string
+      - name: $top
+        in: query
+        description: This option request the number of items to be included in the result
+        required: false
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        description: This query option requests the number of items in the queried collection that are to be skipped and not included in the result.
+        required: false
+        schema:
+          type: integer
+      - name: $count
+        in: query
+        description: This option allows clients to request a count of the matching resources included with the resources in the result
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved list of interactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/interactions'
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+        '403':
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ErrorResponse'
+        '404':
+          description: URL not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404ErrorResponse'
+        '429':
+          description: Rate limiting exceeding error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ErrorResponse'
+  /plugin-calls:
+    get:
+      operationId: list-plugins-calls
+      summary: List plugins calls
+      description: Retrieve all plugins that were called by the Moveworks AI Assistant during an interaction.
+      tags:
+      - ''
+      parameters:
+      - name: $filter
+        in: query
+        description: This option allows the client to filter the resource that is address by request URL
+        required: false
+        schema:
+          type: string
+      - name: $select
+        in: query
+        description: This option allow the client to request a limited set of properties of an entity
+        required: false
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        description: This option allow the client to request resources in either ascending or descending order
+        required: false
+        schema:
+          type: string
+      - name: $top
+        in: query
+        description: This option request the number of items to be included in the result
+        required: false
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        description: This query option requests the number of items in the queried collection that are to be skipped and not included in the result.
+        required: false
+        schema:
+          type: integer
+      - name: $count
+        in: query
+        description: This option allows clients to request a count of the matching resources included with the resources in the result
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved list of plugins calls
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/plugincallslist'
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+        '403':
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ErrorResponse'
+        '404':
+          description: URL not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404ErrorResponse'
+        '429':
+          description: Rate limiting exceeding error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ErrorResponse'
+  /plugin-resources:
+    get:
+      operationId: list-plugin-resources
+      summary: List Plugin Resources
+      description: Retrieve all resources used by AI Assistant during an interaction.
+      tags:
+      - ''
+      parameters:
+      - name: $filter
+        in: query
+        description: This option allows the client to filter the resource that is address by request URL
+        required: false
+        schema:
+          type: string
+      - name: $select
+        in: query
+        description: This option allow the client to request a limited set of properties of an entity
+        required: false
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        description: This option allow the client to request resources in either ascending or descending order
+        required: false
+        schema:
+          type: string
+      - name: $top
+        in: query
+        description: This option request the number of items to be included in the result
+        required: false
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        description: This query option requests the number of items in the queried collection that are to be skipped and not included in the result.
+        required: false
+        schema:
+          type: integer
+      - name: $count
+        in: query
+        description: This option allows clients to request a count of the matching resources included with the resources in the result
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved list of interactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pluginresources'
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+        '403':
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ErrorResponse'
+        '404':
+          description: URL not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404ErrorResponse'
+        '429':
+          description: Rate limiting exceeding error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ErrorResponse'
+  /users/{userId}:
+    get:
+      operationId: get-user-by-id
+      summary: Get User By ID
+      description: Returns user details given their userId. We recommend a rate limit of 5 req/sec for this endpoint.
+      tags:
+      - ''
+      parameters:
+      - name: userId
+        in: path
+        description: ID of user to fetch details for
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A single user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_2'
+  /articles:
+    get:
+      operationId: list-articles
+      summary: List Articles
+      description: "<b>Description:</b> <br> The endpoint should return a list of articles in deterministic order. <br> We recommend a rate limit of 10 req/sec for this endpoint.\n<br> <br>\n <b>Usage:</b>\n <br>\nMoveworks will call this endpoint to ingest articles every 4 hours.  <br> Ask your CSE if you wish to increase or decrease the polling frequency."
+      tags:
+      - ''
+      parameters:
+      - name: pageToken
+        in: query
+        description: "`pageToken` is used to paginate query results. <br> If `pageToken` is not used in a request, the response should default to the first page. <br> <br> The response should always include a `next_page_token` field. <br> To obtain the next page of results, the client will use `next_page_token` as the value of `pageToken` in the next request.\n\n    \nWhen combining the filter parameter with the `pageToken` parameter, servers must ensure that the client uses the appropriate `pageToken` value for the specified filter string. Failure to do so should result in the server throwing an \"INPUT_VALIDATION_FAILED\"."
+        required: false
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: '`pageSize` defines the maximum number of articles to return in a single query.  <br> <br> Moveworks will take a max of 1000 articles in a single response. However, the server can return less than 1000 if desired.
+
+          '
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: filter
+        in: query
+        description: 'Defines a filter expression that narrows down the returned set of items. It allows you to specify criteria, such as numeric comparisons or string matching, to filter the items based on the values of their properties.
+
+
+          The filter parameter must include at least one valid Boolean expression. Each expression should consist of an attribute name, followed by an attribute operator and a value. You have the flexibility to combine multiple expressions using logical operators, and you can also group expressions together using parentheses “()”.
+
+
+          Here are the available attribute operators and their descriptions:
+
+
+          - **`eq`** (equal): The attribute and operator values must be identical for a match.
+
+          - **`ne`** (not equal): The attribute and operator values are not identical.
+
+          - **`gt`** (greater than): If the attribute value is greater than the operator value, there is a match. The actual comparison depends on the attribute type.
+
+          - **`lt`** (less than): If the attribute value is less than the operator value, there is a match. The actual comparison depends on the attribute type.
+
+
+          The boolean operators available for combining expressions are:
+
+
+          - **`and`** (Logical AND): The filter is considered a match only if both expressions evaluate to true.
+
+          - **`or`** (Logical OR): The filter is considered a match if either of the expressions evaluates to true.
+
+
+          Parentheses **`()`** can be used to group boolean expressions and alter the standard order of operations. By grouping expressions with parentheses, you can control how the logical OR operation is evaluated and prioritize certain conditions over others. This allows for more flexibility and precision in constructing complex boolean expressions.
+
+
+          Attribute names and attribute operators used in filters are case insensitive.  For example, the following two expressions will evaluate to the same logical value:
+
+          filter=article.state Eq "ACTIVE"
+
+          filter=article.State eq "ACTIVE"
+
+
+          The evaluation of filters follows a standard order of operations. Attribute operators take precedence over other operators, followed by the grouping operator (parentheses), then the logical AND operator, and finally the logical OR operator.
+
+
+          If the requested filter operation is not recognised, providers must refuse to filter the results and return an HTTP 400 error with an appropriate human readable response.
+
+
+          **Here are some examples of filter expressions:**
+
+          In the provided examples, we have utilised the suggested response structure as defined in the response section. However, it''s important to note that these expressions may differ if you opt for an alternative response format or structure.
+
+
+          - filter=last_modified_at gt "2011-05-13T04:42:34Z"
+
+          - filter=article.state ne “INACTIVE” and last_modified_at gt "2011-05-13T04:42:34Z"
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'List of articles
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listArticles_Response_200'
+components:
+  schemas:
+    pluginresourcesobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID assigned by the system to a resource being used by a plugin called during an interaction.
+        resource_id:
+          type: string
+          format: uuid
+          description: ID of the resource stored in Moveworks.
+        type:
+          type: string
+          format: uuid
+          description: This field represents the type of resource utilized by a plugin call. AI Assistant can utilize different resources to provide a summarized response such as KNOWLEDE ARTICLE, FILES, TICKET, APPROVAL etc
+        plugin_call_id:
+          type: string
+          format: uuid
+          description: ID of the plugin being called.
+        interaction_id:
+          type: string
+          format: uuid
+          description: ID of the interaction.
+        user_id:
+          type: string
+          format: uuid
+          description: User record ID assigned by the system to a user.
+        conversation_id:
+          type: string
+          format: uuid
+          description: ID of the parent conversation.
+        detail:
+          $ref: '#/components/schemas/PluginresourcesobjectDetail'
+          description: This is a JSON object which contains metadata per resource type.
+        cited:
+          type: boolean
+          description: This field denotes if the utilized resource was cited in the AI Assistant response or not.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was utilized by a plugin.
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the plugin resource entry was last updated in this table.
+      title: pluginresourcesobject
+    ErrorResponseError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Standard error code (e.g., UNAUTHORIZED, INVALID_ARGUMENT, NOT_FOUND).
+        message:
+          type: string
+          description: Human-readable explanation of the error.
+      required:
+      - code
+      - message
+      title: ErrorResponseError
+    ODataContentMetadataResponse:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        value:
+          $ref: '#/components/schemas/NodeWithContent'
+      title: ODataContentMetadataResponse
+    500ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 500ErrorResponse
+    GroupMember:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Entity type. Enum: USER | GROUP'
+        id:
+          type: string
+          description: ID of the member (user or group).
+        name:
+          type: string
+          description: Name of the member (optional).
+      title: GroupMember
+    listArticles_Response_200:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Article'
+        next_page_token:
+          type: string
+          description: The value provided serves as the starting point for fetching the next page of records. In the next call, use this value as the pageToken parameter.
+      required:
+      - results
+      title: listArticles_Response_200
+    UserSystemIdentity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Refers to the unique identifier assigned to the user in the identity gateway. This is usually primary key of the external system
+        username:
+          type: string
+          description: Refers to the username of the user in the identity system. This is usually lookup key of the external system
+      required:
+      - id
+      title: UserSystemIdentity
+    UserUserState:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+      description: Specifies the state of the user
+      title: UserUserState
+    interactions:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/interactionsobject'
+      title: interactions
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorResponseError'
+      required:
+      - error
+      title: ErrorResponse
+    PermissionCollection:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: OData metadata context URL.
+        value:
+          $ref: '#/components/schemas/PermissionCollectionValue'
+        '@odata.nextLink':
+          type: string
+          description: URL to retrieve the next page of permission results.
+      title: PermissionCollection
+    GroupMemberCollection:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMember'
+        '@odata.nextLink':
+          type: string
+      title: GroupMemberCollection
+    PermissionsMetadata:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: OData metadata context URL.
+        model:
+          $ref: '#/components/schemas/PermissionsMetadataModel'
+          description: 'Permission model in use. NOTE: `resource_permissions` is the only supported model at this time.'
+      title: PermissionsMetadata
+    UserUserEmploymentInfo:
+      type: object
+      properties:
+        employee_start_date_ts:
+          type: string
+          format: timestamp
+          description: Joining date of the employee in in ISO-8601 UTC.
+        role:
+          type: string
+          description: Role of the user in the organisation
+        manager_email:
+          type: string
+          format: email
+          description: Email address of the manager of the user
+        cost_center_id:
+          type: string
+          description: Cost center id for the user
+        cost_center_name:
+          type: string
+          description: Cost center name for the user
+        department:
+          type: string
+          description: Specifies the department the user belongs to
+        office_phone_number:
+          type: string
+          description: Specifies the office phone number of the user
+        assistant_full_name:
+          type: string
+          description: Assistant's full name of the user
+        employment_location:
+          $ref: '#/components/schemas/UserUserEmploymentInfoEmploymentLocation'
+      title: UserUserEmploymentInfo
+    ConversationsobjectDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Resource type of the approval. Populated for `CONVERSATION_TYPE_APPROVAL_REQUEST_NOTIFICATION`.
+        source:
+          type: string
+          description: External system source of the approval. Populated for `CONVERSATION_TYPE_APPROVAL_REQUEST_NOTIFICATION`.
+        domain:
+          type: string
+          description: Domain of the approval. Populated for `CONVERSATION_TYPE_APPROVAL_REQUEST_NOTIFICATION`.
+        usecase_id:
+          type: string
+          description: Creator Studio usecase ID. Populated for `CONVERSATION_TYPE_EVENTS_NOTIFICATION` and `CONVERSATION_TYPE_AMBIENT_AGENT_NOTIFICATION`.
+        usecase_name:
+          type: string
+          description: Creator Studio usecase name. Populated for `CONVERSATION_TYPE_EVENTS_NOTIFICATION` and `CONVERSATION_TYPE_AMBIENT_AGENT_NOTIFICATION`.
+        ticket_id:
+          type: string
+          description: Ticket ID associated with the conversation. Populated for `CONVERSATION_TYPE_TICKET_UPDATE_NOTIFICATION`, `CONVERSATION_TYPE_TICKET_WATCHER_NOTIFICATION`, `CONVERSATION_TYPE_TICKET_WAITING_NOTIFICATION`, `CONVERSATION_TYPE_TICKET_NUDGE_NOTIFICATION`, and `CONVERSATION_TYPE_TICKET_INTERCEPTION`.
+        campaign_id:
+          type: string
+          description: Campaign ID for the comms notification. Populated for `CONVERSATION_TYPE_COMMS_NOTIFICATION`.
+        campaign_name:
+          type: string
+          description: Campaign name for the comms notification. Populated for `CONVERSATION_TYPE_COMMS_NOTIFICATION`.
+        channel_id:
+          type: string
+          description: Channel ID where the interception occurred. Populated for `CONVERSATION_TYPE_CHANNEL_INTERCEPTION`.
+        channel_name:
+          type: string
+          description: Channel name where the interception occurred. Populated for `CONVERSATION_TYPE_CHANNEL_INTERCEPTION`.
+        content:
+          type: string
+          description: Message or ticket description content that triggered the interception. Populated for `CONVERSATION_TYPE_CHANNEL_INTERCEPTION` (message content) and `CONVERSATION_TYPE_TICKET_INTERCEPTION` (ticket description).
+      description: Type-specific metadata about the conversation. The fields present depend on the value of `type`. See each field's description for which conversation types populate it.
+      title: ConversationsobjectDetail
+    429ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 429ErrorResponse
+    400ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 400ErrorResponse
+    PermissionsMetadataModel:
+      type: string
+      enum:
+      - resource_permission
+      - hierarchy_permission
+      description: 'Permission model in use. NOTE: `resource_permissions` is the only supported model at this time.'
+      title: PermissionsMetadataModel
+    User_2:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserUser'
+        system_identity:
+          $ref: '#/components/schemas/UserSystemIdentity'
+        last_updated_at:
+          type: string
+          format: timestamp
+          description: Represents the timestamp indicating the most recent modification or update made to the user's information (in ISO-8601 UTC)
+      required:
+      - user
+      - system_identity
+      - last_updated_at
+      title: User
+    plugincallsobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID assigned by the system to a plugin being called by AI Assistant for a interaction.
+        interaction_id:
+          type: string
+          format: uuid
+          description: ID of the interaction for which the plugin is called
+        conversation_id:
+          type: string
+          format: uuid
+          description: ID of the parent conversation.
+        plugin_name:
+          type: string
+          description: Name of the plugin being called by the AI Assistant. This field will also contain custom plugin names for Agent Studio use-cases
+        user_id:
+          type: string
+          format: uuid
+          description: User record ID assigned by the system to a user.
+        served:
+          type: boolean
+          description: This field denotes if the plugin was actually served to the end user
+        used:
+          type: boolean
+          description: This field denotes if the plugin was used in the interaction. Action plugin are used only when they have completed the full workflow for an end users, search plugin will always be used if they are served
+        plugin_update_time:
+          type: string
+          format: date-time
+          description: This field denotes the time when the plugin was last updated. For example, Access software plugin can be updated at later point in time, once the approver has approved the software approval access.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the plugin call was initiated.
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the plugin call entry is last updated in this table
+      title: plugincallsobject
+    custom_attributes:
+      type: object
+      additionalProperties:
+        type: string
+      description: A map of string to string for representing custom attributes.
+      title: custom_attributes
+    UserUserWorkStatus:
+      type: string
+      enum:
+      - UNKNOWN_WORK_STATUS
+      - CONTINGENT
+      - INTERN
+      - FULL_TIME
+      description: Employement type of the user
+      title: UserUserWorkStatus
+    PluginresourcesobjectDetail:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: 'This field denotes the resource domain configured in Moveworks Setup while configuring Content ingestion & Ticketing. Domain is defined for resources of types:
+
+            RESOURCE_TYPE_APPROVAL
+
+            RESOURCE_TYPE_FORM
+
+            RESOURCE_TYPE_TICKET
+
+            RESOURCE_TYPE_KNOWLEDGE'
+        external_resource_id:
+          type: string
+          format: uuid
+          description: Service portal ID for the resource of type RESOURCE_TYPE_KNOWLEDGE. This field can be used to join data from external system. Please note external resource ID is not provided for FILE & EXTERNAL KNOWLEDGE (Public knowledge enabled in Moveworks)
+        name:
+          type: string
+          description: 'Name of the resource being used by the plugin, populated for resources of types:
+
+            RESOURCE_TYPE_FILE
+
+            RESOURCE_TYPE_FORM
+
+            RESOURCE_TYPE_KNOWLEDGE'
+        snippet:
+          type: string
+          description: 'Exact snippet from the resource being used to provide the summarized response, populated for resource types
+
+            RESOURCE_TYPE_FILE
+
+            RESOURCE_TYPE_KNOWLEDGE'
+        source:
+          type: string
+          description: 'Name of the external sources from which the resource is being fetched from, populated for resource types
+
+            RESOURCE_TYPE_TICKET
+
+            RESOURCE_TYPE_APPROVAL'
+        type:
+          type: string
+          description: 'Contains sub-type of approval or type of the ticket creation : User initiated v/s bot initiated, populated for resource types
+
+            RESOURCE_TYPE_TICKET
+
+            RESOURCE_TYPE_APPROVAL'
+        url:
+          type: string
+          description: 'External system URL of the resource, populated for resource types
+
+            RESOURCE_TYPE_TICKET
+
+            RESOURCE_TYPE_KNOWLEDGE
+
+            RESOURCE_TYPE_FILE'
+      description: This is a JSON object which contains metadata per resource type.
+      title: PluginresourcesobjectDetail
+    GroupMetadata:
+      type: object
+      properties: {}
+      description: Custom key-value metadata for the group.
+      title: GroupMetadata
+    Node:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique id for each file
+        name:
+          type: string
+          description: User friendly name for the file
+        status:
+          $ref: '#/components/schemas/status_enum'
+        custom_attributes:
+          $ref: '#/components/schemas/custom_attributes'
+        last_modified_datetime:
+          type: string
+          format: date-time
+          description: Used to efficiently ingest content only updated since last ingestion
+        last_modified_by:
+          type: string
+        created_datetime:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        external_url:
+          type: string
+          description: External URL to redirect users
+        metadata_url:
+          type: string
+          description: Used to retrieve metadata about individual files
+        content:
+          $ref: '#/components/schemas/ContentObject'
+        parent_info:
+          $ref: '#/components/schemas/node_reference'
+        children_url:
+          type: string
+      required:
+      - id
+      - name
+      - last_modified_datetime
+      - external_url
+      title: Node
+    plugincallslist:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/plugincallsobject'
+      title: plugincallslist
+    Article:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id field is a unique identifier for each API response. It helps users to distinguish between different articles or entities in the system. This ID can be used for referencing, updating, or deleting specific articles. However Moveworks only fetches the articles without modifying them
+        title:
+          type: string
+          description: The title field represents the title or headline of the article. It shoutld be a concise and descriptive string that gives users an idea of what the article is about.
+        body:
+          type: string
+          description: The body field contains the main content of the article. It includes the detailed information, text, or HTML markup that constitutes the actual content of the article.
+        link:
+          type: string
+          description: The link field typically provides a URL that users can follow to access the full article on a web page. Moveworks gets the snippets from the articles and serves as an answer to the end users for full view users can use this link to access the full article.
+        created_at:
+          type: string
+          format: timestamp
+          description: The created at field denotes the date and time when the article was originally created or published. It provides valuable information about the article's age and can be useful for sorting and filtering articles based on their creation date. It needs to be in  ISO 8601 UTC.
+        updated_at:
+          type: string
+          format: timestamp
+          description: The Updated at field denotes the date and time when the article was updated. It provides valuable information about the article's age and can be useful for sorting and filtering articles based on their updation date. If updated at is not present delta ingestion support will not be possible in future for knowledge ingestion. It needs to be in  ISO 8601 UTC
+        created_by:
+          type: string
+          description: The Created by field captures the email address of the user who has created this article.
+        updated_by:
+          type: string
+          description: The Updated by field captures the email address of the last user who has updated this article
+      required:
+      - id
+      - title
+      - body
+      - link
+      title: Article
+    NodeWithContent:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique id for each file
+        name:
+          type: string
+          description: User friendly name for the file
+        status:
+          $ref: '#/components/schemas/status_enum'
+        custom_attributes:
+          $ref: '#/components/schemas/custom_attributes'
+        last_modified_datetime:
+          type: string
+          format: date-time
+          description: Used to efficiently ingest content only updated since last ingestion
+        last_modified_by:
+          type: string
+        created_datetime:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        external_url:
+          type: string
+          description: External URL to redirect users
+        metadata_url:
+          type: string
+          description: Used to retrieve metadata about individual files
+        content:
+          $ref: '#/components/schemas/ContentObjectWithBody'
+        parent_info:
+          $ref: '#/components/schemas/node_reference'
+        children_url:
+          type: string
+      required:
+      - id
+      - name
+      - last_modified_datetime
+      - external_url
+      title: NodeWithContent
+    PermissionCollectionValuePermissionsItemsAction:
+      type: string
+      enum:
+      - VIEW
+      - UPDATE
+      description: Action permitted on the content.
+      title: PermissionCollectionValuePermissionsItemsAction
+    InteractionsobjectDetail:
+      type: object
+      properties:
+        content:
+          type: string
+          description: This field contains the free form text, link URL, Button name according to interaction type.
+        domain:
+          type: string
+          description: This the interaction level detected domain. Domain is only predicted for free form text interaction type. In some cases, domain of individual utterances may differ from the primary domain detected per conversation.
+        entity:
+          type: string
+          description: This field contains the topic as detected per each interaction. Topic is only predicted for free form text interaction type.
+        type:
+          type: string
+          description: This field indicates which type of resource were accessed during an link click interaction.
+        detail:
+          type: string
+          description: This field indicates the form name which was submitted
+        resource_id:
+          type: string
+          description: 'This field provides the resource ID that was accessed by the end user during an link click interaction, or when a user submits a ticket via UI form
+
+            INTERACTION_TYPE_LINK_CLICK
+
+            INTERACTION_TYPE_UIFORM_SUBMISSION'
+        file_types:
+          type: array
+          items:
+            type: string
+          description: This field provides list of types of files that were uploaded during a file upload interaction (INTERACTION_TYPE_CONTENT_UPLOAD). We do not record the file names as user can also upload a private file
+      description: This is a JSON object which contains metadata per interaction type.
+      title: InteractionsobjectDetail
+    ContentObject:
+      type: object
+      properties:
+        download_path:
+          type: string
+          description: 'URL for the download request. For file streams: use `/{id}/download`. Not required for HTML content.'
+        mime_type:
+          type: string
+          description: 'Used to specify type of content. See our supported MIME types here: https://docs.moveworks.com/api-reference/content-gateway/supported-mime-types.'
+        size:
+          type: integer
+          format: int64
+        sha1_hash:
+          type: string
+      required:
+      - mime_type
+      title: ContentObject
+    UserCollection:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        '@odata.nextLink':
+          type: string
+      title: UserCollection
+    UserMetadata:
+      type: object
+      properties: {}
+      description: Custom key-value metadata for the user.
+      title: UserMetadata
+    UserUser:
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/UserUserState'
+          description: Specifies the state of the user
+        universal_identifier:
+          type: string
+          description: Unique identifier of the user. This field should always be populated. It will be used to uniquely identify a user across different systems.
+        email_addr:
+          type: string
+          format: email
+          description: Email address of the user
+        first_name:
+          type: string
+          description: First name of the user
+        last_name:
+          type: string
+          description: Last name of the user
+        full_name:
+          type: string
+          description: Full name of the user
+        work_status:
+          $ref: '#/components/schemas/UserUserWorkStatus'
+          description: Employement type of the user
+        employment_info:
+          $ref: '#/components/schemas/UserUserEmploymentInfo'
+      required:
+      - state
+      - universal_identifier
+      title: UserUser
+    GroupCollection:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+        '@odata.nextLink':
+          type: string
+      title: GroupCollection
+    pluginresources:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/pluginresourcesobject'
+      title: pluginresources
+    node_reference:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        path:
+          type: string
+      required:
+      - id
+      - name
+      title: node_reference
+    404ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 404ErrorResponse
+    Group:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the group.
+        name:
+          type: string
+          description: Name of the group.
+        created_datetime:
+          type: string
+          description: Timestamp when the group was created.
+        last_modified_datetime:
+          type: string
+          description: Timestamp when the group was last updated.
+        metadata:
+          $ref: '#/components/schemas/GroupMetadata'
+          description: Custom key-value metadata for the group.
+      title: Group
+    PermissionCollectionValue:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionCollectionValuePermissionsItems'
+          description: List of permission mappings for users and groups.
+        permissions_hierarchy:
+          type: array
+          items:
+            type: string
+          description: Hierarchy chain of entity IDs (required if permission model = hierarchy_permission).
+        last_modified_datetime:
+          type: string
+          description: Timestamp of the last permission update.
+      title: PermissionCollectionValue
+    conversationsobject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: UUID assigned by the system to a conversation. Conversations are grouped based on the context of interactions. All interactions within a conversation share the same conversation I
+        primary_domain:
+          type: string
+          description: Primary domain detected by an LLM model after going through all detected domains of free text interactions belonging to a particular conversation.
+        route:
+          type: string
+          description: This field contains details on how a conversation was started either through DM, Notification engagement, Ticket interception engagement, or Channel resolver engagement.
+        user_id:
+          type: string
+          description: User record ID assigned by the system to a user.
+        last_updated_time:
+          type: string
+          description: Timestamp when the conversations entry is last updated in this table.
+        created_time:
+          type: string
+          description: Timestamp when the conversation was initiated.
+        type:
+          type: string
+          description: Type of the conversation.
+        detail:
+          $ref: '#/components/schemas/ConversationsobjectDetail'
+          description: Type-specific metadata about the conversation. The fields present depend on the value of `type`. See each field's description for which conversation types populate it.
+      title: conversationsobject
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the user.
+        primary_email_addr:
+          type: string
+          description: Primary email address of the user.
+        full_name:
+          type: string
+          description: Full name of the user.
+        state:
+          type: string
+          description: 'State of the user account. Enum: Active | Inactive'
+        last_modified_datetime:
+          type: string
+          description: Last modification timestamp (ISO 8601).
+        metadata:
+          $ref: '#/components/schemas/UserMetadata'
+          description: Custom key-value metadata for the user.
+      title: User
+    ContentObjectWithBody:
+      type: object
+      properties:
+        download_path:
+          type: string
+          description: 'URL for the download request. For file streams: use `/{id}/download`. Not required for HTML content.'
+        mime_type:
+          type: string
+          description: 'Used to specify type of content. See our supported MIME types here: https://docs.moveworks.com/api-reference/content-gateway/supported-mime-types.'
+        size:
+          type: integer
+          format: int64
+        sha1_hash:
+          type: string
+        body:
+          type: string
+          description: The HTML content. Required when mime_type is `text/html`.
+      required:
+      - mime_type
+      title: ContentObjectWithBody
+    PermissionCollectionValuePermissionsItems:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/PermissionCollectionValuePermissionsItemsType'
+          description: Type of permission entity.
+        id:
+          type: string
+          description: Entity ID (user or group). Wildcard (`*`), used in conjunction with `type` `GROUP`, can be used to denote all Users.
+        action:
+          $ref: '#/components/schemas/PermissionCollectionValuePermissionsItemsAction'
+          description: Action permitted on the content.
+      title: PermissionCollectionValuePermissionsItems
+    ODataContentResponse:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Node'
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+      title: ODataContentResponse
+    conversations:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/conversationsobject'
+      title: conversations
+    403ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 403ErrorResponse
+    PermissionCollectionValuePermissionsItemsType:
+      type: string
+      enum:
+      - USER
+      - GROUP
+      description: Type of permission entity.
+      title: PermissionCollectionValuePermissionsItemsType
+    interactionsobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID assigned by a system to a interaction. An interaction is either an input from a user to the system, or a response from the system the the user.
+        conversation_id:
+          type: string
+          format: uuid
+          description: ID of the parent conversation.
+        user_id:
+          type: string
+          format: uuid
+          description: User record ID assigned by the system to a user.
+        actor:
+          type: string
+          description: This field differentiates user v/s bot interactions.
+        platform:
+          type: string
+          description: 'This field denotes the platform where the interaction took place. For example: slack, msteams.'
+        type:
+          type: string
+          description: This field defines the type of the interaction.
+        label:
+          type: string
+          description: This field defines the label for UI form submission interaction type.
+        parent_interaction_id:
+          type: string
+          format: uuid
+          description: Parent interaction ID for bot messages and user actions such as form submissions/button clicks/link clicks
+        detail:
+          $ref: '#/components/schemas/InteractionsobjectDetail'
+          description: This is a JSON object which contains metadata per interaction type.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the interaction was initiated.
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the interaction entry is last updated in this table.
+      title: interactionsobject
+    status_enum:
+      type: string
+      enum:
+      - active
+      - deleted
+      title: status_enum
+    UserUserEmploymentInfoEmploymentLocation:
+      type: object
+      properties:
+        location:
+          type: string
+          description: Specifies the location of the office
+        office:
+          type: string
+          description: Denotes the name of the office
+        country_code:
+          type: string
+          description: Specifies the country code of the employee in E.164 format
+        region:
+          type: string
+          description: The geographical region to which the office is assigned
+        timezone:
+          type: string
+          description: Indicates the time zone in which the office is located
+      title: UserUserEmploymentInfoEmploymentLocation
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.

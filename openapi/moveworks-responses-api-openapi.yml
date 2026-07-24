@@ -1,0 +1,901 @@
+openapi: 3.1.0
+info:
+  title: (Beta) Conversations authentication responses API
+  version: 1.0.0
+servers:
+- url: https://api.moveworks.ai/rest/v1beta1
+  description: US production server
+- url: https://api.jp.moveworks.com/rest/v1beta1
+  description: Japan production server
+- url: https://api.uk.moveworks.com/rest/v1beta1
+  description: UK production server
+- url: https://api.prod4.us.moveworks.com/rest/v1beta1
+  description: US Prod 4 production server
+- url: https://api.prod3.us.moveworks.com/rest/v1beta1
+  description: US Prod 3 production server
+tags:
+- name: responses
+paths:
+  /conversations/{conversation_id}/responses:
+    post:
+      operationId: create-response
+      summary: Create response
+      description: Creates a response object for processing. Returns immediately with the response object. Use `GetResponse` by `response_id` to poll for the complete result.
+      tags:
+      - responses
+      parameters:
+      - name: conversation_id
+        in: path
+        description: A base-62 identifier prefixed by a short resource type
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
+        required: true
+        schema:
+          type: string
+      - name: Assistant-Name
+        in: header
+        description: The Moveworks assistant identifier that was configured for your organization.
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Response accepted for processing (acknowledgement)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputRequiredErrorResponse'
+        '401':
+          description: Unauthorized - Invalid or missing authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+        '403':
+          description: Forbidden - Invalid assistant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitExceededErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateResponseRequest'
+  /conversations/{conversation_id}/responses/stream:
+    post:
+      operationId: create-response-stream
+      summary: Create response (streaming)
+      description: Creates a response and streams updates in real-time via Server-Sent Events (SSE). This provides a real-time alternative to creating a response and polling the GetResponse endpoint.
+      tags:
+      - responses
+      parameters:
+      - name: conversation_id
+        in: path
+        description: A base-62 identifier prefixed by a short resource type
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
+        required: true
+        schema:
+          type: string
+      - name: Assistant-Name
+        in: header
+        description: The Moveworks assistant identifier that was configured for your organization.
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: Must be set to `text/event-stream` to receive Server-Sent Events
+        required: true
+        schema:
+          $ref: '#/components/schemas/ConversationsConversationIdResponsesStreamPostParametersAccept'
+      responses:
+        '200':
+          description: Server-Sent Events stream of response updates
+          content:
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ResponseStreamEvent'
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputRequiredErrorResponse'
+        '401':
+          description: Unauthorized - Invalid or missing authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+        '403':
+          description: Forbidden - Invalid assistant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitExceededErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateResponseStreamRequest'
+  /conversations/{conversation_id}/responses/{response_id}:
+    get:
+      operationId: get-response
+      summary: Get response
+      description: Retrieves the current state and output of a response. Only returns assistant outputs. Use Get messages in a conversation or response to retrieve the full set of messages including user messages. Clients can poll this endpoint to watch for response completion by repeatedly calling until the status reaches a terminal state (`COMPLETED` or `FAILED`). Clients can wait up to **120 seconds** for a response to reach a terminal state.
+      tags:
+      - responses
+      parameters:
+      - name: conversation_id
+        in: path
+        description: A base-62 identifier prefixed by a short resource type
+        required: true
+        schema:
+          type: string
+      - name: response_id
+        in: path
+        description: A base-62 identifier prefixed by a short resource type
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
+        required: true
+        schema:
+          type: string
+      - name: Assistant-Name
+        in: header
+        description: The Moveworks assistant identifier that was configured for your organization.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Response retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        '401':
+          description: Unauthorized - Invalid or missing authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+        '403':
+          description: Forbidden - Invalid assistant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitExceededErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorResponse'
+components:
+  schemas:
+    CreateResponseStreamRequest:
+      type: object
+      properties:
+        input:
+          $ref: '#/components/schemas/UserInput'
+          description: User input message
+      required:
+      - input
+      title: CreateResponseStreamRequest
+    InputRequiredErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/InputRequiredErrorResponseError'
+      required:
+      - error
+      description: Error response for missing required input field
+      title: InputRequiredErrorResponse
+    Response:
+      type: object
+      properties:
+        response_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        conversation_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (ISO 8601)
+        completed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Completion timestamp (ISO 8601), null if not completed
+        outputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/OutputItem'
+          description: Output items
+      required:
+      - response_id
+      - conversation_id
+      - status
+      - created_at
+      title: Response
+    ReasoningMessage:
+      type: object
+      properties:
+        reasoning_message_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        conversation_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        response_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        content:
+          $ref: '#/components/schemas/Content'
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (ISO 8601)
+      required:
+      - reasoning_message_id
+      - conversation_id
+      - response_id
+      - content
+      - created_at
+      title: ReasoningMessage
+    MarkdownTextContent:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Raw markdown text content. Used when Minerva's chat response `is_commonmark` is not set.
+      required:
+      - text
+      title: MarkdownTextContent
+    ResponseFailedData:
+      type: object
+      properties:
+        event_type:
+          $ref: '#/components/schemas/StreamEventType'
+        sequence_number:
+          type: integer
+          description: Sequential event number in stream. Monotonically increasing counter starting at 1.
+        response:
+          $ref: '#/components/schemas/Response'
+          description: Response object with FAILED status and error details
+      required:
+      - event_type
+      - sequence_number
+      - response
+      description: Data for RESPONSE_FAILED event - response processing failed
+      title: ResponseFailedData
+    ResponseCompletedData:
+      type: object
+      properties:
+        event_type:
+          $ref: '#/components/schemas/StreamEventType'
+        sequence_number:
+          type: integer
+          description: Sequential event number in stream. Monotonically increasing counter starting at 1.
+        response:
+          $ref: '#/components/schemas/Response'
+          description: Final response object with COMPLETED status and all outputs
+      required:
+      - event_type
+      - sequence_number
+      - response
+      description: Data for RESPONSE_COMPLETED event - response successfully completed
+      title: ResponseCompletedData
+    ResponseStreamEvent:
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/StreamEventType'
+        data:
+          $ref: '#/components/schemas/ResponseStreamData'
+      required:
+      - event
+      - data
+      description: A server-sent event containing response update content
+      title: ResponseStreamEvent
+    NotFoundErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotFoundErrorResponseError'
+      required:
+      - error
+      description: Error response for resource not found
+      title: NotFoundErrorResponse
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code
+        message:
+          type: string
+          description: Human-readable error message
+      required:
+      - code
+      - message
+      title: Error
+    ResponseStreamData:
+      oneOf:
+      - $ref: '#/components/schemas/ResponseCreatedData'
+      - $ref: '#/components/schemas/ResponseInProgressData'
+      - $ref: '#/components/schemas/ResponseOutputDeltaData'
+      - $ref: '#/components/schemas/ResponseCompletedData'
+      - $ref: '#/components/schemas/ResponseFailedData'
+      - $ref: '#/components/schemas/StreamingErrorData'
+      description: Event data payload (structure depends on event type)
+      title: ResponseStreamData
+    ResponseInProgressData:
+      type: object
+      properties:
+        event_type:
+          $ref: '#/components/schemas/StreamEventType'
+        sequence_number:
+          type: integer
+          description: Sequential event number in stream. Monotonically increasing counter starting at 1.
+        response:
+          $ref: '#/components/schemas/Response'
+          description: Response object with IN_PROGRESS status
+      required:
+      - event_type
+      - sequence_number
+      - response
+      description: Data for RESPONSE_IN_PROGRESS event - response processing update
+      title: ResponseInProgressData
+    CitationLocation:
+      type: object
+      properties:
+        offset:
+          type: integer
+          description: Zero-based character position in the assistant message where the citation should be inserted
+      description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
+      title: CitationLocation
+    ResponseStatus:
+      type: string
+      enum:
+      - CREATED
+      - IN_PROGRESS
+      - COMPLETED
+      - FAILED
+      description: Response processing status
+      title: ResponseStatus
+    ResponseCreatedData:
+      type: object
+      properties:
+        event_type:
+          $ref: '#/components/schemas/StreamEventType'
+        sequence_number:
+          type: integer
+          description: Sequential event number in stream. Monotonically increasing counter starting at 1.
+        response:
+          $ref: '#/components/schemas/Response'
+          description: Newly created response object with CREATED status
+      required:
+      - event_type
+      - sequence_number
+      - response
+      description: Data for RESPONSE_CREATED event - response initially created
+      title: ResponseCreatedData
+    MessageFeedback:
+      type: object
+      properties:
+        helpful:
+          $ref: '#/components/schemas/FeedbackOption'
+          description: Positive feedback option. Use this callback_id to rate the response as helpful.
+        unhelpful:
+          $ref: '#/components/schemas/FeedbackOption'
+          description: Negative feedback option. Use this callback_id to rate the response as unhelpful.
+      description: Feedback options available on an assistant message. When present, this message supports feedback and the callback IDs can be used to submit a rating.
+      title: MessageFeedback
+    OutputItem:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/MessageOutputItemType'
+            description: Output item type discriminator
+          message:
+            $ref: '#/components/schemas/Message'
+        required:
+        - type
+        - message
+        description: MESSAGE variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/ReasoningMessageOutputItemType'
+            description: Output item type discriminator
+          reasoning_message:
+            $ref: '#/components/schemas/ReasoningMessage'
+        required:
+        - type
+        - reasoning_message
+        description: REASONING_MESSAGE variant
+      discriminator:
+        propertyName: type
+      description: Output item wrapper with type discriminator
+      title: OutputItem
+    Content:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/PlainTextContentItemType'
+            description: Content type discriminator
+          plain_text:
+            $ref: '#/components/schemas/PlainTextContent'
+        required:
+        - type
+        - plain_text
+        description: PLAIN_TEXT variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/CommonmarkTextContentItemType'
+            description: Content type discriminator
+          commonmark_text:
+            $ref: '#/components/schemas/CommonmarkTextContent'
+        required:
+        - type
+        - commonmark_text
+        description: COMMONMARK_TEXT variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/MarkdownTextContentItemType'
+            description: Content type discriminator
+          markdown_text:
+            $ref: '#/components/schemas/MarkdownTextContent'
+        required:
+        - type
+        - markdown_text
+        description: MARKDOWN_TEXT variant
+      discriminator:
+        propertyName: type
+      description: Message content with type discriminator
+      title: Content
+    PlainTextContent:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Plain text content
+      required:
+      - text
+      title: PlainTextContent
+    UnauthorizedErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/UnauthorizedErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: UnauthorizedErrorResponseError
+    UnauthorizedErrorResponseErrorCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: UnauthorizedErrorResponseErrorCode
+    ForbiddenErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ForbiddenErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: ForbiddenErrorResponseError
+    Attribute:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute name
+        value:
+          type: string
+          description: Attribute value
+      required:
+      - key
+      - value
+      description: Key-value pair for citation display metadata. This is an opaque structure that contains rendering hints specific to each citation. Clients should not make assumptions about the keys or values present, as they may vary based on citation type and context.
+      title: Attribute
+    InputRequiredErrorResponseErrorCode:
+      type: string
+      enum:
+      - INVALID_INPUT
+      title: InputRequiredErrorResponseErrorCode
+    Message:
+      type: object
+      properties:
+        message_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        conversation_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        response_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        actor:
+          $ref: '#/components/schemas/ActorType'
+        content:
+          $ref: '#/components/schemas/Content'
+        citations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Citation'
+          description: Unique citation references in the assistant message. Use `content_references` to determine where in the message text each citation is referenced.
+        content_references:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CitationContentReference'
+          description: Ordered positions in the message text where citations appear (ascending by offset). Each entry references a `Citation` via `citation_id`. Only populated on assistant messages.
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (ISO 8601)
+        feedback:
+          oneOf:
+          - $ref: '#/components/schemas/MessageFeedback'
+          - type: 'null'
+          description: Feedback options for this message. Present only on final assistant messages that support feedback. Use the callback IDs to submit a rating via the feedback endpoint.
+      required:
+      - message_id
+      - conversation_id
+      - response_id
+      - actor
+      - content
+      - created_at
+      title: Message
+    NotFoundErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/NotFoundErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: NotFoundErrorResponseError
+    ReasoningMessageOutputItemType:
+      type: string
+      enum:
+      - REASONING_MESSAGE
+      description: Output item type discriminator
+      title: ReasoningMessageOutputItemType
+    Display:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/Content'
+          description: Primary heading/identifier with type discriminator
+        body:
+          $ref: '#/components/schemas/Content'
+          description: Body/description content with type discriminator
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+          description: Opaque key-value metadata for citation display. These attributes contain implementation-specific rendering hints and should be treated as a black-box by clients. The structure and values may vary between citations and should not be relied upon for business logic.
+      title: Display
+    Citation:
+      type: object
+      properties:
+        citation_id:
+          type: string
+          description: 'Unique citation identifier (format: `cite_<base62>`). Use this to join with `content_references` on the Message object.'
+        location:
+          $ref: '#/components/schemas/CitationLocation'
+          description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
+        url:
+          type: string
+          format: uri
+          description: URL to the entity
+        display:
+          $ref: '#/components/schemas/Display'
+      title: Citation
+    InternalErrorResponseErrorCode:
+      type: string
+      enum:
+      - INTERNAL_ERROR
+      title: InternalErrorResponseErrorCode
+    InputRequiredErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InputRequiredErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: InputRequiredErrorResponseError
+    ForbiddenErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ForbiddenErrorResponseError'
+      required:
+      - error
+      description: Error response for forbidden access
+      title: ForbiddenErrorResponse
+    ForbiddenErrorResponseErrorCode:
+      type: string
+      enum:
+      - FORBIDDEN
+      title: ForbiddenErrorResponseErrorCode
+    ActorType:
+      type: string
+      enum:
+      - USER
+      - ASSISTANT
+      description: Message actor type
+      title: ActorType
+    CitationContentReference:
+      type: object
+      properties:
+        citation_id:
+          type: string
+          description: References `Citation.citation_id` to link this position to a citation entity.
+        offset:
+          type: integer
+          description: Zero-based character position in the assistant message where the citation appears.
+      required:
+      - citation_id
+      - offset
+      title: CitationContentReference
+    FeedbackOption:
+      type: object
+      properties:
+        callback_id:
+          type: string
+          description: Opaque callback identifier. Pass this value to the feedback endpoint to submit this rating.
+      required:
+      - callback_id
+      title: FeedbackOption
+    MarkdownTextContentItemType:
+      type: string
+      enum:
+      - MARKDOWN_TEXT
+      description: Content type discriminator
+      title: MarkdownTextContentItemType
+    RateLimitExceededErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/RateLimitExceededErrorResponseError'
+      required:
+      - error
+      description: Error response for rate limit exceeded
+      title: RateLimitExceededErrorResponse
+    CommonmarkTextContent:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Commonmark-formatted text content
+      required:
+      - text
+      title: CommonmarkTextContent
+    ResponseOutputDeltaData:
+      type: object
+      properties:
+        event_type:
+          $ref: '#/components/schemas/StreamEventType'
+        sequence_number:
+          type: integer
+          description: Sequential event number in stream. Monotonically increasing counter starting at 1.
+        output:
+          $ref: '#/components/schemas/OutputItem'
+          description: Output item delta (message or reasoning message)
+      required:
+      - event_type
+      - sequence_number
+      - output
+      description: Data for RESPONSE_OUTPUT_DELTA event - new output item generated
+      title: ResponseOutputDeltaData
+    RateLimitExceededErrorResponseErrorCode:
+      type: string
+      enum:
+      - RATE_LIMIT_EXCEEDED
+      title: RateLimitExceededErrorResponseErrorCode
+    CommonmarkTextContentItemType:
+      type: string
+      enum:
+      - COMMONMARK_TEXT
+      description: Content type discriminator
+      title: CommonmarkTextContentItemType
+    PlainTextContentItemType:
+      type: string
+      enum:
+      - PLAIN_TEXT
+      description: Content type discriminator
+      title: PlainTextContentItemType
+    NotFoundErrorResponseErrorCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: NotFoundErrorResponseErrorCode
+    UserInput:
+      type: object
+      properties:
+        text:
+          type: string
+          description: User message text
+      required:
+      - text
+      title: UserInput
+    StreamingErrorData:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+          description: Error details
+      required:
+      - error
+      description: Data for ERROR event - error that occurs mid-stream
+      title: StreamingErrorData
+    ConversationsConversationIdResponsesStreamPostParametersAccept:
+      type: string
+      enum:
+      - text/event-stream
+      title: ConversationsConversationIdResponsesStreamPostParametersAccept
+    InternalErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InternalErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: InternalErrorResponseError
+    CreateResponseRequest:
+      type: object
+      properties:
+        input:
+          $ref: '#/components/schemas/UserInput'
+          description: User input message
+      required:
+      - input
+      title: CreateResponseRequest
+    InternalErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/InternalErrorResponseError'
+      required:
+      - error
+      description: Error response for internal server error
+      title: InternalErrorResponse
+    MessageOutputItemType:
+      type: string
+      enum:
+      - MESSAGE
+      description: Output item type discriminator
+      title: MessageOutputItemType
+    UnauthorizedErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthorizedErrorResponseError'
+      required:
+      - error
+      description: Error response for unauthorized access
+      title: UnauthorizedErrorResponse
+    StreamEventType:
+      type: string
+      enum:
+      - RESPONSE_CREATED
+      - RESPONSE_IN_PROGRESS
+      - RESPONSE_OUTPUT_DELTA
+      - RESPONSE_COMPLETED
+      - RESPONSE_FAILED
+      - ERROR
+      description: Response streaming event type
+      title: StreamEventType
+    RateLimitExceededErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/RateLimitExceededErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: RateLimitExceededErrorResponseError
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.

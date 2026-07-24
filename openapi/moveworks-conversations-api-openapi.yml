@@ -1,0 +1,899 @@
+openapi: 3.1.0
+info:
+  title: (Beta) authentication conversations API
+  version: 1.0.0
+servers:
+- url: https://api.moveworks.ai/rest/v1beta1
+  description: US production server
+- url: https://api.jp.moveworks.com/rest/v1beta1
+  description: Japan production server
+- url: https://api.uk.moveworks.com/rest/v1beta1
+  description: UK production server
+- url: https://api.prod4.us.moveworks.com/rest/v1beta1
+  description: US Prod 4 production server
+- url: https://api.prod3.us.moveworks.com/rest/v1beta1
+  description: US Prod 3 production server
+tags:
+- name: conversations
+paths:
+  /conversations:
+    get:
+      operationId: list-conversations
+      summary: List conversations
+      description: Retrieves a paginated list of conversations in descending order by `updated_at` time (last accessed first). Only unarchived conversations are retrieved by default.
+      tags:
+      - conversations
+      parameters:
+      - name: cursor
+        in: query
+        description: Opaque cursor for pagination (obtained from previous response)
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of conversations to return (1-100)
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: archived
+        in: query
+        description: Filter by archived status
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: Authorization
+        in: header
+        description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
+        required: true
+        schema:
+          type: string
+      - name: Assistant-Name
+        in: header
+        description: The Moveworks assistant identifier that was configured for your organization.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of conversations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListConversationsResponse'
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidCursorErrorResponse'
+        '401':
+          description: Unauthorized - Invalid or missing authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+        '403':
+          description: Forbidden - Invalid assistant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitExceededErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorResponse'
+    post:
+      operationId: create-conversation
+      summary: Create conversation
+      description: Creates a new conversation thread. Returns the created Conversation object with a unique `conversation_id`. If `title` is not provided, an AI generated title will be assigned based on the first response.
+      tags:
+      - conversations
+      parameters:
+      - name: Authorization
+        in: header
+        description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
+        required: true
+        schema:
+          type: string
+      - name: Assistant-Name
+        in: header
+        description: The Moveworks assistant identifier that was configured for your organization.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Conversation created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidTitleErrorResponse'
+        '401':
+          description: Unauthorized - Invalid or missing authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+        '403':
+          description: Forbidden - Invalid assistant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitExceededErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConversationRequest'
+  /conversations/{conversation_id}:
+    get:
+      operationId: get-conversation
+      summary: Get conversation
+      description: Retrieves a specific conversation.
+      tags:
+      - conversations
+      parameters:
+      - name: conversation_id
+        in: path
+        description: A base-62 identifier prefixed by a short resource type
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
+        required: true
+        schema:
+          type: string
+      - name: Assistant-Name
+        in: header
+        description: The Moveworks assistant identifier that was configured for your organization.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Conversation retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '401':
+          description: Unauthorized - Invalid or missing authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+        '403':
+          description: Forbidden - Invalid assistant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitExceededErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorResponse'
+    patch:
+      operationId: update-conversation
+      summary: Update conversation
+      description: Updates title, or archive a conversation.
+      tags:
+      - conversations
+      parameters:
+      - name: conversation_id
+        in: path
+        description: A base-62 identifier prefixed by a short resource type
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
+        required: true
+        schema:
+          type: string
+      - name: Assistant-Name
+        in: header
+        description: The Moveworks assistant identifier that was configured for your organization.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Conversation updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidTitleErrorResponse'
+        '401':
+          description: Unauthorized - Invalid or missing authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+        '403':
+          description: Forbidden - Invalid assistant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitExceededErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateConversationRequest'
+  /conversations/{conversation_id}/events:
+    get:
+      operationId: list-events
+      summary: List conversation events
+      description: 'Returns system-initiated messages (async responses and proactive notifications) for a conversation. Only final messages are returned, not transient or reasoning messages.
+
+
+        Use `conversation_id = "-"` to query across all conversations. This is useful for reconciliation after receiving a webhook event, to fetch the full set of messages that may have been missed.
+
+
+        Results are ordered chronologically. Use `starting_after` and `ending_at` to define a time range based on previously seen event IDs.'
+      tags:
+      - conversations
+      parameters:
+      - name: conversation_id
+        in: path
+        description: Conversation identifier. Use "-" to read events across all conversations.
+        required: true
+        schema:
+          type: string
+      - name: starting_after
+        in: query
+        description: Exclusive lower bound. Only events after this event ID are returned. Typically the last event ID from a previous poll.
+        required: false
+        schema:
+          type: string
+      - name: ending_at
+        in: query
+        description: Inclusive upper bound. Only events up to and including this event ID are returned. Must be greater than starting_after.
+        required: false
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: Pagination cursor from a previous response.
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: 'Maximum number of events to return per page (1-100, default: 20).'
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: Authorization
+        in: header
+        description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
+        required: true
+        schema:
+          type: string
+      - name: Assistant-Name
+        in: header
+        description: The Moveworks assistant identifier that was configured for your organization.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListEventsResponse'
+        '401':
+          description: Unauthorized - Invalid or missing authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+        '404':
+          description: Not found - Conversation does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitExceededErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorResponse'
+components:
+  schemas:
+    MarkdownTextContent:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Raw markdown text content. Used when Minerva's chat response `is_commonmark` is not set.
+      required:
+      - text
+      title: MarkdownTextContent
+    NotFoundErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotFoundErrorResponseError'
+      required:
+      - error
+      description: Error response for resource not found
+      title: NotFoundErrorResponse
+    InvalidCursorErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/InvalidCursorErrorResponseError'
+      required:
+      - error
+      description: Error response for invalid pagination cursor
+      title: InvalidCursorErrorResponse
+    EventType:
+      type: string
+      enum:
+      - MESSAGE_EVENT
+      description: Event type discriminator for event payloads.
+      title: EventType
+    CitationLocation:
+      type: object
+      properties:
+        offset:
+          type: integer
+          description: Zero-based character position in the assistant message where the citation should be inserted
+      description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
+      title: CitationLocation
+    ListEventsResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+          description: Array of event objects, ordered chronologically
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+      required:
+      - events
+      - metadata
+      title: ListEventsResponse
+    Event:
+      type: object
+      properties:
+        event_id:
+          type: string
+          description: Unique event identifier
+        conversation_id:
+          type: string
+          description: Parent conversation identifier
+        event_payload:
+          $ref: '#/components/schemas/EventPayload'
+      required:
+      - event_id
+      - conversation_id
+      - event_payload
+      title: Event
+    InvalidCursorErrorResponseErrorCode:
+      type: string
+      enum:
+      - INVALID_CURSOR
+      title: InvalidCursorErrorResponseErrorCode
+    MessageFeedback:
+      type: object
+      properties:
+        helpful:
+          $ref: '#/components/schemas/FeedbackOption'
+          description: Positive feedback option. Use this callback_id to rate the response as helpful.
+        unhelpful:
+          $ref: '#/components/schemas/FeedbackOption'
+          description: Negative feedback option. Use this callback_id to rate the response as unhelpful.
+      description: Feedback options available on an assistant message. When present, this message supports feedback and the callback IDs can be used to submit a rating.
+      title: MessageFeedback
+    UpdateConversationRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: New conversation title (optional)
+        archived:
+          type: boolean
+          description: New archive status (optional)
+      title: UpdateConversationRequest
+    Content:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/PlainTextContentItemType'
+            description: Content type discriminator
+          plain_text:
+            $ref: '#/components/schemas/PlainTextContent'
+        required:
+        - type
+        - plain_text
+        description: PLAIN_TEXT variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/CommonmarkTextContentItemType'
+            description: Content type discriminator
+          commonmark_text:
+            $ref: '#/components/schemas/CommonmarkTextContent'
+        required:
+        - type
+        - commonmark_text
+        description: COMMONMARK_TEXT variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/MarkdownTextContentItemType'
+            description: Content type discriminator
+          markdown_text:
+            $ref: '#/components/schemas/MarkdownTextContent'
+        required:
+        - type
+        - markdown_text
+        description: MARKDOWN_TEXT variant
+      discriminator:
+        propertyName: type
+      description: Message content with type discriminator
+      title: Content
+    InvalidCursorErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InvalidCursorErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: InvalidCursorErrorResponseError
+    PlainTextContent:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Plain text content
+      required:
+      - text
+      title: PlainTextContent
+    UnauthorizedErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/UnauthorizedErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: UnauthorizedErrorResponseError
+    UnauthorizedErrorResponseErrorCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: UnauthorizedErrorResponseErrorCode
+    ForbiddenErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ForbiddenErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: ForbiddenErrorResponseError
+    Attribute:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute name
+        value:
+          type: string
+          description: Attribute value
+      required:
+      - key
+      - value
+      description: Key-value pair for citation display metadata. This is an opaque structure that contains rendering hints specific to each citation. Clients should not make assumptions about the keys or values present, as they may vary based on citation type and context.
+      title: Attribute
+    Message:
+      type: object
+      properties:
+        message_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        conversation_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        response_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        actor:
+          $ref: '#/components/schemas/ActorType'
+        content:
+          $ref: '#/components/schemas/Content'
+        citations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Citation'
+          description: Unique citation references in the assistant message. Use `content_references` to determine where in the message text each citation is referenced.
+        content_references:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CitationContentReference'
+          description: Ordered positions in the message text where citations appear (ascending by offset). Each entry references a `Citation` via `citation_id`. Only populated on assistant messages.
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (ISO 8601)
+        feedback:
+          oneOf:
+          - $ref: '#/components/schemas/MessageFeedback'
+          - type: 'null'
+          description: Feedback options for this message. Present only on final assistant messages that support feedback. Use the callback IDs to submit a rating via the feedback endpoint.
+      required:
+      - message_id
+      - conversation_id
+      - response_id
+      - actor
+      - content
+      - created_at
+      title: Message
+    NotFoundErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/NotFoundErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: NotFoundErrorResponseError
+    ListConversationsResponse:
+      type: object
+      properties:
+        conversations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Conversation'
+          description: Array of conversations
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+          description: Metadata (pagination)
+      required:
+      - conversations
+      title: ListConversationsResponse
+    InvalidTitleErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InvalidTitleErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: InvalidTitleErrorResponseError
+    Conversation:
+      type: object
+      properties:
+        conversation_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        title:
+          type: string
+          description: Optional user-defined title
+        archived:
+          type: boolean
+          description: User-controlled flag to mark conversation as archived
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (ISO 8601)
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp (ISO 8601)
+      required:
+      - conversation_id
+      - created_at
+      - updated_at
+      title: Conversation
+    Display:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/Content'
+          description: Primary heading/identifier with type discriminator
+        body:
+          $ref: '#/components/schemas/Content'
+          description: Body/description content with type discriminator
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+          description: Opaque key-value metadata for citation display. These attributes contain implementation-specific rendering hints and should be treated as a black-box by clients. The structure and values may vary between citations and should not be relied upon for business logic.
+      title: Display
+    Citation:
+      type: object
+      properties:
+        citation_id:
+          type: string
+          description: 'Unique citation identifier (format: `cite_<base62>`). Use this to join with `content_references` on the Message object.'
+        location:
+          $ref: '#/components/schemas/CitationLocation'
+          description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
+        url:
+          type: string
+          format: uri
+          description: URL to the entity
+        display:
+          $ref: '#/components/schemas/Display'
+      title: Citation
+    InternalErrorResponseErrorCode:
+      type: string
+      enum:
+      - INTERNAL_ERROR
+      title: InternalErrorResponseErrorCode
+    Metadata:
+      type: object
+      properties:
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: Opaque cursor for next page (null if no more results)
+      title: Metadata
+    ForbiddenErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ForbiddenErrorResponseError'
+      required:
+      - error
+      description: Error response for forbidden access
+      title: ForbiddenErrorResponse
+    ForbiddenErrorResponseErrorCode:
+      type: string
+      enum:
+      - FORBIDDEN
+      title: ForbiddenErrorResponseErrorCode
+    ActorType:
+      type: string
+      enum:
+      - USER
+      - ASSISTANT
+      description: Message actor type
+      title: ActorType
+    CitationContentReference:
+      type: object
+      properties:
+        citation_id:
+          type: string
+          description: References `Citation.citation_id` to link this position to a citation entity.
+        offset:
+          type: integer
+          description: Zero-based character position in the assistant message where the citation appears.
+      required:
+      - citation_id
+      - offset
+      title: CitationContentReference
+    CreateConversationRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Optional user-defined title
+      title: CreateConversationRequest
+    FeedbackOption:
+      type: object
+      properties:
+        callback_id:
+          type: string
+          description: Opaque callback identifier. Pass this value to the feedback endpoint to submit this rating.
+      required:
+      - callback_id
+      title: FeedbackOption
+    MarkdownTextContentItemType:
+      type: string
+      enum:
+      - MARKDOWN_TEXT
+      description: Content type discriminator
+      title: MarkdownTextContentItemType
+    CommonmarkTextContent:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Commonmark-formatted text content
+      required:
+      - text
+      title: CommonmarkTextContent
+    RateLimitExceededErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/RateLimitExceededErrorResponseError'
+      required:
+      - error
+      description: Error response for rate limit exceeded
+      title: RateLimitExceededErrorResponse
+    EventPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/EventType'
+        message:
+          $ref: '#/components/schemas/Message'
+          description: Present when the event type is MESSAGE_EVENT
+      required:
+      - type
+      description: Event payload. Currently only message events are supported.
+      title: EventPayload
+    RateLimitExceededErrorResponseErrorCode:
+      type: string
+      enum:
+      - RATE_LIMIT_EXCEEDED
+      title: RateLimitExceededErrorResponseErrorCode
+    CommonmarkTextContentItemType:
+      type: string
+      enum:
+      - COMMONMARK_TEXT
+      description: Content type discriminator
+      title: CommonmarkTextContentItemType
+    PlainTextContentItemType:
+      type: string
+      enum:
+      - PLAIN_TEXT
+      description: Content type discriminator
+      title: PlainTextContentItemType
+    InvalidTitleErrorResponseErrorCode:
+      type: string
+      enum:
+      - INVALID_INPUT
+      title: InvalidTitleErrorResponseErrorCode
+    NotFoundErrorResponseErrorCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: NotFoundErrorResponseErrorCode
+    InvalidTitleErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/InvalidTitleErrorResponseError'
+      required:
+      - error
+      description: Error response for invalid conversation title
+      title: InvalidTitleErrorResponse
+    InternalErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InternalErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: InternalErrorResponseError
+    InternalErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/InternalErrorResponseError'
+      required:
+      - error
+      description: Error response for internal server error
+      title: InternalErrorResponse
+    UnauthorizedErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthorizedErrorResponseError'
+      required:
+      - error
+      description: Error response for unauthorized access
+      title: UnauthorizedErrorResponse
+    RateLimitExceededErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/RateLimitExceededErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: RateLimitExceededErrorResponseError
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.

@@ -1,0 +1,188 @@
+openapi: 3.1.0
+info:
+  title: (Beta) Conversations authentication API
+  version: 1.0.0
+servers:
+- url: https://api.moveworks.ai/rest/v1beta1
+  description: US production server
+- url: https://api.jp.moveworks.com/rest/v1beta1
+  description: Japan production server
+- url: https://api.uk.moveworks.com/rest/v1beta1
+  description: UK production server
+- url: https://api.prod4.us.moveworks.com/rest/v1beta1
+  description: US Prod 4 production server
+- url: https://api.prod3.us.moveworks.com/rest/v1beta1
+  description: US Prod 3 production server
+tags:
+- name: authentication
+paths:
+  /oauth/v1/token:
+    post:
+      operationId: create-o-auth-token
+      summary: Create an OAuth token
+      description: 'Generate an Access Token using OAuth 2.0 Client Credentials for authentication in subsequent API calls to other endpoints. See [Credentials Management - OAuth 2.0 Client](/reference/get-api-keys) for more info.
+
+        '
+      tags:
+      - authentication
+      responses:
+        '200':
+          description: Token created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthTokenGenerated'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOAuthTokenRequestBadRequestError'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthInvalidClient'
+        '429':
+          description: Rate Limit Exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRateLimitExceeded'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OauthTokenRequest'
+  /rest/v1/auth/test:
+    get:
+      operationId: test-auth
+      summary: Test API Key
+      tags:
+      - authentication
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully tested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthSuccessful'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorAuthentication'
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: InternalServerError
+    OauthTokenGenerated:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/OauthTokenGeneratedData'
+      title: OauthTokenGenerated
+    OauthTokenGeneratedData:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        token_type:
+          type: string
+      title: OauthTokenGeneratedData
+    ErrorRateLimitExceeded:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorRateLimitExceeded
+    OauthInvalidRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthInvalidRequest
+    ErrorAuthentication:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorAuthentication
+    CreateOAuthTokenRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/OauthInvalidRequest'
+      - $ref: '#/components/schemas/OauthUnsupportedGrantType'
+      title: CreateOAuthTokenRequestBadRequestError
+    OauthInvalidClient:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthInvalidClient
+    AuthSuccessful:
+      type: object
+      properties:
+        Message:
+          type: string
+      title: AuthSuccessful
+    OauthUnsupportedGrantType:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthUnsupportedGrantType
+    OauthTokenRequest:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The client's unique identifier; acquired during the creation of credentials in Events Workspace.
+        client_secret:
+          type: string
+          description: The client's secret key; acquired during the creation of credentials in Events Workspace.
+        grant_type:
+          type: string
+          description: Specifies the type of grant being used for the token request. This should be set to \"client_credentials\".
+      required:
+      - client_id
+      - client_secret
+      - grant_type
+      title: OauthTokenRequest
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
