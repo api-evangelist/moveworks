@@ -1,8 +1,28 @@
 aid: moveworks
 name: Moveworks
-description: 'Moveworks is a company surfaced as a portfolio company of kleiner-perkins and added to the
-  API Evangelist network as a stub for enrichment. Sector: ai. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: >-
+  Moveworks is an enterprise agentic AI assistant platform that lets employees search and act
+  across 100+ business applications (Slack, ServiceNow, Workday, Jira, Salesforce, SAP, Microsoft)
+  through conversational AI agents. Its "Build with Moveworks" developer platform and Agent Studio
+  expose REST APIs to send events and proactive messages, drive AI Assistant conversations
+  (including streaming), export analytics data, and receive inbound webhooks, plus a set of
+  customer-hosted gateways (Content, Identity, Knowledge, Forms) that feed enterprise data to the
+  AI. All APIs use HTTP Bearer authentication with OAuth 2.0 Client Credentials issuing short-lived
+  access tokens, are published as OpenAPI 3.1 with a discoverable /.well-known/api-catalog, and are
+  deployed across US, EU, Canada, GovCloud (FedRAMP), Japan and UK regions.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.moveworks.com/content/dam/images/internal/open-graph/moveworks-open-graph-homepage-v2.jpg
 url: https://raw.githubusercontent.com/api-evangelist/moveworks/refs/heads/main/apis.yml
 x-type: company
 x-source: kleiner-perkins-portfolio
@@ -10,16 +30,221 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
-- Ai
-apis: []
+- Artificial Intelligence
+- Agentic AI
+- AI Assistant
+- Enterprise Automation
+- Conversational AI
+- Employee Experience
+- IT Service Management
+- Enterprise Search
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: moveworks:moveworks-authentication-api
+  name: Moveworks authentication API
+  description: The authentication API from Moveworks — 2 operation(s) for authentication.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-authentication-api-openapi.yml
+- aid: moveworks:moveworks-conversations-api
+  name: Moveworks conversations API
+  description: The conversations API from Moveworks — 3 operation(s) for conversations.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - conversations
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-conversations-api-openapi.yml
+- aid: moveworks:moveworks-default-api
+  name: Moveworks Default API
+  description: The Default API from Moveworks — 14 operation(s) for default.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - Default
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-default-api-openapi.yml
+- aid: moveworks:moveworks-deprecated-api
+  name: Moveworks deprecated API
+  description: The deprecated API from Moveworks — 1 operation(s) for deprecated.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - deprecated
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-deprecated-api-openapi.yml
+- aid: moveworks:moveworks-events-api
+  name: Moveworks events API
+  description: The events API from Moveworks — 1 operation(s) for events.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - events
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-events-api-openapi.yml
+- aid: moveworks:moveworks-messages-api
+  name: Moveworks messages API
+  description: The messages API from Moveworks — 3 operation(s) for messages.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - messages
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-messages-api-openapi.yml
+- aid: moveworks:moveworks-responses-api
+  name: Moveworks responses API
+  description: The responses API from Moveworks — 3 operation(s) for responses.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - responses
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-responses-api-openapi.yml
+- aid: moveworks:moveworks-smartforms-api
+  name: Moveworks smartForms API
+  description: The smartForms API from Moveworks — 3 operation(s) for smartforms.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - smartForms
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-smartforms-api-openapi.yml
+- aid: moveworks:moveworks-webhooks-api
+  name: Moveworks webhooks API
+  description: The webhooks API from Moveworks — 1 operation(s) for webhooks.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-webhooks-api-openapi.yml
 common:
+# --- identity / discoverability ---
 - type: Website
   url: https://www.moveworks.com
+- type: DeveloperPortal
+  url: https://www.moveworks.com/us/en/developers
+- type: Documentation
+  url: https://docs.moveworks.com
+- type: APIReference
+  url: https://docs.moveworks.com/api-reference/overview
+- type: GettingStarted
+  url: https://docs.moveworks.com/agent-studio/quickstart-guide
+- type: Support
+  url: https://help.moveworks.com/docs/support
+- type: HelpCenter
+  url: https://help.moveworks.com
+- type: Community
+  url: https://community.moveworks.com
+- type: Blog
+  url: https://www.moveworks.com/us/en/resources/blog
+- type: GitHubOrganization
+  url: https://github.com/moveworks
+- type: Pricing
+  url: https://www.moveworks.com/us/en/pricing
+- type: TermsOfService
+  url: https://www.moveworks.com/us/en/legal
+- type: PrivacyPolicy
+  url: https://www.moveworks.com/us/en/legal/privacy-policy
+- type: Roadmap
+  url: https://docs.moveworks.com/ai-assistant/getting-started/roadmap-release-notes/release-notes-2026
+# --- gateway specs (customer-hosted) ---
+- type: OpenAPI
+  name: Content Gateway
+  url: openapi/moveworks-content-gateway-openapi.yaml
+- type: OpenAPI
+  name: Identity Gateway
+  url: openapi/moveworks-identity-gateway-openapi.yaml
+- type: OpenAPI
+  name: Knowledge Gateway
+  url: openapi/moveworks-knowledge-gateway-openapi.yaml
+- type: OpenAPI
+  name: Forms Gateway
+  url: openapi/moveworks-forms-gateway-openapi.yaml
+- type: Overlay
+  name: Content Gateway Overlay
+  url: overlays/moveworks-content-gateway-overlay.yaml
+- type: Overlay
+  name: Identity Gateway Overlay
+  url: overlays/moveworks-identity-gateway-overlay.yaml
+- type: Overlay
+  name: Knowledge Gateway Overlay
+  url: overlays/moveworks-knowledge-gateway-overlay.yaml
+- type: Overlay
+  name: Forms Gateway Overlay
+  url: overlays/moveworks-forms-gateway-overlay.yaml
+# --- artifacts ---
+- type: WellKnown
+  url: well-known/moveworks-well-known.yml
+- type: APICatalog
+  url: well-known/moveworks-api-catalog.json
+- type: MCPServer
+  url: mcp/moveworks-mcp.yml
+- type: LLMsTxt
+  url: llms/moveworks-llms.txt
+- type: Packages
+  url: packages/moveworks-packages.yml
+- type: Authentication
+  url: authentication/moveworks-authentication.yml
+- type: AgenticAccess
+  url: agentic-access/moveworks-agentic-access.yml
+- type: Conformance
+  url: conformance/moveworks-conformance.yml
+- type: Compliance
+  url: https://www.moveworks.com/us/en/platform/security
+- type: ErrorCatalog
+  url: errors/moveworks-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/moveworks-lifecycle.yml
+- type: StatusPage
+  url: https://status.moveworks.com
+- type: Deprecation
+  url: https://docs.moveworks.com/api-reference/legacy-deprecated-ap-is
+- type: Conventions
+  url: conventions/moveworks-conventions.yml
+- type: ChangeLog
+  url: changelog/moveworks-changelog.yml
+- type: DataModel
+  url: data-model/moveworks-data-model.yml
+- type: Webhooks
+  url: asyncapi/moveworks-webhooks.yml
+- type: DomainSecurity
+  url: security/moveworks-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/moveworks-vulnerability-disclosure.yml
+- type: Security
+  url: https://www.moveworks.com/us/en/platform/security
+- type: TrustCenter
+  url: security/moveworks-trust-center.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Arazzo
+  name: Authenticate and notify employees for an event
+  url: arazzo/moveworks-notify-employees.yml
+- type: Arazzo
+  name: Start an AI Assistant conversation and read the reply
+  url: arazzo/moveworks-conversation.yml
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 25
+  pass: local-v1
