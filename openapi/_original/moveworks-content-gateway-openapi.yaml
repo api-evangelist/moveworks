@@ -1,0 +1,1029 @@
+openapi: 3.1.0
+info:
+  title: Content Gateway
+  version: 1.0.0
+paths:
+  /files:
+    get:
+      operationId: list-files
+      summary: List files
+      description: >
+        Retrieve files in a specific node, providing features like querying, filtering, and detailed navigational
+        information including parent folder details and direct download URLs.
+      tags:
+        - ''
+      parameters:
+        - name: $filter
+          in: query
+          description: Filter content items by a condition.
+          required: false
+          schema:
+            type: string
+        - name: $select
+          in: query
+          description: Select which properties to include in the response for the content items.
+          required: false
+          schema:
+            type: string
+        - name: $orderby
+          in: query
+          description: Order content items by specific fields.
+          required: false
+          schema:
+            type: string
+        - name: $top
+          in: query
+          description: Specify the number of content results to return.
+          required: false
+          schema:
+            type: integer
+        - name: $skip
+          in: query
+          description: Skip the first n content results.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully retrieved list of content items with enhanced information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ODataContentResponse'
+        '400':
+          description: Bad Request - The request could not be understood due to malformed syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Authentication is required and has failed or has not yet been provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - Server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /files/{id}:
+    get:
+      operationId: get-file-metadata-and-html-content-body
+      summary: Get file metadata and HTML content body
+      description: >
+        Retrieves metadata and content for a specific file. When the content type is HTML (mime_type: text/html), this
+        endpoint returns the actual HTML content in the response body. For other file types, it provides download path
+        information.
+      tags:
+        - ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved metadata of content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ODataContentMetadataResponse'
+        '400':
+          description: Bad Request - The request could not be understood by the server due to malformed syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Authentication is required and has failed or has not yet been provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - Server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested file could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: >-
+            Internal Server Error - The server encountered an unexpected condition that prevented it from fulfilling the
+            request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /files/{id}/download:
+    get:
+      operationId: download-file
+      summary: Download file
+      description: >
+        Retrieves and downloads the entire media file based on the specified file ID.
+
+
+        The response body is the raw binary content of the file. Treat the response body as a byte stream and write it
+        directly to disk or pass it to a file handler.
+
+
+        The `Content-Type` response header indicates the MIME type of the file (e.g. `application/pdf`, `text/html`).
+        Use this to determine how to handle or display the file.
+
+
+        The `Checksum-SHA256` response header provides a SHA-256 hash of the file contents. Verify this value against
+        the downloaded bytes to confirm the file was not corrupted in transit.
+      tags:
+        - ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved the file. The response body is the raw binary content of the file.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request - The request could not be understood by the server due to malformed syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Authentication is required and has failed or has not yet been provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - Server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested file could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: >-
+            Internal Server Error - The server encountered an unexpected condition that prevented it from fulfilling the
+            request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /users:
+    get:
+      operationId: list-users
+      summary: List users
+      description: Retrieve a paginated list of users using OData parameters.
+      tags:
+        - ''
+      parameters:
+        - name: $top
+          in: query
+          description: Number of items to return per page (default pagination)
+          required: false
+          schema:
+            type: integer
+        - name: $skip
+          in: query
+          description: Number of items to skip (default pagination offset)
+          required: false
+          schema:
+            type: integer
+        - name: $skiptoken
+          in: query
+          description: >-
+            Used when the query parameters can be memoized into an encoded string containing filtering and pagination
+            parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while
+            @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be
+            sufficient.
+          required: false
+          schema:
+            type: string
+        - name: $filter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: $select
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: $orderby
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User list response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCollection'
+        '400':
+          description: Bad Request - The request was invalid or cannot be served.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - The request requires user authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - The server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - The server encountered an unexpected condition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable - The server is currently unable to handle the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /groups:
+    get:
+      operationId: list-groups
+      summary: List groups
+      description: Retrieve a paginated list of groups using OData parameters.
+      tags:
+        - ''
+      parameters:
+        - name: $top
+          in: query
+          description: Number of items to return per page (default pagination)
+          required: false
+          schema:
+            type: integer
+        - name: $skip
+          in: query
+          description: Number of items to skip (default pagination offset)
+          required: false
+          schema:
+            type: integer
+        - name: $skiptoken
+          in: query
+          description: >-
+            Used when the query parameters can be memoized into an encoded string containing filtering and pagination
+            parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while
+            @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be
+            sufficient.
+          required: false
+          schema:
+            type: string
+        - name: $filter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: $select
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: $orderby
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Group list response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupCollection'
+        '400':
+          description: Bad Request - The request was invalid or cannot be served.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - The request requires user authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - The server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - The server encountered an unexpected condition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable - The server is currently unable to handle the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /groups/{groupId}/members:
+    get:
+      operationId: list-group-members
+      summary: List group members
+      description: List direct members (users or groups) of a group. No recursion supported.
+      tags:
+        - ''
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: $top
+          in: query
+          description: Number of items to return per page (default pagination)
+          required: false
+          schema:
+            type: integer
+        - name: $skiptoken
+          in: query
+          description: >-
+            Used when the query parameters can be memoized into an encoded string containing filtering and pagination
+            parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while
+            @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be
+            sufficient.
+          required: false
+          schema:
+            type: string
+        - name: $filter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: $select
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Group members list response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupMemberCollection'
+        '400':
+          description: Bad Request - The request was invalid or cannot be served.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - The request requires user authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - The server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - The server encountered an unexpected condition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable - The server is currently unable to handle the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /files/permissions/metadata:
+    get:
+      operationId: get-permission-model-metadata
+      summary: Get permission model metadata
+      description: >-
+        Returns the current permission evaluation model. NOTE: `resource_permissions` is the only supported model at
+        this time.
+      tags:
+        - ''
+      responses:
+        '200':
+          description: Permissions metadata response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionsMetadata'
+        '400':
+          description: Bad Request - The request was invalid or cannot be served.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - The request requires user authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - The server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - The server encountered an unexpected condition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable - The server is currently unable to handle the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /files/{id}/permissions:
+    get:
+      operationId: get-content-permissions
+      summary: Get content permissions
+      description: >-
+        Returns all user/group permissions on content. If permission model is 'hierarchy_permission', then
+        `permissions_hierarchy` must be provided in the response.
+      tags:
+        - ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: $top
+          in: query
+          description: Number of items to return per page (default pagination)
+          required: false
+          schema:
+            type: integer
+        - name: $skip
+          in: query
+          description: Number of items to skip (default pagination offset)
+          required: false
+          schema:
+            type: integer
+        - name: $skiptoken
+          in: query
+          description: >-
+            Used when the query parameters can be memoized into an encoded string containing filtering and pagination
+            parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while
+            @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be
+            sufficient.
+          required: false
+          schema:
+            type: string
+        - name: $filter
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: $select
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: $orderby
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Content permission response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionCollection'
+        '400':
+          description: Bad Request - The request was invalid or cannot be served.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - The request requires user authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - The server understood the request but refuses to authorize it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The requested resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error - The server encountered an unexpected condition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service Unavailable - The server is currently unable to handle the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+servers:
+  - url: https://content-gateway-example.com/v1
+    description: https://content-gateway-example.com/v1
+components:
+  schemas:
+    status_enum:
+      type: string
+      enum:
+        - active
+        - deleted
+      title: status_enum
+    custom_attributes:
+      type: object
+      additionalProperties:
+        type: string
+      description: A map of string to string for representing custom attributes.
+      title: custom_attributes
+    ContentObject:
+      type: object
+      properties:
+        download_path:
+          type: string
+          description: 'URL for the download request. For file streams: use `/{id}/download`. Not required for HTML content.'
+        mime_type:
+          type: string
+          description: >-
+            Used to specify type of content. See our supported MIME types here:
+            https://docs.moveworks.com/api-reference/content-gateway/supported-mime-types.
+        size:
+          type: integer
+          format: int64
+        sha1_hash:
+          type: string
+      required:
+        - mime_type
+      title: ContentObject
+    node_reference:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        path:
+          type: string
+      required:
+        - id
+        - name
+      title: node_reference
+    Node:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique id for each file
+        name:
+          type: string
+          description: User friendly name for the file
+        status:
+          $ref: '#/components/schemas/status_enum'
+        custom_attributes:
+          $ref: '#/components/schemas/custom_attributes'
+        last_modified_datetime:
+          type: string
+          format: date-time
+          description: Used to efficiently ingest content only updated since last ingestion
+        last_modified_by:
+          type: string
+        created_datetime:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        external_url:
+          type: string
+          description: External URL to redirect users
+        metadata_url:
+          type: string
+          description: Used to retrieve metadata about individual files
+        content:
+          $ref: '#/components/schemas/ContentObject'
+        parent_info:
+          $ref: '#/components/schemas/node_reference'
+        children_url:
+          type: string
+      required:
+        - id
+        - name
+        - last_modified_datetime
+        - external_url
+      title: Node
+    ODataContentResponse:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Node'
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+      title: ODataContentResponse
+    ErrorResponseError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Standard error code (e.g., UNAUTHORIZED, INVALID_ARGUMENT, NOT_FOUND).
+        message:
+          type: string
+          description: Human-readable explanation of the error.
+      required:
+        - code
+        - message
+      title: ErrorResponseError
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorResponseError'
+      required:
+        - error
+      title: ErrorResponse
+    ContentObjectWithBody:
+      type: object
+      properties:
+        download_path:
+          type: string
+          description: 'URL for the download request. For file streams: use `/{id}/download`. Not required for HTML content.'
+        mime_type:
+          type: string
+          description: >-
+            Used to specify type of content. See our supported MIME types here:
+            https://docs.moveworks.com/api-reference/content-gateway/supported-mime-types.
+        size:
+          type: integer
+          format: int64
+        sha1_hash:
+          type: string
+        body:
+          type: string
+          description: The HTML content. Required when mime_type is `text/html`.
+      required:
+        - mime_type
+      title: ContentObjectWithBody
+    NodeWithContent:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique id for each file
+        name:
+          type: string
+          description: User friendly name for the file
+        status:
+          $ref: '#/components/schemas/status_enum'
+        custom_attributes:
+          $ref: '#/components/schemas/custom_attributes'
+        last_modified_datetime:
+          type: string
+          format: date-time
+          description: Used to efficiently ingest content only updated since last ingestion
+        last_modified_by:
+          type: string
+        created_datetime:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        external_url:
+          type: string
+          description: External URL to redirect users
+        metadata_url:
+          type: string
+          description: Used to retrieve metadata about individual files
+        content:
+          $ref: '#/components/schemas/ContentObjectWithBody'
+        parent_info:
+          $ref: '#/components/schemas/node_reference'
+        children_url:
+          type: string
+      required:
+        - id
+        - name
+        - last_modified_datetime
+        - external_url
+      title: NodeWithContent
+    ODataContentMetadataResponse:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        value:
+          $ref: '#/components/schemas/NodeWithContent'
+      title: ODataContentMetadataResponse
+    UserMetadata:
+      type: object
+      properties: {}
+      description: Custom key-value metadata for the user.
+      title: UserMetadata
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the user.
+        primary_email_addr:
+          type: string
+          description: Primary email address of the user.
+        full_name:
+          type: string
+          description: Full name of the user.
+        state:
+          type: string
+          description: 'State of the user account. Enum: Active | Inactive'
+        last_modified_datetime:
+          type: string
+          description: Last modification timestamp (ISO 8601).
+        metadata:
+          $ref: '#/components/schemas/UserMetadata'
+          description: Custom key-value metadata for the user.
+      title: User
+    UserCollection:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        '@odata.nextLink':
+          type: string
+      title: UserCollection
+    GroupMetadata:
+      type: object
+      properties: {}
+      description: Custom key-value metadata for the group.
+      title: GroupMetadata
+    Group:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the group.
+        name:
+          type: string
+          description: Name of the group.
+        created_datetime:
+          type: string
+          description: Timestamp when the group was created.
+        last_modified_datetime:
+          type: string
+          description: Timestamp when the group was last updated.
+        metadata:
+          $ref: '#/components/schemas/GroupMetadata'
+          description: Custom key-value metadata for the group.
+      title: Group
+    GroupCollection:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+        '@odata.nextLink':
+          type: string
+      title: GroupCollection
+    GroupMember:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Entity type. Enum: USER | GROUP'
+        id:
+          type: string
+          description: ID of the member (user or group).
+        name:
+          type: string
+          description: Name of the member (optional).
+      title: GroupMember
+    GroupMemberCollection:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMember'
+        '@odata.nextLink':
+          type: string
+      title: GroupMemberCollection
+    PermissionsMetadataModel:
+      type: string
+      enum:
+        - resource_permission
+        - hierarchy_permission
+      description: 'Permission model in use. NOTE: `resource_permissions` is the only supported model at this time.'
+      title: PermissionsMetadataModel
+    PermissionsMetadata:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: OData metadata context URL.
+        model:
+          $ref: '#/components/schemas/PermissionsMetadataModel'
+          description: 'Permission model in use. NOTE: `resource_permissions` is the only supported model at this time.'
+      title: PermissionsMetadata
+    PermissionCollectionValuePermissionsItemsType:
+      type: string
+      enum:
+        - USER
+        - GROUP
+      description: Type of permission entity.
+      title: PermissionCollectionValuePermissionsItemsType
+    PermissionCollectionValuePermissionsItemsAction:
+      type: string
+      enum:
+        - VIEW
+        - UPDATE
+      description: Action permitted on the content.
+      title: PermissionCollectionValuePermissionsItemsAction
+    PermissionCollectionValuePermissionsItems:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/PermissionCollectionValuePermissionsItemsType'
+          description: Type of permission entity.
+        id:
+          type: string
+          description: >-
+            Entity ID (user or group). Wildcard (`*`), used in conjunction with `type` `GROUP`, can be used to denote
+            all Users.
+        action:
+          $ref: '#/components/schemas/PermissionCollectionValuePermissionsItemsAction'
+          description: Action permitted on the content.
+      title: PermissionCollectionValuePermissionsItems
+    PermissionCollectionValue:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionCollectionValuePermissionsItems'
+          description: List of permission mappings for users and groups.
+        permissions_hierarchy:
+          type: array
+          items:
+            type: string
+          description: Hierarchy chain of entity IDs (required if permission model = hierarchy_permission).
+        last_modified_datetime:
+          type: string
+          description: Timestamp of the last permission update.
+      title: PermissionCollectionValue
+    PermissionCollection:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: OData metadata context URL.
+        value:
+          $ref: '#/components/schemas/PermissionCollectionValue'
+        '@odata.nextLink':
+          type: string
+          description: URL to retrieve the next page of permission results.
+      title: PermissionCollection

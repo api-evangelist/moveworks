@@ -1,0 +1,28 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/orgs/moveworks/repos
+summary: >-
+  Moveworks does not publish first-party client SDK libraries to npm, PyPI,
+  Maven, NuGet, RubyGems or crates.io. Integration is via direct REST calls
+  (Bearer auth) or the Agent Studio HTTP Connectors. The public GitHub org ships
+  example/reference code and an MCP proxy client rather than versioned SDKs.
+packages: []
+repositories:
+- name: data-api
+  language: python
+  url: https://github.com/moveworks/data-api
+  description: Example integration code for the Data API plus an exportable PowerBI template.
+  official: true
+  kind: example
+- name: gateway
+  language: python
+  url: https://github.com/moveworks/gateway
+  description: Example code for building customer-hosted gateway integrations (Content/Identity/Knowledge/Forms).
+  official: true
+  kind: example
+- name: Moveworks-MCP-Proxy-Client
+  language: typescript
+  url: https://github.com/moveworks/Moveworks-MCP-Proxy-Client
+  description: Proxy client for connecting an AI agent to the Moveworks MCP Plugin on the AI Agent Marketplace.
+  official: true
+  kind: mcp-client

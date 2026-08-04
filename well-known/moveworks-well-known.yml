@@ -1,0 +1,34 @@
+generated: '2026-07-20'
+method: searched
+source: live probes of /.well-known/ on Moveworks hosts
+hosts:
+- host: https://docs.moveworks.com
+  documents:
+  - path: /.well-known/api-catalog
+    status: 200
+    file: moveworks-api-catalog.json
+    note: RFC 8631 linkset cataloguing 9 OpenAPI service descriptions
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+- host: https://www.moveworks.com
+  documents:
+  - path: /.well-known/api-catalog
+    status: 200
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://help.moveworks.com
+  documents:
+  - path: /.well-known/api-catalog
+    status: 200
+- host: https://api.moveworks.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404

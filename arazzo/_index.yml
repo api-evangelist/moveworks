@@ -1,0 +1,11 @@
+generated: '2026-07-20'
+method: derived
+workflows:
+- file: moveworks-notify-employees.yml
+  workflowId: notify-employees-for-event
+  title: Authenticate and notify employees for an event
+  summary: Mint an OAuth client-credentials token, verify it, then send an event-triggered message.
+- file: moveworks-conversation.yml
+  workflowId: converse-with-assistant
+  title: Start an AI Assistant conversation and read the reply
+  summary: Create a conversation, request a response, then list the resulting messages.

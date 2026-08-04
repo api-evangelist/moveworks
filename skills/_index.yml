@@ -1,0 +1,12 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/ (operationIds verified against published specs)
+skills:
+- file: moveworks-notify-employees.md
+  name: Notify employees for an event
+  api: openapi/moveworks-events-api-openapi.yaml
+  operations: [create-o-auth-token, test-auth, send-message-for-event]
+- file: moveworks-drive-conversation.md
+  name: Drive an AI Assistant conversation
+  api: openapi/moveworks-conversations-api-openapi.yaml
+  operations: [create-conversation, create-response, create-response-stream, list-conversation-messages, get-response, submit-feedback]

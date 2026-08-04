@@ -1,0 +1,978 @@
+openapi: 3.1.0
+info:
+  title: Data API
+  version: 1.0.0
+paths:
+  /conversations:
+    get:
+      operationId: list-conversations
+      summary: List conversations
+      description: Retrieve all conversations occurring with the Moveworks AI Assistant.
+      tags:
+        - ''
+      parameters:
+        - name: $filter
+          in: query
+          description: This option allows the client to filter the resource that is address by request URL
+          required: false
+          schema:
+            type: string
+        - name: $select
+          in: query
+          description: This option allow the client to request a limited set of properties of an entity
+          required: false
+          schema:
+            type: string
+        - name: $orderby
+          in: query
+          description: This option allow the client to request resources in either ascending or descending order
+          required: false
+          schema:
+            type: string
+        - name: $top
+          in: query
+          description: This option request the number of items to be included in the result
+          required: false
+          schema:
+            type: integer
+        - name: $skip
+          in: query
+          description: >-
+            This query option requests the number of items in the queried collection that are to be skipped and not
+            included in the result.
+          required: false
+          schema:
+            type: integer
+        - name: $count
+          in: query
+          description: >-
+            This option allows clients to request a count of the matching resources included with the resources in the
+            result
+          required: false
+          schema:
+            type: boolean
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved list of conversations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conversations'
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+        '403':
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ErrorResponse'
+        '404':
+          description: URL not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404ErrorResponse'
+        '429':
+          description: Rate limiting exceeding error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ErrorResponse'
+  /interactions:
+    get:
+      operationId: list-interactions
+      summary: List interactions
+      description: Retrieve all interactions occurring with the Moveworks AI Assistant.
+      tags:
+        - ''
+      parameters:
+        - name: $filter
+          in: query
+          description: This option allows the client to filter the resource that is address by request URL
+          required: false
+          schema:
+            type: string
+        - name: $select
+          in: query
+          description: This option allow the client to request a limited set of properties of an entity
+          required: false
+          schema:
+            type: string
+        - name: $orderby
+          in: query
+          description: This option allow the client to request resources in either ascending or descending order
+          required: false
+          schema:
+            type: string
+        - name: $top
+          in: query
+          description: This option request the number of items to be included in the result
+          required: false
+          schema:
+            type: integer
+        - name: $skip
+          in: query
+          description: >-
+            This query option requests the number of items in the queried collection that are to be skipped and not
+            included in the result.
+          required: false
+          schema:
+            type: integer
+        - name: $count
+          in: query
+          description: >-
+            This option allows clients to request a count of the matching resources included with the resources in the
+            result
+          required: false
+          schema:
+            type: boolean
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved list of interactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/interactions'
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+        '403':
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ErrorResponse'
+        '404':
+          description: URL not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404ErrorResponse'
+        '429':
+          description: Rate limiting exceeding error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ErrorResponse'
+  /plugin-calls:
+    get:
+      operationId: list-plugins-calls
+      summary: List plugins calls
+      description: Retrieve all plugins that were called by the Moveworks AI Assistant during an interaction.
+      tags:
+        - ''
+      parameters:
+        - name: $filter
+          in: query
+          description: This option allows the client to filter the resource that is address by request URL
+          required: false
+          schema:
+            type: string
+        - name: $select
+          in: query
+          description: This option allow the client to request a limited set of properties of an entity
+          required: false
+          schema:
+            type: string
+        - name: $orderby
+          in: query
+          description: This option allow the client to request resources in either ascending or descending order
+          required: false
+          schema:
+            type: string
+        - name: $top
+          in: query
+          description: This option request the number of items to be included in the result
+          required: false
+          schema:
+            type: integer
+        - name: $skip
+          in: query
+          description: >-
+            This query option requests the number of items in the queried collection that are to be skipped and not
+            included in the result.
+          required: false
+          schema:
+            type: integer
+        - name: $count
+          in: query
+          description: >-
+            This option allows clients to request a count of the matching resources included with the resources in the
+            result
+          required: false
+          schema:
+            type: boolean
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved list of plugins calls
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/plugincallslist'
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+        '403':
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ErrorResponse'
+        '404':
+          description: URL not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404ErrorResponse'
+        '429':
+          description: Rate limiting exceeding error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ErrorResponse'
+  /plugin-resources:
+    get:
+      operationId: list-plugin-resources
+      summary: List Plugin Resources
+      description: Retrieve all resources used by AI Assistant during an interaction.
+      tags:
+        - ''
+      parameters:
+        - name: $filter
+          in: query
+          description: This option allows the client to filter the resource that is address by request URL
+          required: false
+          schema:
+            type: string
+        - name: $select
+          in: query
+          description: This option allow the client to request a limited set of properties of an entity
+          required: false
+          schema:
+            type: string
+        - name: $orderby
+          in: query
+          description: This option allow the client to request resources in either ascending or descending order
+          required: false
+          schema:
+            type: string
+        - name: $top
+          in: query
+          description: This option request the number of items to be included in the result
+          required: false
+          schema:
+            type: integer
+        - name: $skip
+          in: query
+          description: >-
+            This query option requests the number of items in the queried collection that are to be skipped and not
+            included in the result.
+          required: false
+          schema:
+            type: integer
+        - name: $count
+          in: query
+          description: >-
+            This option allows clients to request a count of the matching resources included with the resources in the
+            result
+          required: false
+          schema:
+            type: boolean
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved list of interactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pluginresources'
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+        '403':
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ErrorResponse'
+        '404':
+          description: URL not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404ErrorResponse'
+        '429':
+          description: Rate limiting exceeding error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ErrorResponse'
+  /users:
+    get:
+      operationId: list-users
+      summary: List Users
+      description: Retrieve all users ingested into Moveworks.
+      tags:
+        - ''
+      parameters:
+        - name: $filter
+          in: query
+          description: This option allows the client to filter the resource that is address by request URL
+          required: false
+          schema:
+            type: string
+        - name: $select
+          in: query
+          description: This option allow the client to request a limited set of properties of an entity
+          required: false
+          schema:
+            type: string
+        - name: $orderby
+          in: query
+          description: This option allow the client to request resources in either ascending or descending order
+          required: false
+          schema:
+            type: string
+        - name: $top
+          in: query
+          description: This option request the number of items to be included in the result
+          required: false
+          schema:
+            type: integer
+        - name: $skip
+          in: query
+          description: >-
+            This query option requests the number of items in the queried collection that are to be skipped and not
+            included in the result.
+          required: false
+          schema:
+            type: integer
+        - name: $count
+          in: query
+          description: >-
+            This option allows clients to request a count of the matching resources included with the resources in the
+            result
+          required: false
+          schema:
+            type: boolean
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved list of plugins calls
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users'
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+        '403':
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ErrorResponse'
+        '404':
+          description: URL not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404ErrorResponse'
+        '429':
+          description: Rate limiting exceeding error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ErrorResponse'
+servers:
+  - url: https://api.moveworks.ai/export/v1/records
+    description: US PROD server. If you are located in the US region please use this server URL
+  - url: https://api.am-eu-central.moveworks.ai/export/v1/records
+    description: EU PROD server. If you are located in the EU region please use this server URL
+  - url: https://api.am-ca-central.moveworks.ai/export/v1/records
+    description: CA PROD server. If you are located in the CA region please use this server URL
+  - url: https://api.moveworksgov.ai/export/v1/records
+    description: Govcloud PROD server. If you are on GovCloud infrastrucutre (US region) please use this server URL
+  - url: https://api.jp.moveworks.com/export/v1/records
+    description: Japan production server
+  - url: https://api.uk.moveworks.com/export/v1/records
+    description: UK production server
+  - url: https://api.prod4.us.moveworks.com/export/v1/records
+    description: US Prod 4 production server
+  - url: https://api.prod3.us.moveworks.com/export/v1/records
+    description: US Prod 3 production server
+components:
+  schemas:
+    ConversationsobjectDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Resource type of the approval. Populated for `CONVERSATION_TYPE_APPROVAL_REQUEST_NOTIFICATION`.
+        source:
+          type: string
+          description: External system source of the approval. Populated for `CONVERSATION_TYPE_APPROVAL_REQUEST_NOTIFICATION`.
+        domain:
+          type: string
+          description: Domain of the approval. Populated for `CONVERSATION_TYPE_APPROVAL_REQUEST_NOTIFICATION`.
+        usecase_id:
+          type: string
+          description: >-
+            Creator Studio usecase ID. Populated for `CONVERSATION_TYPE_EVENTS_NOTIFICATION` and
+            `CONVERSATION_TYPE_AMBIENT_AGENT_NOTIFICATION`.
+        usecase_name:
+          type: string
+          description: >-
+            Creator Studio usecase name. Populated for `CONVERSATION_TYPE_EVENTS_NOTIFICATION` and
+            `CONVERSATION_TYPE_AMBIENT_AGENT_NOTIFICATION`.
+        ticket_id:
+          type: string
+          description: >-
+            Ticket ID associated with the conversation. Populated for `CONVERSATION_TYPE_TICKET_UPDATE_NOTIFICATION`,
+            `CONVERSATION_TYPE_TICKET_WATCHER_NOTIFICATION`, `CONVERSATION_TYPE_TICKET_WAITING_NOTIFICATION`,
+            `CONVERSATION_TYPE_TICKET_NUDGE_NOTIFICATION`, and `CONVERSATION_TYPE_TICKET_INTERCEPTION`.
+        campaign_id:
+          type: string
+          description: Campaign ID for the comms notification. Populated for `CONVERSATION_TYPE_COMMS_NOTIFICATION`.
+        campaign_name:
+          type: string
+          description: Campaign name for the comms notification. Populated for `CONVERSATION_TYPE_COMMS_NOTIFICATION`.
+        channel_id:
+          type: string
+          description: Channel ID where the interception occurred. Populated for `CONVERSATION_TYPE_CHANNEL_INTERCEPTION`.
+        channel_name:
+          type: string
+          description: Channel name where the interception occurred. Populated for `CONVERSATION_TYPE_CHANNEL_INTERCEPTION`.
+        content:
+          type: string
+          description: >-
+            Message or ticket description content that triggered the interception. Populated for
+            `CONVERSATION_TYPE_CHANNEL_INTERCEPTION` (message content) and `CONVERSATION_TYPE_TICKET_INTERCEPTION`
+            (ticket description).
+      description: >-
+        Type-specific metadata about the conversation. The fields present depend on the value of `type`. See each
+        field's description for which conversation types populate it.
+      title: ConversationsobjectDetail
+    conversationsobject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: >-
+            UUID assigned by the system to a conversation. Conversations are grouped based on the context of
+            interactions. All interactions within a conversation share the same conversation I
+        primary_domain:
+          type: string
+          description: >-
+            Primary domain detected by an LLM model after going through all detected domains of free text interactions
+            belonging to a particular conversation.
+        route:
+          type: string
+          description: >-
+            This field contains details on how a conversation was started either through DM, Notification engagement,
+            Ticket interception engagement, or Channel resolver engagement.
+        user_id:
+          type: string
+          description: User record ID assigned by the system to a user.
+        last_updated_time:
+          type: string
+          description: Timestamp when the conversations entry is last updated in this table.
+        created_time:
+          type: string
+          description: Timestamp when the conversation was initiated.
+        type:
+          type: string
+          description: Type of the conversation.
+        detail:
+          $ref: '#/components/schemas/ConversationsobjectDetail'
+          description: >-
+            Type-specific metadata about the conversation. The fields present depend on the value of `type`. See each
+            field's description for which conversation types populate it.
+      title: conversationsobject
+    conversations:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/conversationsobject'
+      title: conversations
+    400ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 400ErrorResponse
+    403ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 403ErrorResponse
+    404ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 404ErrorResponse
+    429ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 429ErrorResponse
+    500ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 500ErrorResponse
+    InteractionsobjectDetail:
+      type: object
+      properties:
+        content:
+          type: string
+          description: This field contains the free form text, link URL, Button name according to interaction type.
+        domain:
+          type: string
+          description: >-
+            This the interaction level detected domain. Domain is only predicted for free form text interaction type. In
+            some cases, domain of individual utterances may differ from the primary domain detected per conversation.
+        entity:
+          type: string
+          description: >-
+            This field contains the topic as detected per each interaction. Topic is only predicted for free form text
+            interaction type.
+        type:
+          type: string
+          description: This field indicates which type of resource were accessed during an link click interaction.
+        detail:
+          type: string
+          description: This field indicates the form name which was submitted
+        resource_id:
+          type: string
+          description: >-
+            This field provides the resource ID that was accessed by the end user during an link click interaction, or
+            when a user submits a ticket via UI form
+
+            INTERACTION_TYPE_LINK_CLICK
+
+            INTERACTION_TYPE_UIFORM_SUBMISSION
+        file_types:
+          type: array
+          items:
+            type: string
+          description: >-
+            This field provides list of types of files that were uploaded during a file upload interaction
+            (INTERACTION_TYPE_CONTENT_UPLOAD). We do not record the file names as user can also upload a private file
+      description: This is a JSON object which contains metadata per interaction type.
+      title: InteractionsobjectDetail
+    interactionsobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: >-
+            UUID assigned by a system to a interaction. An interaction is either an input from a user to the system, or
+            a response from the system the the user.
+        conversation_id:
+          type: string
+          format: uuid
+          description: ID of the parent conversation.
+        user_id:
+          type: string
+          format: uuid
+          description: User record ID assigned by the system to a user.
+        actor:
+          type: string
+          description: This field differentiates user v/s bot interactions.
+        platform:
+          type: string
+          description: 'This field denotes the platform where the interaction took place. For example: slack, msteams.'
+        type:
+          type: string
+          description: This field defines the type of the interaction.
+        label:
+          type: string
+          description: This field defines the label for UI form submission interaction type.
+        parent_interaction_id:
+          type: string
+          format: uuid
+          description: Parent interaction ID for bot messages and user actions such as form submissions/button clicks/link clicks
+        detail:
+          $ref: '#/components/schemas/InteractionsobjectDetail'
+          description: This is a JSON object which contains metadata per interaction type.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the interaction was initiated.
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the interaction entry is last updated in this table.
+      title: interactionsobject
+    interactions:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/interactionsobject'
+      title: interactions
+    plugincallsobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID assigned by the system to a plugin being called by AI Assistant for a interaction.
+        interaction_id:
+          type: string
+          format: uuid
+          description: ID of the interaction for which the plugin is called
+        conversation_id:
+          type: string
+          format: uuid
+          description: ID of the parent conversation.
+        plugin_name:
+          type: string
+          description: >-
+            Name of the plugin being called by the AI Assistant. This field will also contain custom plugin names for
+            Agent Studio use-cases
+        user_id:
+          type: string
+          format: uuid
+          description: User record ID assigned by the system to a user.
+        served:
+          type: boolean
+          description: This field denotes if the plugin was actually served to the end user
+        used:
+          type: boolean
+          description: >-
+            This field denotes if the plugin was used in the interaction. Action plugin are used only when they have
+            completed the full workflow for an end users, search plugin will always be used if they are served
+        plugin_update_time:
+          type: string
+          format: date-time
+          description: >-
+            This field denotes the time when the plugin was last updated. For example, Access software plugin can be
+            updated at later point in time, once the approver has approved the software approval access.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the plugin call was initiated.
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the plugin call entry is last updated in this table
+      title: plugincallsobject
+    plugincallslist:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/plugincallsobject'
+      title: plugincallslist
+    PluginresourcesobjectDetail:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: >-
+            This field denotes the resource domain configured in Moveworks Setup while configuring Content ingestion &
+            Ticketing. Domain is defined for resources of types:
+
+            RESOURCE_TYPE_APPROVAL
+
+            RESOURCE_TYPE_FORM
+
+            RESOURCE_TYPE_TICKET
+
+            RESOURCE_TYPE_KNOWLEDGE
+        external_resource_id:
+          type: string
+          format: uuid
+          description: >-
+            Service portal ID for the resource of type RESOURCE_TYPE_KNOWLEDGE. This field can be used to join data from
+            external system. Please note external resource ID is not provided for FILE & EXTERNAL KNOWLEDGE (Public
+            knowledge enabled in Moveworks)
+        name:
+          type: string
+          description: |-
+            Name of the resource being used by the plugin, populated for resources of types:
+            RESOURCE_TYPE_FILE
+            RESOURCE_TYPE_FORM
+            RESOURCE_TYPE_KNOWLEDGE
+        snippet:
+          type: string
+          description: |-
+            Exact snippet from the resource being used to provide the summarized response, populated for resource types
+            RESOURCE_TYPE_FILE
+            RESOURCE_TYPE_KNOWLEDGE
+        source:
+          type: string
+          description: |-
+            Name of the external sources from which the resource is being fetched from, populated for resource types
+            RESOURCE_TYPE_TICKET
+            RESOURCE_TYPE_APPROVAL
+        type:
+          type: string
+          description: >-
+            Contains sub-type of approval or type of the ticket creation : User initiated v/s bot initiated, populated
+            for resource types
+
+            RESOURCE_TYPE_TICKET
+
+            RESOURCE_TYPE_APPROVAL
+        url:
+          type: string
+          description: |-
+            External system URL of the resource, populated for resource types
+            RESOURCE_TYPE_TICKET
+            RESOURCE_TYPE_KNOWLEDGE
+            RESOURCE_TYPE_FILE
+      description: This is a JSON object which contains metadata per resource type.
+      title: PluginresourcesobjectDetail
+    pluginresourcesobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID assigned by the system to a resource being used by a plugin called during an interaction.
+        resource_id:
+          type: string
+          format: uuid
+          description: ID of the resource stored in Moveworks.
+        type:
+          type: string
+          format: uuid
+          description: >-
+            This field represents the type of resource utilized by a plugin call. AI Assistant can utilize different
+            resources to provide a summarized response such as KNOWLEDE ARTICLE, FILES, TICKET, APPROVAL etc
+        plugin_call_id:
+          type: string
+          format: uuid
+          description: ID of the plugin being called.
+        interaction_id:
+          type: string
+          format: uuid
+          description: ID of the interaction.
+        user_id:
+          type: string
+          format: uuid
+          description: User record ID assigned by the system to a user.
+        conversation_id:
+          type: string
+          format: uuid
+          description: ID of the parent conversation.
+        detail:
+          $ref: '#/components/schemas/PluginresourcesobjectDetail'
+          description: This is a JSON object which contains metadata per resource type.
+        cited:
+          type: boolean
+          description: This field denotes if the utilized resource was cited in the AI Assistant response or not.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was utilized by a plugin.
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the plugin resource entry was last updated in this table.
+      title: pluginresourcesobject
+    pluginresources:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/pluginresourcesobject'
+      title: pluginresources
+    UserobjectExternalIdsItems:
+      type: object
+      properties:
+        connector_name:
+          type: string
+          description: Name of the connector created in Moveworks Setup
+        external_id:
+          type: string
+          format: uuid
+          description: External ID from the source system
+        source:
+          type: string
+          description: Identifier for the source system.
+      title: UserobjectExternalIdsItems
+    userobject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: User record id generated and stored in Moveworks for the end user
+        email_addr:
+          type: string
+          description: >-
+            Email of the end user stored in Moveworks. This field is ingested from your systems and reflect the value
+            present in your systems.
+        access_to_bot:
+          type: boolean
+          description: >-
+            Denotes if the end user has access to Moveworks Assistant or not. This is evaluated through the bot access
+            rule configured in Moveworks Setup.
+        first_name:
+          type: string
+          description: >-
+            First name of the end user. This field is ingested from your systems and reflect the value present in your
+            systems.
+        last_name:
+          type: string
+          description: >-
+            Last name of the end user.This field is ingested from your systems and reflect the value present in your
+            systems.
+        user_preferred_language:
+          type: string
+          description: User preferred language set from the end user. EN-US is the default value for this field
+        first_interaction_time:
+          type: string
+          format: date-time
+          description: Time stamp for the first interaction for the end user.
+        latest_interaction_time:
+          type: string
+          format: date-time
+          description: Time stamp for the latest interaction of the end user.
+        external_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserobjectExternalIdsItems'
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Last updated time for the user entry.
+      title: userobject
+    users:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/userobject'
+      title: users
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+    OAuth2:
+      type: http
+      scheme: bearer

@@ -1,0 +1,43 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/ + https://www.moveworks.com/us/en/platform/security
+standards:
+- id: oauth2-client-credentials
+  conforms: true
+  evidence: Events API exposes POST /oauth/v1/token with grant_type=client_credentials (OAuth 2.0 Client Credentials)
+- id: bearer-token-http-auth
+  conforms: true
+  evidence: All REST APIs use HTTP Bearer token in the Authorization header
+- id: rfc8631-api-catalog
+  conforms: true
+  evidence: /.well-known/api-catalog linkset published (docs/www/help hosts)
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use a custom {"error":{code,message}} envelope, not application/problem+json
+- id: openapi-3-1
+  conforms: true
+  evidence: all 9 published specs are OpenAPI 3.1.0
+- id: cursor-pagination
+  conforms: true
+  evidence: list endpoints use pageToken/pageSize/next_page cursor pagination
+- id: soc2-type2
+  conforms: true
+  evidence: SOC 2 Type 2 (Security, Confidentiality, Availability, Privacy TSC)
+- id: iso-27001
+  conforms: true
+  evidence: ISO/IEC 27001 certified
+- id: iso-27701
+  conforms: true
+  evidence: ISO/IEC 27701 privacy information management
+- id: iso-42001
+  conforms: true
+  evidence: ISO/IEC 42001 AI management system
+- id: csa-star-level-2
+  conforms: true
+  evidence: CSA STAR Level 2
+- id: fedramp
+  conforms: true
+  evidence: FedRAMP (GovCloud region api.moveworksgov.ai)
+- id: gdpr
+  conforms: true
+  evidence: GDPR + CCPA data privacy compliance

@@ -1,0 +1,46 @@
+# Moveworks
+
+> Moveworks is an enterprise agentic AI assistant platform. Its developer platform ("Build with Moveworks" / Agent Studio) exposes REST APIs to send events, drive conversations with the AI Assistant, export analytics data, and receive webhooks, plus customer-hosted gateways (Content, Identity, Knowledge, Forms). All APIs use HTTP Bearer authentication; OAuth 2.0 Client Credentials issues short-lived (60s) access tokens.
+
+## APIs
+
+- [Events API](https://docs.moveworks.com/api-reference/events-api/events-api): Send events to trigger automations and notify employees; OAuth token endpoint.
+- [Conversations API](https://docs.moveworks.com/api-reference/conversations-api/conversations-api): Create/manage conversation threads and AI responses (streaming supported).
+- [Data API](https://docs.moveworks.com/api-reference/data-api): Export conversations, interactions, plugin calls, plugin resources and users for analytics.
+- [Webhook Listeners](https://docs.moveworks.com/api-reference/webhook-listeners): Receive inbound webhook events into Agent Studio listeners.
+- [Content Gateway](https://docs.moveworks.com/api-reference/content-gateway/content-gateway): Customer-hosted — serve files/permissions to the AI.
+- [Identity Gateway](https://docs.moveworks.com/api-reference/legacy-gateways/identity-gateway): Customer-hosted — resolve user identities.
+- [Knowledge Gateway](https://docs.moveworks.com/api-reference/legacy-gateways/knowledge-gateway): Customer-hosted — provide knowledge-base articles.
+- [Forms Gateway](https://docs.moveworks.com/api-reference/legacy-gateways/forms-gateway): Customer-hosted — list/submit forms.
+
+## Specs
+
+- openapi/moveworks-events-api-openapi.yaml
+- openapi/moveworks-conversations-api-openapi.yaml
+- openapi/moveworks-beta-conversations-api-openapi.yaml
+- openapi/moveworks-data-api-openapi.yaml
+- openapi/moveworks-webhook-listeners-openapi.yaml
+- openapi/moveworks-content-gateway-openapi.yaml
+- openapi/moveworks-identity-gateway-openapi.yaml
+- openapi/moveworks-knowledge-gateway-openapi.yaml
+- openapi/moveworks-forms-gateway-openapi.yaml
+
+## Docs
+
+- [API Reference Overview](https://docs.moveworks.com/api-reference/overview)
+- [API Credentials](https://docs.moveworks.com/api-reference/api-credentials)
+- [Errors](https://docs.moveworks.com/api-reference/errors)
+- [Agent Studio Quickstart](https://docs.moveworks.com/agent-studio/quickstart-guide)
+- [Developer Docs Index](https://docs.moveworks.com/llms.txt)
+- [MCP Server](https://docs.moveworks.com/_mcp/server)
+- [Status](https://status.moveworks.com)
+- [Security & Compliance](https://www.moveworks.com/us/en/platform/security)
+
+## Base URLs
+
+- US Production: https://api.moveworks.ai
+- EU: https://api.am-eu-central.moveworks.ai
+- Canada: https://api.am-ca-central.moveworks.ai
+- GovCloud (FedRAMP): https://api.moveworksgov.ai
+- Japan: https://api.jp.moveworks.com
+- UK: https://api.uk.moveworks.com

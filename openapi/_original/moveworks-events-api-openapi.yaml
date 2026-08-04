@@ -1,0 +1,426 @@
+openapi: 3.1.0
+info:
+  title: Events API
+  version: 1.0.0
+paths:
+  /rest/v1/events/{event_id}/messages/send:
+    post:
+      operationId: send-message-for-event
+      summary: Send a message for an event
+      description: |
+        Send a message to a list of recipients for an event. The event must be defined in the Events Workspace.
+      tags:
+        - events
+      parameters:
+        - name: event_id
+          in: path
+          description: ID of the event to notify for
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully scheduled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageScheduled'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequest'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMessageForEventRequestUnauthorizedError'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorAuthorization'
+        '404':
+          description: Event not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMessageForEventRequestNotFoundError'
+        '429':
+          description: Rate Limit Exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRateLimitExceeded'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageForEventRequest'
+  /oauth/v1/token:
+    post:
+      operationId: create-o-auth-token
+      summary: Create an OAuth token
+      description: >
+        Generate an Access Token using OAuth 2.0 Client Credentials for authentication in subsequent API calls to other
+        endpoints. See [Credentials Management - OAuth 2.0 Client](/reference/get-api-keys) for more info.
+      tags:
+        - authentication
+      responses:
+        '200':
+          description: Token created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthTokenGenerated'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOAuthTokenRequestBadRequestError'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthInvalidClient'
+        '429':
+          description: Rate Limit Exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRateLimitExceeded'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OauthTokenRequest'
+  /rest/v1/auth/test:
+    get:
+      operationId: test-auth
+      summary: Test API Key
+      tags:
+        - authentication
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully tested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthSuccessful'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorAuthentication'
+  /rest/v1/messages/send:
+    post:
+      operationId: send-message
+      summary: '[Deprecated] Send a message'
+      description: |
+        Send a message to users. This endpoint is deprecated, but existing integrations will continue to work.
+      tags:
+        - deprecated
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequest'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorAuthentication'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMessageRequestForbiddenError'
+        '429':
+          description: Rate Limit Exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRateLimitExceeded'
+      requestBody:
+        description: Object containing all the data needed to send a message to a list of recipients
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageRequest'
+servers:
+  - url: https://api.moveworks.ai
+    description: https://api.moveworks.ai
+  - url: https://api-demo.moveworks.ai
+    description: https://api-demo.moveworks.ai
+  - url: https://api.am-eu-central.moveworks.ai
+    description: https://api.am-eu-central.moveworks.ai
+  - url: https://api.am-ca-central.moveworks.ai
+    description: https://api.am-ca-central.moveworks.ai
+  - url: https://api.moveworksgov.ai
+    description: https://api.moveworksgov.ai
+  - url: https://api.jp.moveworks.com
+    description: https://api.jp.moveworks.com
+  - url: https://api.uk.moveworks.com
+    description: https://api.uk.moveworks.com
+  - url: https://api.prod4.us.moveworks.com
+    description: https://api.prod4.us.moveworks.com
+  - url: https://api.prod3.us.moveworks.com
+    description: https://api.prod3.us.moveworks.com
+components:
+  schemas:
+    SendMessageForEventRequestContextSlots:
+      type: object
+      properties: {}
+      description: Contextual slots
+      title: SendMessageForEventRequestContextSlots
+    SendMessageForEventRequestContext:
+      type: object
+      properties:
+        slots:
+          $ref: '#/components/schemas/SendMessageForEventRequestContextSlots'
+          description: Contextual slots
+      description: Additional contextual data
+      title: SendMessageForEventRequestContext
+    SendMessageForEventRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          description: >-
+            Message to be sent, formatted in Moveworks' version of HTML. Moveworks attempts to shorten valid links to
+            fit within chat platform constraints. Consult your chat platform API documentation to understand actual
+            character limits.
+        recipients:
+          type: array
+          items:
+            type: string
+          description: Email addresses of the employees to send the message to
+        context:
+          $ref: '#/components/schemas/SendMessageForEventRequestContext'
+          description: Additional contextual data
+      required:
+        - message
+        - recipients
+      title: SendMessageForEventRequest
+    MessageScheduledDataStatus:
+      type: string
+      enum:
+        - RECEIVED
+      title: MessageScheduledDataStatus
+    MessageScheduledData:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/MessageScheduledDataStatus'
+      title: MessageScheduledData
+    MessageScheduled:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MessageScheduledData'
+      title: MessageScheduled
+    ErrorBadRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorBadRequest
+    ErrorAuthentication:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorAuthentication
+    OauthErrorAuthenticationInvalidToken:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthErrorAuthenticationInvalidToken
+    OauthErrorAuthenticationExpiredToken:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthErrorAuthenticationExpiredToken
+    SendMessageForEventRequestUnauthorizedError:
+      oneOf:
+        - $ref: '#/components/schemas/ErrorAuthentication'
+        - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
+        - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
+      title: SendMessageForEventRequestUnauthorizedError
+    ErrorAuthorization:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorAuthorization
+    SendMessageForEventRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: SendMessageForEventRequestNotFoundError
+    ErrorRateLimitExceeded:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorRateLimitExceeded
+    OauthTokenRequest:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The client's unique identifier; acquired during the creation of credentials in Events Workspace.
+        client_secret:
+          type: string
+          description: The client's secret key; acquired during the creation of credentials in Events Workspace.
+        grant_type:
+          type: string
+          description: Specifies the type of grant being used for the token request. This should be set to \"client_credentials\".
+      required:
+        - client_id
+        - client_secret
+        - grant_type
+      title: OauthTokenRequest
+    OauthTokenGeneratedData:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        token_type:
+          type: string
+      title: OauthTokenGeneratedData
+    OauthTokenGenerated:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/OauthTokenGeneratedData'
+      title: OauthTokenGenerated
+    OauthInvalidRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthInvalidRequest
+    OauthUnsupportedGrantType:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthUnsupportedGrantType
+    CreateOAuthTokenRequestBadRequestError:
+      oneOf:
+        - $ref: '#/components/schemas/OauthInvalidRequest'
+        - $ref: '#/components/schemas/OauthUnsupportedGrantType'
+      title: CreateOAuthTokenRequestBadRequestError
+    OauthInvalidClient:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthInvalidClient
+    InternalServerError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: InternalServerError
+    AuthSuccessful:
+      type: object
+      properties:
+        Message:
+          type: string
+      title: AuthSuccessful
+    SendMessageRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          description: >-
+            Message to be sent, formatted in Moveworks' version of HTML. Moveworks attempts to shorten valid links to
+            fit within chat platform constraints. Consult your chat platform API documentation to understand actual
+            character limits.
+        recipients:
+          type: array
+          items:
+            type: string
+          description: Email addresses of the employees to send the message to
+      required:
+        - message
+        - recipients
+      title: SendMessageRequest
+    SendMessageRequestForbiddenError:
+      oneOf:
+        - $ref: '#/components/schemas/ErrorAuthentication'
+        - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
+        - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
+      title: SendMessageRequestForbiddenError
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

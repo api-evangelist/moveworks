@@ -1,0 +1,68 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/ ($ref links + id-reference fields across specs)
+entities:
+- name: Conversation
+  api: openapi/moveworks-conversations-api-openapi.yaml
+  id: conversation_id
+  description: A conversation thread with the AI Assistant.
+- name: Response
+  api: openapi/moveworks-conversations-api-openapi.yaml
+  id: response_id
+  description: An AI response turn within a conversation.
+- name: Message
+  api: openapi/moveworks-conversations-api-openapi.yaml
+  id: message_id
+  description: An individual message belonging to a response/conversation.
+- name: Event
+  api: openapi/moveworks-events-api-openapi.yaml
+  id: event_id
+  description: A named event defined in the Events Workspace that can trigger messages.
+- name: WebhookListener
+  api: openapi/moveworks-webhook-listeners-openapi.yaml
+  id: listener_id
+  description: An Agent Studio listener that receives inbound webhook payloads.
+- name: Interaction
+  api: openapi/moveworks-data-api-openapi.yaml
+  description: An analytics record of an assistant interaction (Data API export).
+- name: PluginCall
+  api: openapi/moveworks-data-api-openapi.yaml
+  description: An analytics record of a plugin invocation.
+- name: User
+  api: openapi/moveworks-data-api-openapi.yaml
+  description: An employee/user resolved across systems.
+- name: Form
+  api: openapi/moveworks-forms-gateway-openapi.yaml
+  id: formId
+  description: A form served/collected via the Forms Gateway.
+- name: File
+  api: openapi/moveworks-content-gateway-openapi.yaml
+  id: id
+  description: A content file exposed via the Content Gateway.
+- name: Article
+  api: openapi/moveworks-knowledge-gateway-openapi.yaml
+  description: A knowledge-base article via the Knowledge Gateway.
+relationships:
+- from: Response
+  to: Conversation
+  type: belongs_to
+  via: conversation_id
+- from: Message
+  to: Response
+  type: belongs_to
+  via: response_id
+- from: Message
+  to: Conversation
+  type: belongs_to
+  via: conversation_id
+- from: Conversation
+  to: Response
+  type: has_many
+  via: response_id
+- from: Conversation
+  to: Message
+  type: has_many
+- from: File
+  to: User
+  type: has_many
+  via: permissions

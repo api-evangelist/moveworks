@@ -1,0 +1,36 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.moveworks.com/api-reference/errors + openapi/ 4xx/5xx responses
+format: custom
+envelope:
+  shape: '{"error": {"code": "ERROR_CODE_IDENTIFIER", "message": "Description of the error."}}'
+  note: Error codes are documented as stable and will not change. Not RFC 9457 problem+json.
+statuses:
+- status: 400
+  title: Bad Request
+  meaning: Malformed request, invalid parameters, or unsupported OAuth grant_type.
+  schemas: [ErrorBadRequest, OauthInvalidRequest, OauthUnsupportedGrantType]
+- status: 401
+  title: Unauthenticated
+  meaning: Missing/invalid credentials, invalid client, or an invalid/expired OAuth token.
+  schemas: [ErrorAuthentication, OauthInvalidClient, OauthErrorAuthenticationInvalidToken, OauthErrorAuthenticationExpiredToken]
+- status: 403
+  title: Unauthorized
+  meaning: Authenticated but not permitted for the requested resource or event.
+  schemas: [ErrorAuthorization]
+- status: 404
+  title: Not Found
+  meaning: Referenced resource (event, conversation, form, user) does not exist.
+  schemas: [SendMessageForEventRequestNotFoundError]
+- status: 429
+  title: Rate Limit Exceeded
+  meaning: API rate limit reached; contact support for limit increases.
+  schemas: [ErrorRateLimitExceeded]
+- status: 500
+  title: Internal Server Error
+  meaning: Unexpected server-side error.
+  schemas: [InternalServerError]
+notes: >-
+  Derived from OpenAPI response schemas across events-api, conversations-api,
+  data-api, forms-gateway and webhook-listeners; error body enum values are not
+  published in the docs beyond the stable {error:{code,message}} contract.

@@ -1,0 +1,30 @@
+generated: '2026-07-20'
+method: searched
+probe: true
+source: https://www.moveworks.com/us/en/platform/security
+url: https://www.moveworks.com/us/en/platform/security
+certifications:
+- SOC 2 Type 2
+- ISO 27001
+- ISO 27017
+- ISO 27018
+- ISO 27701
+- ISO 42001
+- CSA STAR Level 2
+- FedRAMP
+- GDPR
+- CCPA
+whistic_profile: Available on request via Account Executive or CSM
+evidence:
+- source: https://www.moveworks.com/us/en/platform/security
+  keywords:
+  - soc 2 type 2
+  - iso/iec 27001
+  - iso/iec 27017
+  - iso/iec 27018
+  - iso/iec 27701
+  - iso/iec 42001
+  - csa star level 2
+  - fedramp
+  - gdpr
+  - ccpa

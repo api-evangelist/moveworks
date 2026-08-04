@@ -1,0 +1,46 @@
+arazzo: 1.0.1
+info:
+  title: Moveworks — start an AI Assistant conversation and read the reply
+  version: 1.0.0
+  summary: Create a conversation, request a response, then list the resulting messages.
+sourceDescriptions:
+- name: conversations
+  url: ../openapi/moveworks-conversations-api-openapi.yaml
+  type: openapi
+workflows:
+- workflowId: converse-with-assistant
+  summary: Create a conversation, generate a response, and read the transcript.
+  inputs:
+    type: object
+    properties:
+      bearer_token: { type: string }
+      user_input: { type: string }
+  steps:
+  - stepId: create-conversation
+    operationId: create-conversation
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer {$inputs.bearer_token}"
+    outputs:
+      conversation_id: $response.body#/conversation_id
+  - stepId: create-response
+    operationId: create-response
+    parameters:
+    - name: conversation_id
+      in: path
+      value: $steps.create-conversation.outputs.conversation_id
+    - name: Authorization
+      in: header
+      value: "Bearer {$inputs.bearer_token}"
+    outputs:
+      response_id: $response.body#/response_id
+  - stepId: list-messages
+    operationId: list-conversation-messages
+    parameters:
+    - name: conversation_id
+      in: path
+      value: $steps.create-conversation.outputs.conversation_id
+    - name: Authorization
+      in: header
+      value: "Bearer {$inputs.bearer_token}"

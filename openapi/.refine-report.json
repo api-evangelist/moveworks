@@ -1,0 +1,30 @@
+{
+  "provider": "moveworks",
+  "sources": [
+    "moveworks-authentication-api-openapi.yml",
+    "moveworks-conversations-api-openapi.yml",
+    "moveworks-default-api-openapi.yml",
+    "moveworks-deprecated-api-openapi.yml",
+    "moveworks-events-api-openapi.yml",
+    "moveworks-messages-api-openapi.yml",
+    "moveworks-responses-api-openapi.yml",
+    "moveworks-smartforms-api-openapi.yml",
+    "moveworks-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "moveworks-authentication-api-openapi.yml",
+    "moveworks-conversations-api-openapi.yml",
+    "moveworks-default-api-openapi.yml",
+    "moveworks-deprecated-api-openapi.yml",
+    "moveworks-events-api-openapi.yml",
+    "moveworks-messages-api-openapi.yml",
+    "moveworks-responses-api-openapi.yml",
+    "moveworks-smartforms-api-openapi.yml",
+    "moveworks-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

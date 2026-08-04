@@ -1,0 +1,31 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.moveworks.com/api-reference + openapi/
+authentication:
+  style: HTTP Bearer token in Authorization header
+  oauth2: Client Credentials (POST /oauth/v1/token, grant_type=client_credentials)
+  api_key: Supported (X-API-KEY on Forms Gateway; Authorization header on Data API)
+  token_lifetime: Access tokens expire every 60 seconds; client_id/client_secret/API keys never expire
+  ref: authentication/moveworks-authentication.yml
+idempotency:
+  supported: false
+  note: No Idempotency-Key header documented or present in the OpenAPI specs.
+pagination:
+  style: cursor
+  request_params: [pageToken, pageSize, limit, offset]
+  response_fields: [next_page, cursor]
+  note: List endpoints (conversations, interactions, plugin-calls, users, files) use cursor-style pagination.
+versioning:
+  style: uri-path
+  values: [v1, v1beta1]
+  ref: lifecycle/moveworks-lifecycle.yml
+error_envelope:
+  shape: '{"error": {"code": "...", "message": "..."}}'
+  stable_codes: true
+  ref: errors/moveworks-error-codes.yml
+rate_limiting:
+  signaling: HTTP 429 Rate Limit Exceeded
+  note: Limits enforced for platform stability; contact support for increases.
+media_type: application/json
+regions:
+  style: Per-region base host (US/EU/CA/GovCloud/JP/UK)

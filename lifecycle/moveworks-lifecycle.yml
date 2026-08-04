@@ -1,0 +1,26 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.moveworks.com/api-reference + https://status.moveworks.com
+versioning:
+  scheme: uri-path
+  current: v1
+  channels:
+  - v1 (stable, e.g. /assistant/v1, /rest/v1, /export/v1/records)
+  - v1beta1 (beta Conversations API)
+  docs: https://docs.moveworks.com/api-reference/overview
+deprecation:
+  policy_url: https://docs.moveworks.com/api-reference/legacy-deprecated-ap-is
+  note: Legacy/deprecated APIs are documented; deprecated endpoints continue to work for existing integrations.
+status_page: https://status.moveworks.com
+status_platform: Atlassian Statuspage
+regions:
+- US Production (api.moveworks.ai)
+- EU (api.am-eu-central.moveworks.ai)
+- Canada (api.am-ca-central.moveworks.ai)
+- GovCloud/FedRAMP (api.moveworksgov.ai)
+- Japan (api.jp.moveworks.com)
+- UK (api.uk.moveworks.com)
+deprecated_operations:
+- openapi/moveworks-events-api-openapi.yaml#send-message
+- openapi/moveworks-beta-conversations-api-openapi.yaml (v1beta1 — superseded by /assistant/v1)
+release_notes: https://docs.moveworks.com/ai-assistant/getting-started/roadmap-release-notes/release-notes-2026

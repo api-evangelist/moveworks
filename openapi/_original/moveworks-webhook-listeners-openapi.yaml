@@ -1,0 +1,104 @@
+openapi: 3.1.0
+info:
+  title: Webhook Listeners
+  version: 1.0.0
+paths:
+  /webhooks/v1/listeners/{listener_id}/notify:
+    post:
+      operationId: send-a-webhook-to-a-webhook-listener
+      summary: Send a webhook to a webhook listener
+      description: Sends a webhook to a webhook listener. The listener must be defined in Agent Studio.
+      tags:
+        - webhooks
+      parameters:
+        - name: listener_id
+          in: path
+          description: The unique identifier of the webhook listener.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: Authorization
+          in: header
+          description: API Key in the form of a JWT Bearer token.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK. The event was received successfully by the listener.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhooks_sendAWebhookToAWebhookListener_Response_200'
+        '401':
+          description: Unauthorized. The request lacks valid authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendAWebhookToAWebhookListenerRequestUnauthorizedError'
+        '404':
+          description: Not Found. The specified listener_id does not exist. The response body is empty.
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        description: The arbitrary JSON payload to send to the webhook listener.
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                description: Any type
+servers:
+  - url: https://api.moveworks.ai
+    description: https://api.moveworks.ai
+  - url: https://api-demo.moveworks.ai
+    description: https://api-demo.moveworks.ai
+  - url: https://api.am-eu-central.moveworks.ai
+    description: https://api.am-eu-central.moveworks.ai
+  - url: https://api.am-ca-central.moveworks.ai
+    description: https://api.am-ca-central.moveworks.ai
+  - url: https://api.moveworksgov.ai
+    description: https://api.moveworksgov.ai
+  - url: https://api.jp.moveworks.com
+    description: https://api.jp.moveworks.com
+  - url: https://api.uk.moveworks.com
+    description: https://api.uk.moveworks.com
+  - url: https://api.prod4.us.moveworks.com
+    description: https://api.prod4.us.moveworks.com
+  - url: https://api.prod3.us.moveworks.com
+    description: https://api.prod3.us.moveworks.com
+components:
+  schemas:
+    Webhooks_sendAWebhookToAWebhookListener_Response_200:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A confirmation message.
+        status:
+          type: string
+          description: The status of the event receipt.
+      title: Webhooks_sendAWebhookToAWebhookListener_Response_200
+    WebhooksV1ListenersListenerIdNotifyPostResponsesContentApplicationJsonSchemaError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: Details about the authorization failure.
+      title: WebhooksV1ListenersListenerIdNotifyPostResponsesContentApplicationJsonSchemaError
+    SendAWebhookToAWebhookListenerRequestUnauthorizedError:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/WebhooksV1ListenersListenerIdNotifyPostResponsesContentApplicationJsonSchemaError'
+      title: SendAWebhookToAWebhookListenerRequestUnauthorizedError
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API Key in the form of a JWT Bearer token.

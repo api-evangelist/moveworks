@@ -1,0 +1,390 @@
+openapi: 3.1.0
+info:
+  title: Forms Gateway
+  version: 1.0.0
+paths:
+  /forms:
+    get:
+      operationId: list-forms
+      summary: List Forms
+      description: >-
+        Forms should be returned from this API in a deterministic order. Deterministic order is desired if we decide to
+        use pagination. Anticipated load – Moveworks will call this endpoint to iterate over all forms provided by this
+        endpoint once every 24 hours. This API is primarily used for ingestion.
+      tags:
+        - smartForms
+      parameters:
+        - name: offset
+          in: query
+          description: Given a deterministically ordered list of articles, skips this many forms before returning form records
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: limit
+          in: query
+          description: 'Number of forms to return in a single query. Recommended max: 100 records / request.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of forms
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Smart Forms_listForms_Response_200'
+  /forms/{formId}:
+    get:
+      operationId: get-form-by-id
+      summary: Get Form By ID
+      description: >-
+        Form with the requested ID should be returned from this API. Anticipated load – Moveworks may call this endpoint
+        a few times every 24 hours. This API is primarily for sanity checks and debugging. Since ingestion happens once
+        every 24 hours, we might want to verify if form submission failures are due to deviations between the local and
+        remote versions.
+      tags:
+        - smartForms
+      parameters:
+        - name: formId
+          in: path
+          description: ID of form to return
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single form
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+  /forms/{formId}/submit:
+    post:
+      operationId: submit-form
+      summary: Submit a Form
+      description: >-
+        This API is primarily used for transactional activity. Performance will be essential. The following example
+        assumes submission of the example form defined here. Anticipated load – Moveworks will call this endpoint every
+        time a user submits a form through our native skill. 
+      tags:
+        - smartForms
+      parameters:
+        - name: formId
+          in: path
+          description: ID of form to submit
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful form submission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmitFormResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                submitted_by:
+                  type: string
+                  description: System ID (usually the email address) of the user who submitted this form.
+                fields:
+                  $ref: '#/components/schemas/FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFields'
+                  description: >-
+                    This is a dictionary where they keys are the "field names" coming from the schema, and the value
+                    types are string, list of strings, and boolean. See the example.
+                form_metadata:
+                  $ref: '#/components/schemas/FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFormMetadata'
+              required:
+                - submitted_by
+servers:
+  - url: http://localhost:5000/myinstance1
+    description: http://localhost:5000/myinstance1
+components:
+  schemas:
+    FormDomain:
+      type: string
+      enum:
+        - IT
+        - HR
+      description: Specifies the domain the form belongs to.
+      title: FormDomain
+    FieldType:
+      type: string
+      enum:
+        - LABEL
+        - SINGLE_OPTION_PICKER
+        - MULTI_OPTION_PICKER
+        - SINGLE_USER_OPTION_PICKER
+        - MULTI_USER_OPTION_PICKER
+        - SINGLE_LINE_TEXT
+        - MULTI_LINE_TEXT
+        - CHECKBOX
+        - DATE_PICKER
+        - DATETIME_PICKER
+      description: The type of the field.
+      title: FieldType
+    Option:
+      type: object
+      properties:
+        label:
+          type: string
+          description: The display value for this option. This will be displayed to the end user.
+        value:
+          type: string
+          description: The response value for this option. This will be used as the field value during form submission.
+      required:
+        - label
+        - value
+      title: Option
+    Field:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Unique name for the field in the form. Will be used as the key (in a key-value pair) during form submission.
+        label:
+          type: string
+          description: Label for the field. This will be displayed to the end user.
+        placeholder:
+          type: string
+          description: Placeholder text to be shown in the field. This will be displayed to the end user.
+        help:
+          type: string
+          description: Tooltip (or additional help text) for the field. This will be displayed to the end user.
+        type:
+          $ref: '#/components/schemas/FieldType'
+          description: The type of the field.
+        default_to_current_user:
+          type: boolean
+          default: false
+          description: >-
+            For SINGLE_USER_OPTION_PICKER and MULTI_USER_OPTION_PICKER field types only. The value defaults (auto-fills)
+            to the end user filling the form.
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/Option'
+          description: For SINGLE_OPTION_PICKER and MULTI_OPTION_PICKER field types only.
+        required:
+          type: boolean
+          default: false
+          description: Conveys whether the field is mandatory during form submission.
+        visible:
+          type: boolean
+          default: true
+          description: Conveys whether the field is initially hidden when the form is displayed to the end user.
+      required:
+        - name
+        - label
+        - type
+      title: Field
+    RuleLogical:
+      type: string
+      enum:
+        - AND
+        - OR
+      description: The logical operator to use to combine the conditions
+      title: RuleLogical
+    ConditionOperator:
+      type: string
+      enum:
+        - EMPTY
+        - NOT_EMPTY
+        - IN
+        - NOT_IN
+        - EQUALS
+        - NOT_EQUALS
+      description: The operator to use to inspect the field_name's value.
+      title: ConditionOperator
+    ConditionValue:
+      oneOf:
+        - type: boolean
+        - type: string
+        - type: array
+          items:
+            type: string
+      description: >-
+        field_name's value will be compared against this value using the operator specified above. Note: When the
+        operator is EMPTY, NOT_EMPTY, this attribute need not be specified.
+      title: ConditionValue
+    Condition:
+      type: object
+      properties:
+        field_name:
+          type: string
+          description: Name of the field whose value needs to be inspected.
+        operator:
+          $ref: '#/components/schemas/ConditionOperator'
+          description: The operator to use to inspect the field_name's value.
+        value:
+          $ref: '#/components/schemas/ConditionValue'
+          description: >-
+            field_name's value will be compared against this value using the operator specified above. Note: When the
+            operator is EMPTY, NOT_EMPTY, this attribute need not be specified.
+      required:
+        - field_name
+        - operator
+      title: Condition
+    Action:
+      type: object
+      properties:
+        field_name:
+          type: string
+          description: Name of the target field to take action on.
+        visible:
+          type: boolean
+          description: Marks the target field as visible or hidden when the conditions are met.
+        required:
+          type: boolean
+          description: Marks the target field as required or optional when the conditions are met.
+      required:
+        - field_name
+        - visible
+        - required
+      title: Action
+    Rule:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Unique identifier for the rule within the form.
+        logical:
+          $ref: '#/components/schemas/RuleLogical'
+          description: The logical operator to use to combine the conditions
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Condition'
+          description: >-
+            Specifies the conditions that when met, will kick off actions. If the conditions go from met to unmet, the
+            actions will be reversed as well.
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+          description: Specifies the actions to be taken if the conditions are met.
+      required:
+        - name
+        - conditions
+        - actions
+      title: Rule
+    Form:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable unique identifier for the form.
+        image_url:
+          type: string
+          description: Publically accessible image URL for the form
+        domain:
+          $ref: '#/components/schemas/FormDomain'
+          description: Specifies the domain the form belongs to.
+        title:
+          type: string
+          description: Title of the form. This will be displayed to the end user.
+        description:
+          type: string
+          description: >-
+            A long description of the form’s purpose. This is used in our form search machine learning, and is also
+            displayed to the end user.
+        short_description:
+          type: string
+          description: >-
+            A short description of the form’s purpose. This is used in our form search machine learning, and is also
+            displayed to the end user.
+        url:
+          type: string
+          description: Self-service portal URL where the user can fill out the form if in-bot form filling is not supported.
+        last_updated_at:
+          type: string
+          description: Last updated date as a ISO-8601 UTC timestamp (e.g., 2021-10-20T17:28:52Z)
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field'
+          description: A list of fields that make up this form.
+        dynamic_field_rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rule'
+          description: A list of rules that specify dynamic form field behavior based on user response to other fields.
+      required:
+        - id
+        - domain
+        - title
+        - url
+        - last_updated_at
+      title: Form
+    Smart Forms_listForms_Response_200:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Form'
+      title: Smart Forms_listForms_Response_200
+    FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFields:
+      type: object
+      properties: {}
+      description: >-
+        This is a dictionary where they keys are the "field names" coming from the schema, and the value types are
+        string, list of strings, and boolean. See the example.
+      title: FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFields
+    FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFormMetadata:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the form being submitted
+        last_updated_at:
+          type: string
+          description: >-
+            Last updated date as a ISO-8601 UTC timestamp (e.g., 2021-10-20T17:28:52Z). Indicates the freshness of the
+            form.
+      required:
+        - name
+        - last_updated_at
+      title: FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFormMetadata
+    SubmitFormResponse:
+      type: object
+      properties:
+        ticket_id:
+          type: string
+          description: >-
+            The display ticket ID of the ticket that was created (if any). null value is allowed. If a valid ticket ID
+            is returned, Moveworks will be able to fetch/poll this ticket to provide updates to the user and to
+            accelerate resolution of their request.
+      title: SubmitFormResponse
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY

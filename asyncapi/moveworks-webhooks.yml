@@ -1,0 +1,24 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/moveworks-webhook-listeners-openapi.yaml + openapi/moveworks-events-api-openapi.yaml
+spec_type: Webhooks
+note: >-
+  Moveworks publishes no AsyncAPI document. Its event surface is (a) inbound
+  Webhook Listeners defined in Agent Studio that receive arbitrary JSON from
+  external systems, and (b) the Events API that pushes event-triggered messages
+  to employees. Captured here as a webhook/event catalog.
+webhooks:
+- name: webhook-listener-notify
+  direction: inbound
+  operation: openapi/moveworks-webhook-listeners-openapi.yaml#send-a-webhook-to-a-webhook-listener
+  endpoint: POST /webhooks/v1/listeners/{listener_id}/notify
+  auth: Bearer (JWT)
+  payload: arbitrary JSON, routed to a listener configured in Agent Studio
+  description: External systems POST events into a Moveworks webhook listener to trigger automations.
+- name: event-message-send
+  direction: outbound
+  operation: openapi/moveworks-events-api-openapi.yaml#send-message-for-event
+  endpoint: POST /rest/v1/events/{event_id}/messages/send
+  auth: Bearer (JWT / OAuth client-credentials token)
+  payload: message + recipients + context slots for an event defined in the Events Workspace
+  description: Trigger an event-driven message to employees across the chat platform.

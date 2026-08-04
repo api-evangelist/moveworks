@@ -1,0 +1,25 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.moveworks.com/ai-assistant/getting-started/roadmap-release-notes/release-notes-2026
+scheme: monthly-dated product release notes
+scope: platform (AI Assistant, Agent Studio, Enterprise Search, Service Management)
+archives:
+- '2026': https://docs.moveworks.com/ai-assistant/getting-started/roadmap-release-notes/release-notes-2026
+- '2025': https://docs.moveworks.com/ai-assistant/getting-started/roadmap-release-notes/release-notes-2025
+- '2024': https://docs.moveworks.com/ai-assistant/getting-started/roadmap-release-notes/release-notes-2024
+- '2023': https://docs.moveworks.com/ai-assistant/getting-started/roadmap-release-notes/release-notes-2023
+entries:
+- date: '2026-02'
+  highlights:
+  - 'Agent Studio: Optional Slots, File Slots, Content Activities, images in plugin responses'
+  - 'Agent Studio: Python Script Actions support'
+  - 'Agent Studio: LDAP Connector for on-prem LDAP/Active Directory'
+  - 'Agent Architect upgraded to Gemini 3.1'
+  - 'Moveworks Setup: API Playground upgrades; new wizard-based ticketing setup'
+- date: '2026-01'
+  highlights:
+  - 'Agent Studio: Architect Panel, Data Mapper for HTTP Actions, Initiative Designer, Data Bank'
+  - 'Agent Studio: stabilized ambient-agent conversational process execution; custom TTL in API Mocker'
+  - 'Enterprise Search: 10 new next-gen content connectors'
+  - 'AI Assistant: new UX branding; Live Agent improvements'
+notes: Recent window only; the dated release-notes pages are the source of truth.

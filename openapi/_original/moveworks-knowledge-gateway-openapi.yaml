@@ -1,0 +1,206 @@
+openapi: 3.1.0
+info:
+  title: Knowledge Gateway
+  version: 1.0.0
+paths:
+  /articles:
+    get:
+      operationId: list-articles
+      summary: List Articles
+      description: >-
+        <b>Description:</b> <br> The endpoint should return a list of articles in deterministic order. <br> We recommend
+        a rate limit of 10 req/sec for this endpoint.
+
+        <br> <br>
+         <b>Usage:</b>
+         <br>
+        Moveworks will call this endpoint to ingest articles every 4 hours.  <br> Ask your CSE if you wish to increase
+        or decrease the polling frequency.
+      tags:
+        - ''
+      parameters:
+        - name: pageToken
+          in: query
+          description: >-
+            `pageToken` is used to paginate query results. <br> If `pageToken` is not used in a request, the response
+            should default to the first page. <br> <br> The response should always include a `next_page_token` field.
+            <br> To obtain the next page of results, the client will use `next_page_token` as the value of `pageToken`
+            in the next request.
+
+                
+            When combining the filter parameter with the `pageToken` parameter, servers must ensure that the client uses
+            the appropriate `pageToken` value for the specified filter string. Failure to do so should result in the
+            server throwing an "INPUT_VALIDATION_FAILED".
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: >
+            `pageSize` defines the maximum number of articles to return in a single query.  <br> <br> Moveworks will
+            take a max of 1000 articles in a single response. However, the server can return less than 1000 if desired.
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: filter
+          in: query
+          description: >
+            Defines a filter expression that narrows down the returned set of items. It allows you to specify criteria,
+            such as numeric comparisons or string matching, to filter the items based on the values of their properties.
+
+
+            The filter parameter must include at least one valid Boolean expression. Each expression should consist of
+            an attribute name, followed by an attribute operator and a value. You have the flexibility to combine
+            multiple expressions using logical operators, and you can also group expressions together using parentheses
+            “()”.
+
+
+            Here are the available attribute operators and their descriptions:
+
+
+            - **`eq`** (equal): The attribute and operator values must be identical for a match.
+
+            - **`ne`** (not equal): The attribute and operator values are not identical.
+
+            - **`gt`** (greater than): If the attribute value is greater than the operator value, there is a match. The
+            actual comparison depends on the attribute type.
+
+            - **`lt`** (less than): If the attribute value is less than the operator value, there is a match. The actual
+            comparison depends on the attribute type.
+
+
+            The boolean operators available for combining expressions are:
+
+
+            - **`and`** (Logical AND): The filter is considered a match only if both expressions evaluate to true.
+
+            - **`or`** (Logical OR): The filter is considered a match if either of the expressions evaluates to true.
+
+
+            Parentheses **`()`** can be used to group boolean expressions and alter the standard order of operations. By
+            grouping expressions with parentheses, you can control how the logical OR operation is evaluated and
+            prioritize certain conditions over others. This allows for more flexibility and precision in constructing
+            complex boolean expressions.
+
+
+            Attribute names and attribute operators used in filters are case insensitive.  For example, the following
+            two expressions will evaluate to the same logical value:
+
+            filter=article.state Eq "ACTIVE"
+
+            filter=article.State eq "ACTIVE"
+
+
+            The evaluation of filters follows a standard order of operations. Attribute operators take precedence over
+            other operators, followed by the grouping operator (parentheses), then the logical AND operator, and finally
+            the logical OR operator.
+
+
+            If the requested filter operation is not recognised, providers must refuse to filter the results and return
+            an HTTP 400 error with an appropriate human readable response.
+
+
+            **Here are some examples of filter expressions:**
+
+            In the provided examples, we have utilised the suggested response structure as defined in the response
+            section. However, it's important to note that these expressions may differ if you opt for an alternative
+            response format or structure.
+
+
+            - filter=last_modified_at gt "2011-05-13T04:42:34Z"
+
+            - filter=article.state ne “INACTIVE” and last_modified_at gt "2011-05-13T04:42:34Z"
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |
+            List of articles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listArticles_Response_200'
+servers:
+  - url: http://localhost:5000/myinstance1
+    description: http://localhost:5000/myinstance1
+components:
+  schemas:
+    Article:
+      type: object
+      properties:
+        id:
+          type: string
+          description: >-
+            The id field is a unique identifier for each API response. It helps users to distinguish between different
+            articles or entities in the system. This ID can be used for referencing, updating, or deleting specific
+            articles. However Moveworks only fetches the articles without modifying them
+        title:
+          type: string
+          description: >-
+            The title field represents the title or headline of the article. It shoutld be a concise and descriptive
+            string that gives users an idea of what the article is about.
+        body:
+          type: string
+          description: >-
+            The body field contains the main content of the article. It includes the detailed information, text, or HTML
+            markup that constitutes the actual content of the article.
+        link:
+          type: string
+          description: >-
+            The link field typically provides a URL that users can follow to access the full article on a web page.
+            Moveworks gets the snippets from the articles and serves as an answer to the end users for full view users
+            can use this link to access the full article.
+        created_at:
+          type: string
+          format: timestamp
+          description: >-
+            The created at field denotes the date and time when the article was originally created or published. It
+            provides valuable information about the article's age and can be useful for sorting and filtering articles
+            based on their creation date. It needs to be in  ISO 8601 UTC.
+        updated_at:
+          type: string
+          format: timestamp
+          description: >-
+            The Updated at field denotes the date and time when the article was updated. It provides valuable
+            information about the article's age and can be useful for sorting and filtering articles based on their
+            updation date. If updated at is not present delta ingestion support will not be possible in future for
+            knowledge ingestion. It needs to be in  ISO 8601 UTC
+        created_by:
+          type: string
+          description: The Created by field captures the email address of the user who has created this article.
+        updated_by:
+          type: string
+          description: The Updated by field captures the email address of the last user who has updated this article
+      required:
+        - id
+        - title
+        - body
+        - link
+      title: Article
+    listArticles_Response_200:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Article'
+        next_page_token:
+          type: string
+          description: >-
+            The value provided serves as the starting point for fetching the next page of records. In the next call, use
+            this value as the pageToken parameter.
+      required:
+        - results
+      title: listArticles_Response_200
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

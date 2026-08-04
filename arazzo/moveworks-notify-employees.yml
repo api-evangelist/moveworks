@@ -1,0 +1,53 @@
+arazzo: 1.0.1
+info:
+  title: Moveworks — authenticate and notify employees for an event
+  version: 1.0.0
+  summary: Mint an OAuth client-credentials token, verify it, then send an event-triggered message to employees.
+sourceDescriptions:
+- name: events
+  url: ../openapi/moveworks-events-api-openapi.yaml
+  type: openapi
+workflows:
+- workflowId: notify-employees-for-event
+  summary: Get a token and send a message for an event to a list of recipients.
+  inputs:
+    type: object
+    properties:
+      client_id: { type: string }
+      client_secret: { type: string }
+      event_id: { type: string }
+      message: { type: string }
+      recipients: { type: array, items: { type: string } }
+  steps:
+  - stepId: get-token
+    operationId: create-o-auth-token
+    requestBody:
+      contentType: application/json
+      payload:
+        client_id: $inputs.client_id
+        client_secret: $inputs.client_secret
+        grant_type: client_credentials
+    outputs:
+      access_token: $response.body#/data/access_token
+  - stepId: test-auth
+    operationId: test-auth
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer {$steps.get-token.outputs.access_token}"
+  - stepId: send-event-message
+    operationId: send-message-for-event
+    parameters:
+    - name: event_id
+      in: path
+      value: $inputs.event_id
+    - name: Authorization
+      in: header
+      value: "Bearer {$steps.get-token.outputs.access_token}"
+    requestBody:
+      contentType: application/json
+      payload:
+        message: $inputs.message
+        recipients: $inputs.recipients
+    outputs:
+      status: $response.body#/data/status

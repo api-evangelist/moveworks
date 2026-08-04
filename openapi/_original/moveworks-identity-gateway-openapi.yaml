@@ -1,0 +1,315 @@
+openapi: 3.1.0
+info:
+  title: Identity Gateway
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      operationId: list-users
+      summary: List Users
+      description: >-
+        List of users should be returned from this API in a deterministic order. Deterministic order is desired if we
+        decide to use pagination.
+
+        Anticipated load – Moveworks will call this endpoint to ingest users, polling would be as frequent as every 4
+        hours, could be even more aggressive in extenuating circumstances and it could be as seldom as 2 weeks. We
+        recommend a rate limit of 10 req/sec for this endpoint.
+      tags:
+        - ''
+      parameters:
+        - name: pageToken
+          in: query
+          description: >-
+            Used to paginate query results, determining starting point for the next page of records retrieval. When a
+            query operation returns a large number of results surpassing the specified page size, the gateway is
+            expected to restrict the response size to the provided page size. It should automatically include a
+            "next_page_token" field in the response. To obtain the subsequent page of results, the client will employ
+            the "pageToken" and set it to the value of the "next_page_token" in the following request. This approach
+            facilitates the efficient retrieval of large result sets through multiple paginated requests. Since this
+            parameter value becomes available starting from the second call, it will be omitted during the initial call
+            to retrieve records.
+                
+            When combining the filter parameter with the pageToken parameter, servers must ensure that the client uses
+            the appropriate pageToken value for the specified filter string. Failure to do so should result in the
+            server throwing an "INPUT_VALIDATION_FAILED".
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: |
+            Maximum number of users to return in a single query. Defaults to 1000.
+
+            Note: Server is free to return less number of users.
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: filter
+          in: query
+          description: >
+            Defines a filter expression that narrows down the returned set of items. It allows you to specify criteria,
+            such as numeric comparisons or string matching, to filter the items based on the values of their properties.
+
+
+            The filter parameter must include at least one valid Boolean expression. Each expression should consist of
+            an attribute name, followed by an attribute operator and a value. You have the flexibility to combine
+            multiple expressions using logical operators, and you can also group expressions together using parentheses
+            “()”.
+
+
+            Here are the available attribute operators and their descriptions:
+
+
+            - **`eq`** (equal): The attribute and operator values must be identical for a match.
+
+            - **`ne`** (not equal): The attribute and operator values are not identical.
+
+            - **`gt`** (greater than): If the attribute value is greater than the operator value, there is a match. The
+            actual comparison depends on the attribute type.
+
+            - **`lt`** (less than): If the attribute value is less than the operator value, there is a match. The actual
+            comparison depends on the attribute type.
+
+
+            The boolean operators available for combining expressions are:
+
+
+            - **`and`** (Logical AND): The filter is considered a match only if both expressions evaluate to true.
+
+            - **`or`** (Logical OR): The filter is considered a match if either of the expressions evaluates to true.
+
+
+            Parentheses **`()`** can be used to group boolean expressions and alter the standard order of operations. By
+            grouping expressions with parentheses, you can control how the logical OR operation is evaluated and
+            prioritize certain conditions over others. This allows for more flexibility and precision in constructing
+            complex boolean expressions.
+
+
+            Attribute names and attribute operators used in filters are case insensitive.  For example, the following
+            two expressions will evaluate to the same logical value:
+
+            filter=user.state Eq "ACTIVE"
+
+            filter=user.STate eq "ACTIVE"
+
+
+            The evaluation of filters follows a standard order of operations. Attribute operators take precedence over
+            other operators, followed by the grouping operator (parentheses), then the logical AND operator, and finally
+            the logical OR operator.
+
+
+            If the requested filter operation is not recognised, providers must refuse to filter the results and return
+            an HTTP 400 error with an appropriate human readable response.
+
+
+            **Here are some examples of filter expressions:**
+
+            In the provided examples, we have utilised the suggested response structure as defined in the response
+            section. However, it's important to note that these expressions may differ if you opt for an alternative
+            response format or structure.
+
+
+            - filter=last_modified_at gt "2011-05-13T04:42:34Z"
+
+            - filter=user.state ne “INACTIVE” and last_modified_at gt "2011-05-13T04:42:34Z"
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |
+            List of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listUsers_Response_200'
+  /users/{userId}:
+    get:
+      operationId: get-user-by-id
+      summary: Get User By ID
+      description: Returns user details given their userId. We recommend a rate limit of 5 req/sec for this endpoint.
+      tags:
+        - ''
+      parameters:
+        - name: userId
+          in: path
+          description: ID of user to fetch details for
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+servers:
+  - url: http://localhost:5000/myinstance1
+    description: http://localhost:5000/myinstance1
+components:
+  schemas:
+    UserUserState:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+      description: Specifies the state of the user
+      title: UserUserState
+    UserUserWorkStatus:
+      type: string
+      enum:
+        - UNKNOWN_WORK_STATUS
+        - CONTINGENT
+        - INTERN
+        - FULL_TIME
+      description: Employement type of the user
+      title: UserUserWorkStatus
+    UserUserEmploymentInfoEmploymentLocation:
+      type: object
+      properties:
+        location:
+          type: string
+          description: Specifies the location of the office
+        office:
+          type: string
+          description: Denotes the name of the office
+        country_code:
+          type: string
+          description: Specifies the country code of the employee in E.164 format
+        region:
+          type: string
+          description: The geographical region to which the office is assigned
+        timezone:
+          type: string
+          description: Indicates the time zone in which the office is located
+      title: UserUserEmploymentInfoEmploymentLocation
+    UserUserEmploymentInfo:
+      type: object
+      properties:
+        employee_start_date_ts:
+          type: string
+          format: timestamp
+          description: Joining date of the employee in in ISO-8601 UTC.
+        role:
+          type: string
+          description: Role of the user in the organisation
+        manager_email:
+          type: string
+          format: email
+          description: Email address of the manager of the user
+        cost_center_id:
+          type: string
+          description: Cost center id for the user
+        cost_center_name:
+          type: string
+          description: Cost center name for the user
+        department:
+          type: string
+          description: Specifies the department the user belongs to
+        office_phone_number:
+          type: string
+          description: Specifies the office phone number of the user
+        assistant_full_name:
+          type: string
+          description: Assistant's full name of the user
+        employment_location:
+          $ref: '#/components/schemas/UserUserEmploymentInfoEmploymentLocation'
+      title: UserUserEmploymentInfo
+    UserUser:
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/UserUserState'
+          description: Specifies the state of the user
+        universal_identifier:
+          type: string
+          description: >-
+            Unique identifier of the user. This field should always be populated. It will be used to uniquely identify a
+            user across different systems.
+        email_addr:
+          type: string
+          format: email
+          description: Email address of the user
+        first_name:
+          type: string
+          description: First name of the user
+        last_name:
+          type: string
+          description: Last name of the user
+        full_name:
+          type: string
+          description: Full name of the user
+        work_status:
+          $ref: '#/components/schemas/UserUserWorkStatus'
+          description: Employement type of the user
+        employment_info:
+          $ref: '#/components/schemas/UserUserEmploymentInfo'
+      required:
+        - state
+        - universal_identifier
+      title: UserUser
+    UserSystemIdentity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: >-
+            Refers to the unique identifier assigned to the user in the identity gateway. This is usually primary key of
+            the external system
+        username:
+          type: string
+          description: Refers to the username of the user in the identity system. This is usually lookup key of the external system
+      required:
+        - id
+      title: UserSystemIdentity
+    User:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserUser'
+        system_identity:
+          $ref: '#/components/schemas/UserSystemIdentity'
+        last_updated_at:
+          type: string
+          format: timestamp
+          description: >-
+            Represents the timestamp indicating the most recent modification or update made to the user's information
+            (in ISO-8601 UTC)
+      required:
+        - user
+        - system_identity
+        - last_updated_at
+      title: User
+    listUsers_Response_200:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        next_page_token:
+          type: string
+          description: >-
+            The value provided serves as the starting point for fetching the next page of records. In the next call, use
+            this value as the pageToken parameter.
+      required:
+        - results
+      title: listUsers_Response_200
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

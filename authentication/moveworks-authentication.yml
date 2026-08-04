@@ -1,0 +1,39 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/moveworks-beta-conversations-api-openapi.yaml, openapi/moveworks-conversations-api-openapi.yaml,
+  openapi/moveworks-data-api-openapi.yaml, openapi/moveworks-events-api-openapi.yaml, openapi/moveworks-forms-gateway-openapi.yaml,
+  openapi/moveworks-identity-gateway-openapi.yaml, openapi/moveworks-knowledge-gateway-openapi.yaml,
+  openapi/moveworks-webhook-listeners-openapi.yaml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  description: JWT bearer token authentication. Obtain an access token from the Moveworks auth
+    endpoint and include it in the Authorization header as 'Bearer <token>'.
+  sources:
+  - openapi/moveworks-beta-conversations-api-openapi.yaml
+  - openapi/moveworks-conversations-api-openapi.yaml
+  - openapi/moveworks-data-api-openapi.yaml
+  - openapi/moveworks-events-api-openapi.yaml
+  - openapi/moveworks-forms-gateway-openapi.yaml
+  - openapi/moveworks-identity-gateway-openapi.yaml
+  - openapi/moveworks-knowledge-gateway-openapi.yaml
+  - openapi/moveworks-webhook-listeners-openapi.yaml
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  sources:
+  - openapi/moveworks-data-api-openapi.yaml
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-API-KEY
+  sources:
+  - openapi/moveworks-forms-gateway-openapi.yaml
