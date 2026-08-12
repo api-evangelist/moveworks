@@ -170,16 +170,16 @@ common:
 # --- gateway specs (customer-hosted) ---
 - type: OpenAPI
   name: Content Gateway
-  url: openapi/moveworks-content-gateway-openapi.yaml
+  url: openapi/_original/moveworks-content-gateway-openapi.yaml
 - type: OpenAPI
   name: Identity Gateway
-  url: openapi/moveworks-identity-gateway-openapi.yaml
+  url: openapi/_original/moveworks-identity-gateway-openapi.yaml
 - type: OpenAPI
   name: Knowledge Gateway
-  url: openapi/moveworks-knowledge-gateway-openapi.yaml
+  url: openapi/_original/moveworks-knowledge-gateway-openapi.yaml
 - type: OpenAPI
   name: Forms Gateway
-  url: openapi/moveworks-forms-gateway-openapi.yaml
+  url: openapi/_original/moveworks-forms-gateway-openapi.yaml
 - type: Overlay
   name: Content Gateway Overlay
   url: overlays/moveworks-content-gateway-overlay.yaml
