@@ -1,0 +1,103 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "(Beta) Conversations authentication smartForms API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "smartForms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/forms",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Given a deterministically ordered list of articles, skips this many forms before returning form records"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of forms to return in a single query. Recommended max: 100 records / request."
+              }
+            ]
+          },
+          "docs": "Forms should be returned from this API in a deterministic order. Deterministic order is desired if we decide to use pagination. Anticipated load – Moveworks will call this endpoint to iterate over all forms provided by this endpoint once every 24 hours. This API is primarily used for ingestion."
+        },
+        {
+          "info": {
+            "name": "Get Form By ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/forms/:formId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "formId",
+                "value": "",
+                "type": "path",
+                "description": "ID of form to return"
+              }
+            ]
+          },
+          "docs": "Form with the requested ID should be returned from this API. Anticipated load – Moveworks may call this endpoint a few times every 24 hours. This API is primarily for sanity checks and debugging. Since ingestion happens once every 24 hours, we might want to verify if form submission failures are due to deviations between the local and remote versions."
+        },
+        {
+          "info": {
+            "name": "Submit a Form",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.moveworks.ai/rest/v1beta1/forms/:formId/submit",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "formId",
+                "value": "",
+                "type": "path",
+                "description": "ID of form to submit"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This API is primarily used for transactional activity. Performance will be essential. The following example assumes submission of the example form defined here. Anticipated load – Moveworks will call this endpoint every time a user submits a form through our native skill. "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

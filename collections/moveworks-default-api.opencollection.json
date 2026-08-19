@@ -1,0 +1,573 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "(Beta) Conversations authentication  API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/files",
+            "params": [
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter content items by a condition."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select which properties to include in the response for the content items."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order content items by specific fields."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Specify the number of content results to return."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first n content results."
+              }
+            ]
+          },
+          "docs": "Retrieve files in a specific node, providing features like querying, filtering, and detailed navigational information including parent folder details and direct download URLs.\n"
+        },
+        {
+          "info": {
+            "name": "Get file metadata and HTML content body",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/files/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves metadata and content for a specific file. When the content type is HTML (mime_type: text/html), this endpoint returns the actual HTML content in the response body. For other file types, it provides download path information.\n"
+        },
+        {
+          "info": {
+            "name": "Download file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/files/:id/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves and downloads the entire media file based on the specified file ID.\n\nThe response body is the raw binary content of the file. Treat the response body as a byte stream and write it directly to disk or pass it to a file handler.\n\nThe `Content-Type` response header indicates the MIME type of the file (e.g. `application/pdf`, `text/html`). Use this to determine how to handle or display the file.\n\nThe `Checksum-SHA256` response header provides a SHA-256 hash of the file contents. Verify thi"
+        },
+        {
+          "info": {
+            "name": "List users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/users",
+            "params": [
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return per page (default pagination)"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip (default pagination offset)"
+              },
+              {
+                "name": "$skiptoken",
+                "value": "",
+                "type": "query",
+                "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of users using OData parameters."
+        },
+        {
+          "info": {
+            "name": "List groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/groups",
+            "params": [
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return per page (default pagination)"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip (default pagination offset)"
+              },
+              {
+                "name": "$skiptoken",
+                "value": "",
+                "type": "query",
+                "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of groups using OData parameters."
+        },
+        {
+          "info": {
+            "name": "List group members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/groups/:groupId/members",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return per page (default pagination)"
+              },
+              {
+                "name": "$skiptoken",
+                "value": "",
+                "type": "query",
+                "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List direct members (users or groups) of a group. No recursion supported."
+        },
+        {
+          "info": {
+            "name": "Get permission model metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/files/permissions/metadata"
+          },
+          "docs": "Returns the current permission evaluation model. NOTE: `resource_permissions` is the only supported model at this time."
+        },
+        {
+          "info": {
+            "name": "Get content permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/files/:id/permissions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return per page (default pagination)"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip (default pagination offset)"
+              },
+              {
+                "name": "$skiptoken",
+                "value": "",
+                "type": "query",
+                "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns all user/group permissions on content. If permission model is 'hierarchy_permission', then `permissions_hierarchy` must be provided in the response."
+        },
+        {
+          "info": {
+            "name": "List conversations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/conversations",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "This option allows the client to filter the resource that is address by request URL"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "This option allow the client to request a limited set of properties of an entity"
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "This option allow the client to request resources in either ascending or descending order"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "This option request the number of items to be included in the result"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "This option allows clients to request a count of the matching resources included with the resources in the result"
+              }
+            ]
+          },
+          "docs": "Retrieve all conversations occurring with the Moveworks AI Assistant."
+        },
+        {
+          "info": {
+            "name": "List interactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/interactions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "This option allows the client to filter the resource that is address by request URL"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "This option allow the client to request a limited set of properties of an entity"
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "This option allow the client to request resources in either ascending or descending order"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "This option request the number of items to be included in the result"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "This option allows clients to request a count of the matching resources included with the resources in the result"
+              }
+            ]
+          },
+          "docs": "Retrieve all interactions occurring with the Moveworks AI Assistant."
+        },
+        {
+          "info": {
+            "name": "List plugins calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/plugin-calls",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "This option allows the client to filter the resource that is address by request URL"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "This option allow the client to request a limited set of properties of an entity"
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "This option allow the client to request resources in either ascending or descending order"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "This option request the number of items to be included in the result"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "This option allows clients to request a count of the matching resources included with the resources in the result"
+              }
+            ]
+          },
+          "docs": "Retrieve all plugins that were called by the Moveworks AI Assistant during an interaction."
+        },
+        {
+          "info": {
+            "name": "List Plugin Resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/plugin-resources",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "This option allows the client to filter the resource that is address by request URL"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "This option allow the client to request a limited set of properties of an entity"
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "This option allow the client to request resources in either ascending or descending order"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "This option request the number of items to be included in the result"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "This option allows clients to request a count of the matching resources included with the resources in the result"
+              }
+            ]
+          },
+          "docs": "Retrieve all resources used by AI Assistant during an interaction."
+        },
+        {
+          "info": {
+            "name": "Get User By ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/users/:userId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "ID of user to fetch details for"
+              }
+            ]
+          },
+          "docs": "Returns user details given their userId. We recommend a rate limit of 5 req/sec for this endpoint."
+        },
+        {
+          "info": {
+            "name": "List Articles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/articles",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "`pageToken` is used to paginate query results. <br> If `pageToken` is not used in a request, the response should default to the first page. <br> <br> The response should always include a `next_page_token` field. <br> To obtain the next page of results, the client will use `next_page_token` as the value of `pageToken` in the next request.\n\n    \nWhen combining the filter parameter with the `pageToken` parameter, servers must ensure that the client uses the appropriate `pageToken` value for the specified filter string. Failure to do so should result in the server throwing an \"INPUT_VALIDATION_FAILED\"."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "`pageSize` defines the maximum number of articles to return in a single query.  <br> <br> Moveworks will take a max of 1000 articles in a single response. However, the server can return less than 1000 if desired.\n"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Defines a filter expression that narrows down the returned set of items. It allows you to specify criteria, such as numeric comparisons or string matching, to filter the items based on the values of their properties.\n\nThe filter parameter must include at least one valid Boolean expression. Each expression should consist of an attribute name, followed by an attribute operator and a value. You have the flexibility to combine multiple expressions using logical operators, and you can also group expressions together using parentheses “()”.\n\nHere are the available attribute operators and their descriptions:\n\n- **`eq`** (equal): The attribute and operator values must be identical for a match.\n- **`ne`** (not equal): The attribute and operator values are not identical.\n- **`gt`** (greater than): If the attribute value is greater than the operator value, there is a match. The actual comparison depends on the attribute type.\n- **`lt`** (less than): If the attribute value is less than the operator value, there is a match. The actual comparison depends on the attribute type.\n\nThe boolean operators available for combining expressions are:\n\n- **`and`** (Logical AND): The filter is considered a match only if both expressions evaluate to true.\n- **`or`** (Logical OR): The filter is considered a match if either of the expressions evaluates to true.\n\nParentheses **`()`** can be used to group boolean expressions and alter the standard order of operations. By grouping expressions with parentheses, you can control how the logical OR operation is evaluated and prioritize certain conditions over others. This allows for more flexibility and precision in constructing complex boolean expressions.\n\nAttribute names and attribute operators used in filters are case insensitive.  For example, the following two expressions will evaluate to the same logical value:\nfilter=article.state Eq \"ACTIVE\"\nfilter=article.State eq \"ACTIVE\"\n\nThe evaluation of filters follows a standard order of operations. Attribute operators take precedence over other operators, followed by the grouping operator (parentheses), then the logical AND operator, and finally the logical OR operator.\n\nIf the requested filter operation is not recognised, providers must refuse to filter the results and return an HTTP 400 error with an appropriate human readable response.\n\n**Here are some examples of filter expressions:**\nIn the provided examples, we have utilised the suggested response structure as defined in the response section. However, it's important to note that these expressions may differ if you opt for an alternative response format or structure.\n\n- filter=last_modified_at gt \"2011-05-13T04:42:34Z\"\n- filter=article.state ne “INACTIVE” and last_modified_at gt \"2011-05-13T04:42:34Z\"\n"
+              }
+            ]
+          },
+          "docs": "<b>Description:</b> <br> The endpoint should return a list of articles in deterministic order. <br> We recommend a rate limit of 10 req/sec for this endpoint.\n<br> <br>\n <b>Usage:</b>\n <br>\nMoveworks will call this endpoint to ingest articles every 4 hours.  <br> Ask your CSE if you wish to increase or decrease the polling frequency."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

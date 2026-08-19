@@ -1,0 +1,341 @@
+{
+  "item": [
+    {
+      "id": "4fd1d2be-4597-49d4-aae5-c1d626493e8f",
+      "name": "smartForms",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8be67038-90c9-4d02-9864-2e9330a3c72f",
+          "name": "List Forms",
+          "request": {
+            "name": "List Forms",
+            "description": {
+              "content": "Forms should be returned from this API in a deterministic order. Deterministic order is desired if we decide to use pagination. Anticipated load – Moveworks will call this endpoint to iterate over all forms provided by this endpoint once every 24 hours. This API is primarily used for ingestion.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "forms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<long>",
+                  "description": "(Required) Given a deterministically ordered list of articles, skips this many forms before returning form records"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<long>",
+                  "description": "(Required) Number of forms to return in a single query. Recommended max: 100 records / request."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "19fe63f1-3ee8-4efd-aba9-a3bcac03f59d",
+              "name": "List of forms",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"domain\": \"IT\",\n      \"title\": \"string\",\n      \"url\": \"string\",\n      \"last_updated_at\": \"string\",\n      \"image_url\": \"string\",\n      \"description\": \"string\",\n      \"short_description\": \"string\",\n      \"fields\": [\n        {\n          \"name\": \"string\",\n          \"label\": \"string\",\n          \"type\": \"CHECKBOX\",\n          \"placeholder\": \"string\",\n          \"help\": \"string\",\n          \"default_to_current_user\": false,\n          \"options\": [\n            {\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"required\": false,\n          \"visible\": true\n        },\n        {\n          \"name\": \"string\",\n          \"label\": \"string\",\n          \"type\": \"CHECKBOX\",\n          \"placeholder\": \"string\",\n          \"help\": \"string\",\n          \"default_to_current_user\": false,\n          \"options\": [\n            {\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"required\": false,\n          \"visible\": true\n        }\n      ],\n      \"dynamic_field_rules\": [\n        {\n          \"name\": \"string\",\n          \"conditions\": [\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"actions\": [\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"logical\": \"AND\"\n        },\n        {\n          \"name\": \"string\",\n          \"conditions\": [\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"actions\": [\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"logical\": \"OR\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"domain\": \"IT\",\n      \"title\": \"string\",\n      \"url\": \"string\",\n      \"last_updated_at\": \"string\",\n      \"image_url\": \"string\",\n      \"description\": \"string\",\n      \"short_description\": \"string\",\n      \"fields\": [\n        {\n          \"name\": \"string\",\n          \"label\": \"string\",\n          \"type\": \"SINGLE_OPTION_PICKER\",\n          \"placeholder\": \"string\",\n          \"help\": \"string\",\n          \"default_to_current_user\": false,\n          \"options\": [\n            {\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"required\": false,\n          \"visible\": true\n        },\n        {\n          \"name\": \"string\",\n          \"label\": \"string\",\n          \"type\": \"MULTI_USER_OPTION_PICKER\",\n          \"placeholder\": \"string\",\n          \"help\": \"string\",\n          \"default_to_current_user\": false,\n          \"options\": [\n            {\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"required\": false,\n          \"visible\": true\n        }\n      ],\n      \"dynamic_field_rules\": [\n        {\n          \"name\": \"string\",\n          \"conditions\": [\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"actions\": [\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"logical\": \"OR\"\n        },\n        {\n          \"name\": \"string\",\n          \"conditions\": [\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"operator\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"actions\": [\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"field_name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"visible\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"logical\": \"AND\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "509a96e2-ba54-494e-94e6-03cde6cae935",
+          "name": "Get Form By ID",
+          "request": {
+            "name": "Get Form By ID",
+            "description": {
+              "content": "Form with the requested ID should be returned from this API. Anticipated load – Moveworks may call this endpoint a few times every 24 hours. This API is primarily for sanity checks and debugging. Since ingestion happens once every 24 hours, we might want to verify if form submission failures are due to deviations between the local and remote versions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "forms",
+                ":formId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "formId",
+                  "description": "(Required) ID of form to return"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b35e388a-4897-4f1b-a032-7ea7a6120b70",
+              "name": "A single form",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    ":formId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "formId",
+                      "description": "(Required) ID of form to return"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"domain\": \"IT\",\n  \"title\": \"string\",\n  \"url\": \"string\",\n  \"last_updated_at\": \"string\",\n  \"image_url\": \"string\",\n  \"description\": \"string\",\n  \"short_description\": \"string\",\n  \"fields\": [\n    {\n      \"name\": \"string\",\n      \"label\": \"string\",\n      \"type\": \"DATETIME_PICKER\",\n      \"placeholder\": \"string\",\n      \"help\": \"string\",\n      \"default_to_current_user\": false,\n      \"options\": [\n        {\n          \"label\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"label\": \"string\",\n          \"value\": \"string\"\n        }\n      ],\n      \"required\": false,\n      \"visible\": true\n    },\n    {\n      \"name\": \"string\",\n      \"label\": \"string\",\n      \"type\": \"CHECKBOX\",\n      \"placeholder\": \"string\",\n      \"help\": \"string\",\n      \"default_to_current_user\": false,\n      \"options\": [\n        {\n          \"label\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"label\": \"string\",\n          \"value\": \"string\"\n        }\n      ],\n      \"required\": false,\n      \"visible\": true\n    }\n  ],\n  \"dynamic_field_rules\": [\n    {\n      \"name\": \"string\",\n      \"conditions\": [\n        {\n          \"field_name\": \"string\",\n          \"operator\": \"NOT_EQUALS\",\n          \"value\": true\n        },\n        {\n          \"field_name\": \"string\",\n          \"operator\": \"NOT_EQUALS\",\n          \"value\": false\n        }\n      ],\n      \"actions\": [\n        {\n          \"field_name\": \"string\",\n          \"visible\": true,\n          \"required\": true\n        },\n        {\n          \"field_name\": \"string\",\n          \"visible\": true,\n          \"required\": false\n        }\n      ],\n      \"logical\": \"OR\"\n    },\n    {\n      \"name\": \"string\",\n      \"conditions\": [\n        {\n          \"field_name\": \"string\",\n          \"operator\": \"IN\",\n          \"value\": false\n        },\n        {\n          \"field_name\": \"string\",\n          \"operator\": \"NOT_EQUALS\",\n          \"value\": false\n        }\n      ],\n      \"actions\": [\n        {\n          \"field_name\": \"string\",\n          \"visible\": false,\n          \"required\": false\n        },\n        {\n          \"field_name\": \"string\",\n          \"visible\": false,\n          \"required\": true\n        }\n      ],\n      \"logical\": \"AND\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "151786ae-a279-4b8b-99c6-6742964963b9",
+          "name": "Submit a Form",
+          "request": {
+            "name": "Submit a Form",
+            "description": {
+              "content": "This API is primarily used for transactional activity. Performance will be essential. The following example assumes submission of the example form defined here. Anticipated load – Moveworks will call this endpoint every time a user submits a form through our native skill. ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "forms",
+                ":formId",
+                "submit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "formId",
+                  "description": "(Required) ID of form to submit"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"submitted_by\": \"<string>\",\n  \"fields\": {},\n  \"form_metadata\": {\n    \"name\": \"<string>\",\n    \"last_updated_at\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e9a14d87-478d-4fa8-a682-3b3eefc8e7b8",
+              "name": "Successful form submission",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    ":formId",
+                    "submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "formId",
+                      "description": "(Required) ID of form to submit"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"submitted_by\": \"<string>\",\n  \"fields\": {},\n  \"form_metadata\": {\n    \"name\": \"string\",\n    \"last_updated_at\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ticket_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.moveworks.ai/rest/v1beta1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8aae3281-5ada-490d-ba91-24bcf1ce6d3f",
+    "name": "(Beta) Conversations authentication smartForms API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

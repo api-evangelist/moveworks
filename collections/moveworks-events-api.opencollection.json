@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "(Beta) Conversations authentication events API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a message for an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.moveworks.ai/rest/v1beta1/rest/v1/events/:event_id/messages/send",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "event_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the event to notify for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a message to a list of recipients for an event. The event must be defined in the Events Workspace.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

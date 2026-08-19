@@ -1,0 +1,139 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "(Beta) Conversations authentication messages API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List conversation messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/conversations/:conversation_id/messages",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Assistant-Name",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "A base-62 identifier prefixed by a short resource type"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of messages to return (1-100)"
+              }
+            ]
+          },
+          "docs": "Retrieves all messages (both user and assistant) in a conversation in descending order by creation time (most recent first)."
+        },
+        {
+          "info": {
+            "name": "List response messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/conversations/:conversation_id/responses/:response_id/messages",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Assistant-Name",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "A base-62 identifier prefixed by a short resource type"
+              },
+              {
+                "name": "response_id",
+                "value": "",
+                "type": "path",
+                "description": "A base-62 identifier prefixed by a short resource type"
+              }
+            ]
+          },
+          "docs": "Retrieves all messages associated with a specific response (both the user's input message and all assistant reply messages)."
+        },
+        {
+          "info": {
+            "name": "Submit feedback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.moveworks.ai/rest/v1beta1/conversations/:conversation_id/responses/:response_id/messages/:message_id/feedback",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Assistant-Name",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "A base-62 identifier prefixed by a short resource type"
+              },
+              {
+                "name": "response_id",
+                "value": "",
+                "type": "path",
+                "description": "A base-62 identifier prefixed by a short resource type"
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path",
+                "description": "A base-62 identifier prefixed by a short resource type"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a feedback rating (helpful or unhelpful) for a specific assistant message.\n\nUse the `callback_id` from the message's `feedback` field to indicate which rating is being submitted. The `callback_id` is an opaque token. Pass it back exactly as received.\n\nOptionally include `additional_feedback` for free-text comments."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

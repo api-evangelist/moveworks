@@ -6,23 +6,25 @@ servers:
 - name: Moveworks Docs MCP
   transport: http
   url: https://docs.moveworks.com/_mcp/server
-  description: >-
-    Hosted MCP server exposing the Moveworks developer documentation to AI
-    clients (Claude Code, Cursor, etc.) for search and retrieval over the docs
-    corpus. Advertised in docs llms.txt.
+  description: Hosted MCP server exposing the Moveworks developer documentation to AI clients (Claude
+    Code, Cursor, etc.) for search and retrieval over the docs corpus. Advertised in docs llms.txt.
 - name: Moveworks Help MCP
   transport: http
   url: https://help.moveworks.com/_mcp/server
-  description: >-
-    Hosted MCP server over the Moveworks help/support documentation.
+  description: Hosted MCP server over the Moveworks help/support documentation.
 - name: Moveworks Marketplace MCP Plugin
   transport: http
   url: https://marketplace.moveworks.com/
-  description: >-
-    Moveworks publishes an MCP Plugin on the AI Agent Marketplace; the
-    Moveworks-MCP-Proxy-Client (github.com/moveworks/Moveworks-MCP-Proxy-Client)
-    is the reference proxy client for connecting an AI agent to it.
-notes: >-
-  These are documentation/marketplace MCP surfaces, not a full MCP wrapper of
-  the REST APIs (Events/Conversations/Data). A candidate REST-API MCP tool list
-  could be derived from the 46 OpenAPI operations in openapi/ if needed.
+  description: Moveworks publishes an MCP Plugin on the AI Agent Marketplace; the Moveworks-MCP-Proxy-Client
+    (github.com/moveworks/Moveworks-MCP-Proxy-Client) is the reference proxy client for connecting an
+    AI agent to it.
+notes: These are documentation/marketplace MCP surfaces, not a full MCP wrapper of the REST APIs (Events/Conversations/Data).
+  A candidate REST-API MCP tool list could be derived from the 46 OpenAPI operations in openapi/ if needed.
+deployment:
+  mode: remote
+  endpoint: https://help.moveworks.com/_mcp/server
+  verified: probed
+  probe: live
+  tools: 1
+  checked: '2026-08-12'
+  source: catalog MCP census

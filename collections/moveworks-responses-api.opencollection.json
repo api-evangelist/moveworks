@@ -1,0 +1,123 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "(Beta) Conversations authentication responses API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "responses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create response",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.moveworks.ai/rest/v1beta1/conversations/:conversation_id/responses",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Assistant-Name",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "A base-62 identifier prefixed by a short resource type"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a response object for processing. Returns immediately with the response object. Use `GetResponse` by `response_id` to poll for the complete result."
+        },
+        {
+          "info": {
+            "name": "Create response (streaming)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.moveworks.ai/rest/v1beta1/conversations/:conversation_id/responses/stream",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Assistant-Name",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "A base-62 identifier prefixed by a short resource type"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a response and streams updates in real-time via Server-Sent Events (SSE). This provides a real-time alternative to creating a response and polling the GetResponse endpoint."
+        },
+        {
+          "info": {
+            "name": "Get response",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/conversations/:conversation_id/responses/:response_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Assistant-Name",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "A base-62 identifier prefixed by a short resource type"
+              },
+              {
+                "name": "response_id",
+                "value": "",
+                "type": "path",
+                "description": "A base-62 identifier prefixed by a short resource type"
+              }
+            ]
+          },
+          "docs": "Retrieves the current state and output of a response. Only returns assistant outputs. Use Get messages in a conversation or response to retrieve the full set of messages including user messages. Clients can poll this endpoint to watch for response completion by repeatedly calling until the status reaches a terminal state (`COMPLETED` or `FAILED`). Clients can wait up to **120 seconds** for a response to reach a terminal state."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

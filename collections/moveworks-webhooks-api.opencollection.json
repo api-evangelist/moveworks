@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "(Beta) Conversations authentication webhooks API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a webhook to a webhook listener",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.moveworks.ai/rest/v1beta1/webhooks/v1/listeners/:listener_id/notify",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "listener_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the webhook listener."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a webhook to a webhook listener. The listener must be defined in Agent Studio."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

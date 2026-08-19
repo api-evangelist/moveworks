@@ -1,0 +1,199 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "(Beta) authentication conversations API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "conversations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List conversations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/conversations",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Assistant-Name",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor for pagination (obtained from previous response)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of conversations to return (1-100)"
+              },
+              {
+                "name": "archived",
+                "value": "",
+                "type": "query",
+                "description": "Filter by archived status"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of conversations in descending order by `updated_at` time (last accessed first). Only unarchived conversations are retrieved by default."
+        },
+        {
+          "info": {
+            "name": "Create conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.moveworks.ai/rest/v1beta1/conversations",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Assistant-Name",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new conversation thread. Returns the created Conversation object with a unique `conversation_id`. If `title` is not provided, an AI generated title will be assigned based on the first response."
+        },
+        {
+          "info": {
+            "name": "Get conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/conversations/:conversation_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Assistant-Name",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "A base-62 identifier prefixed by a short resource type"
+              }
+            ]
+          },
+          "docs": "Retrieves a specific conversation."
+        },
+        {
+          "info": {
+            "name": "Update conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.moveworks.ai/rest/v1beta1/conversations/:conversation_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Assistant-Name",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "A base-62 identifier prefixed by a short resource type"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates title, or archive a conversation."
+        },
+        {
+          "info": {
+            "name": "List conversation events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.moveworks.ai/rest/v1beta1/conversations/:conversation_id/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Assistant-Name",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "Conversation identifier. Use \"-\" to read events across all conversations."
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Exclusive lower bound. Only events after this event ID are returned. Typically the last event ID from a previous poll."
+              },
+              {
+                "name": "ending_at",
+                "value": "",
+                "type": "query",
+                "description": "Inclusive upper bound. Only events up to and including this event ID are returned. Must be greater than starting_after."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from a previous response."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of events to return per page (1-100, default: 20)."
+              }
+            ]
+          },
+          "docs": "Returns system-initiated messages (async responses and proactive notifications) for a conversation. Only final messages are returned, not transient or reasoning messages.\n\nUse `conversation_id = \"-\"` to query across all conversations. This is useful for reconciliation after receiving a webhook event, to fetch the full set of messages that may have been missed.\n\nResults are ordered chronologically. Use `starting_after` and `ending_at` to define a time range based on previously seen event IDs."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

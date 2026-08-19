@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "(Beta) Conversations authentication deprecated API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "deprecated",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "[Deprecated] Send a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.moveworks.ai/rest/v1beta1/rest/v1/messages/send",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a message to users. This endpoint is deprecated, but existing integrations will continue to work.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
