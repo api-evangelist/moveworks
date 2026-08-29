@@ -1,18 +1,10 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: (Beta) Conversations authentication smartForms API
+  title: Forms Gateway Smart Forms API
   version: 1.0.0
 servers:
-- url: https://api.moveworks.ai/rest/v1beta1
-  description: US production server
-- url: https://api.jp.moveworks.com/rest/v1beta1
-  description: Japan production server
-- url: https://api.uk.moveworks.com/rest/v1beta1
-  description: UK production server
-- url: https://api.prod4.us.moveworks.com/rest/v1beta1
-  description: US Prod 4 production server
-- url: https://api.prod3.us.moveworks.com/rest/v1beta1
-  description: US Prod 3 production server
+- url: http://localhost:5000/myinstance1
+  description: http://localhost:5000/myinstance1
 tags:
 - name: smartForms
 paths:
@@ -50,7 +42,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Smart Forms_listForms_Response_200'
+                $ref: '#/components/schemas/Smart_Forms_listForms_Response_200'
   /forms/{formId}:
     get:
       operationId: get-form-by-id
@@ -123,6 +115,127 @@ paths:
               - submitted_by
 components:
   schemas:
+    FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFormMetadata:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the form being submitted
+        last_updated_at:
+          type: string
+          description: Last updated date as a ISO-8601 UTC timestamp (e.g., 2021-10-20T17:28:52Z). Indicates the freshness of the form.
+      required:
+      - name
+      - last_updated_at
+      title: FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFormMetadata
+    Action:
+      type: object
+      properties:
+        field_name:
+          type: string
+          description: Name of the target field to take action on.
+        visible:
+          type: boolean
+          description: Marks the target field as visible or hidden when the conditions are met.
+        required:
+          type: boolean
+          description: Marks the target field as required or optional when the conditions are met.
+      required:
+      - field_name
+      - visible
+      - required
+      title: Action
+    FieldType:
+      type: string
+      enum:
+      - LABEL
+      - SINGLE_OPTION_PICKER
+      - MULTI_OPTION_PICKER
+      - SINGLE_USER_OPTION_PICKER
+      - MULTI_USER_OPTION_PICKER
+      - SINGLE_LINE_TEXT
+      - MULTI_LINE_TEXT
+      - CHECKBOX
+      - DATE_PICKER
+      - DATETIME_PICKER
+      description: The type of the field.
+      title: FieldType
+    Smart_Forms_listForms_Response_200:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Form'
+      title: Smart Forms_listForms_Response_200
+    Condition:
+      type: object
+      properties:
+        field_name:
+          type: string
+          description: Name of the field whose value needs to be inspected.
+        operator:
+          $ref: '#/components/schemas/ConditionOperator'
+          description: The operator to use to inspect the field_name's value.
+        value:
+          $ref: '#/components/schemas/ConditionValue'
+          description: 'field_name''s value will be compared against this value using the operator specified above. Note: When the operator is EMPTY, NOT_EMPTY, this attribute need not be specified.'
+      required:
+      - field_name
+      - operator
+      title: Condition
+    ConditionValue:
+      oneOf:
+      - type: boolean
+      - type: string
+      - type: array
+        items:
+          type: string
+      description: 'field_name''s value will be compared against this value using the operator specified above. Note: When the operator is EMPTY, NOT_EMPTY, this attribute need not be specified.'
+      title: ConditionValue
+    FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFields:
+      type: object
+      properties: {}
+      description: This is a dictionary where they keys are the "field names" coming from the schema, and the value types are string, list of strings, and boolean. See the example.
+      title: FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFields
+    ConditionOperator:
+      type: string
+      enum:
+      - EMPTY
+      - NOT_EMPTY
+      - IN
+      - NOT_IN
+      - EQUALS
+      - NOT_EQUALS
+      description: The operator to use to inspect the field_name's value.
+      title: ConditionOperator
+    FormDomain:
+      type: string
+      enum:
+      - IT
+      - HR
+      description: Specifies the domain the form belongs to.
+      title: FormDomain
+    Option:
+      type: object
+      properties:
+        label:
+          type: string
+          description: The display value for this option. This will be displayed to the end user.
+        value:
+          type: string
+          description: The response value for this option. This will be used as the field value during form submission.
+      required:
+      - label
+      - value
+      title: Option
+    SubmitFormResponse:
+      type: object
+      properties:
+        ticket_id:
+          type: string
+          description: The display ticket ID of the ticket that was created (if any). null value is allowed. If a valid ticket ID is returned, Moveworks will be able to fetch/poll this ticket to provide updates to the user and to accelerate resolution of their request.
+      title: SubmitFormResponse
     Rule:
       type: object
       properties:
@@ -147,68 +260,6 @@ components:
       - conditions
       - actions
       title: Rule
-    Option:
-      type: object
-      properties:
-        label:
-          type: string
-          description: The display value for this option. This will be displayed to the end user.
-        value:
-          type: string
-          description: The response value for this option. This will be used as the field value during form submission.
-      required:
-      - label
-      - value
-      title: Option
-    Field:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Unique name for the field in the form. Will be used as the key (in a key-value pair) during form submission.
-        label:
-          type: string
-          description: Label for the field. This will be displayed to the end user.
-        placeholder:
-          type: string
-          description: Placeholder text to be shown in the field. This will be displayed to the end user.
-        help:
-          type: string
-          description: Tooltip (or additional help text) for the field. This will be displayed to the end user.
-        type:
-          $ref: '#/components/schemas/FieldType'
-          description: The type of the field.
-        default_to_current_user:
-          type: boolean
-          default: false
-          description: For SINGLE_USER_OPTION_PICKER and MULTI_USER_OPTION_PICKER field types only. The value defaults (auto-fills) to the end user filling the form.
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/Option'
-          description: For SINGLE_OPTION_PICKER and MULTI_OPTION_PICKER field types only.
-        required:
-          type: boolean
-          default: false
-          description: Conveys whether the field is mandatory during form submission.
-        visible:
-          type: boolean
-          default: true
-          description: Conveys whether the field is initially hidden when the form is displayed to the end user.
-      required:
-      - name
-      - label
-      - type
-      title: Field
-    ConditionValue:
-      oneOf:
-      - type: boolean
-      - type: string
-      - type: array
-        items:
-          type: string
-      description: 'field_name''s value will be compared against this value using the operator specified above. Note: When the operator is EMPTY, NOT_EMPTY, this attribute need not be specified.'
-      title: ConditionValue
     Form:
       type: object
       properties:
@@ -253,84 +304,46 @@ components:
       - url
       - last_updated_at
       title: Form
-    SubmitFormResponse:
-      type: object
-      properties:
-        ticket_id:
-          type: string
-          description: The display ticket ID of the ticket that was created (if any). null value is allowed. If a valid ticket ID is returned, Moveworks will be able to fetch/poll this ticket to provide updates to the user and to accelerate resolution of their request.
-      title: SubmitFormResponse
-    FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFormMetadata:
+    Field:
       type: object
       properties:
         name:
           type: string
-          description: The name of the form being submitted
-        last_updated_at:
+          description: Unique name for the field in the form. Will be used as the key (in a key-value pair) during form submission.
+        label:
           type: string
-          description: Last updated date as a ISO-8601 UTC timestamp (e.g., 2021-10-20T17:28:52Z). Indicates the freshness of the form.
-      required:
-      - name
-      - last_updated_at
-      title: FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFormMetadata
-    FormDomain:
-      type: string
-      enum:
-      - IT
-      - HR
-      description: Specifies the domain the form belongs to.
-      title: FormDomain
-    FieldType:
-      type: string
-      enum:
-      - LABEL
-      - SINGLE_OPTION_PICKER
-      - MULTI_OPTION_PICKER
-      - SINGLE_USER_OPTION_PICKER
-      - MULTI_USER_OPTION_PICKER
-      - SINGLE_LINE_TEXT
-      - MULTI_LINE_TEXT
-      - CHECKBOX
-      - DATE_PICKER
-      - DATETIME_PICKER
-      description: The type of the field.
-      title: FieldType
-    Smart Forms_listForms_Response_200:
-      type: object
-      properties:
-        results:
+          description: Label for the field. This will be displayed to the end user.
+        placeholder:
+          type: string
+          description: Placeholder text to be shown in the field. This will be displayed to the end user.
+        help:
+          type: string
+          description: Tooltip (or additional help text) for the field. This will be displayed to the end user.
+        type:
+          $ref: '#/components/schemas/FieldType'
+          description: The type of the field.
+        default_to_current_user:
+          type: boolean
+          default: false
+          description: For SINGLE_USER_OPTION_PICKER and MULTI_USER_OPTION_PICKER field types only. The value defaults (auto-fills) to the end user filling the form.
+        options:
           type: array
           items:
-            $ref: '#/components/schemas/Form'
-      title: Smart Forms_listForms_Response_200
-    ConditionOperator:
-      type: string
-      enum:
-      - EMPTY
-      - NOT_EMPTY
-      - IN
-      - NOT_IN
-      - EQUALS
-      - NOT_EQUALS
-      description: The operator to use to inspect the field_name's value.
-      title: ConditionOperator
-    Action:
-      type: object
-      properties:
-        field_name:
-          type: string
-          description: Name of the target field to take action on.
-        visible:
-          type: boolean
-          description: Marks the target field as visible or hidden when the conditions are met.
+            $ref: '#/components/schemas/Option'
+          description: For SINGLE_OPTION_PICKER and MULTI_OPTION_PICKER field types only.
         required:
           type: boolean
-          description: Marks the target field as required or optional when the conditions are met.
+          default: false
+          description: Conveys whether the field is mandatory during form submission.
+        visible:
+          type: boolean
+          default: true
+          description: Conveys whether the field is initially hidden when the form is displayed to the end user.
       required:
-      - field_name
-      - visible
-      - required
-      title: Action
+      - name
+      - label
+      - type
+      title: Field
     RuleLogical:
       type: string
       enum:
@@ -338,29 +351,11 @@ components:
       - OR
       description: The logical operator to use to combine the conditions
       title: RuleLogical
-    Condition:
-      type: object
-      properties:
-        field_name:
-          type: string
-          description: Name of the field whose value needs to be inspected.
-        operator:
-          $ref: '#/components/schemas/ConditionOperator'
-          description: The operator to use to inspect the field_name's value.
-        value:
-          $ref: '#/components/schemas/ConditionValue'
-          description: 'field_name''s value will be compared against this value using the operator specified above. Note: When the operator is EMPTY, NOT_EMPTY, this attribute need not be specified.'
-      required:
-      - field_name
-      - operator
-      title: Condition
-    FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFields:
-      type: object
-      properties: {}
-      description: This is a dictionary where they keys are the "field names" coming from the schema, and the value types are string, list of strings, and boolean. See the example.
-      title: FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFields
   securitySchemes:
-    BearerAuth:
+    bearerAuth:
       type: http
       scheme: bearer
-      description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY

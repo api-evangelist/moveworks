@@ -1,7 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: (Beta) Conversations authentication responses API
+  title: Moveworks Responses API
   version: 1.0.0
+  description: 'Operations tagged responses across 2 of this provider''s published API definitions: moveworks-beta-conversations-api-openapi.yaml, moveworks-conversations-api-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.moveworks.ai/rest/v1beta1
   description: US production server
@@ -13,6 +14,8 @@ servers:
   description: US Prod 4 production server
 - url: https://api.prod3.us.moveworks.com/rest/v1beta1
   description: US Prod 3 production server
+- url: https://api.moveworks.ai/assistant/v1
+  description: US production server
 tags:
 - name: responses
 paths:
@@ -90,6 +93,17 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateResponseRequest'
+    servers:
+    - url: https://api.moveworks.ai/rest/v1beta1
+      description: US production server
+    - url: https://api.jp.moveworks.com/rest/v1beta1
+      description: Japan production server
+    - url: https://api.uk.moveworks.com/rest/v1beta1
+      description: UK production server
+    - url: https://api.prod4.us.moveworks.com/rest/v1beta1
+      description: US Prod 4 production server
+    - url: https://api.prod3.us.moveworks.com/rest/v1beta1
+      description: US Prod 3 production server
   /conversations/{conversation_id}/responses/stream:
     post:
       operationId: create-response-stream
@@ -170,6 +184,17 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateResponseStreamRequest'
+    servers:
+    - url: https://api.moveworks.ai/rest/v1beta1
+      description: US production server
+    - url: https://api.jp.moveworks.com/rest/v1beta1
+      description: Japan production server
+    - url: https://api.uk.moveworks.com/rest/v1beta1
+      description: UK production server
+    - url: https://api.prod4.us.moveworks.com/rest/v1beta1
+      description: US Prod 4 production server
+    - url: https://api.prod3.us.moveworks.com/rest/v1beta1
+      description: US Prod 3 production server
   /conversations/{conversation_id}/responses/{response_id}:
     get:
       operationId: get-response
@@ -239,8 +264,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalErrorResponse'
+    servers:
+    - url: https://api.moveworks.ai/rest/v1beta1
+      description: US production server
+    - url: https://api.jp.moveworks.com/rest/v1beta1
+      description: Japan production server
+    - url: https://api.uk.moveworks.com/rest/v1beta1
+      description: UK production server
+    - url: https://api.prod4.us.moveworks.com/rest/v1beta1
+      description: US Prod 4 production server
+    - url: https://api.prod3.us.moveworks.com/rest/v1beta1
+      description: US Prod 3 production server
 components:
   schemas:
+    ResponseCreatedData:
+      type: object
+      properties:
+        event_type:
+          $ref: '#/components/schemas/StreamEventType'
+        sequence_number:
+          type: integer
+          description: Sequential event number in stream. Monotonically increasing counter starting at 1.
+        response:
+          $ref: '#/components/schemas/Response'
+          description: Newly created response object with CREATED status
+      required:
+      - event_type
+      - sequence_number
+      - response
+      description: Data for RESPONSE_CREATED event - response initially created
+      title: ResponseCreatedData
+    CitationLocation:
+      type: object
+      properties:
+        offset:
+          type: integer
+          description: Zero-based character position in the assistant message where the citation should be inserted
+      description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
+      title: CitationLocation
     CreateResponseStreamRequest:
       type: object
       properties:
@@ -250,15 +311,6 @@ components:
       required:
       - input
       title: CreateResponseStreamRequest
-    InputRequiredErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/InputRequiredErrorResponseError'
-      required:
-      - error
-      description: Error response for missing required input field
-      title: InputRequiredErrorResponse
     Response:
       type: object
       properties:
@@ -291,31 +343,6 @@ components:
       - status
       - created_at
       title: Response
-    ReasoningMessage:
-      type: object
-      properties:
-        reasoning_message_id:
-          type: string
-          description: A base-62 identifier prefixed by a short resource type
-        conversation_id:
-          type: string
-          description: A base-62 identifier prefixed by a short resource type
-        response_id:
-          type: string
-          description: A base-62 identifier prefixed by a short resource type
-        content:
-          $ref: '#/components/schemas/Content'
-        created_at:
-          type: string
-          format: date-time
-          description: Creation timestamp (ISO 8601)
-      required:
-      - reasoning_message_id
-      - conversation_id
-      - response_id
-      - content
-      - created_at
-      title: ReasoningMessage
     MarkdownTextContent:
       type: object
       properties:
@@ -325,74 +352,11 @@ components:
       required:
       - text
       title: MarkdownTextContent
-    ResponseFailedData:
-      type: object
-      properties:
-        event_type:
-          $ref: '#/components/schemas/StreamEventType'
-        sequence_number:
-          type: integer
-          description: Sequential event number in stream. Monotonically increasing counter starting at 1.
-        response:
-          $ref: '#/components/schemas/Response'
-          description: Response object with FAILED status and error details
-      required:
-      - event_type
-      - sequence_number
-      - response
-      description: Data for RESPONSE_FAILED event - response processing failed
-      title: ResponseFailedData
-    ResponseCompletedData:
-      type: object
-      properties:
-        event_type:
-          $ref: '#/components/schemas/StreamEventType'
-        sequence_number:
-          type: integer
-          description: Sequential event number in stream. Monotonically increasing counter starting at 1.
-        response:
-          $ref: '#/components/schemas/Response'
-          description: Final response object with COMPLETED status and all outputs
-      required:
-      - event_type
-      - sequence_number
-      - response
-      description: Data for RESPONSE_COMPLETED event - response successfully completed
-      title: ResponseCompletedData
-    ResponseStreamEvent:
-      type: object
-      properties:
-        event:
-          $ref: '#/components/schemas/StreamEventType'
-        data:
-          $ref: '#/components/schemas/ResponseStreamData'
-      required:
-      - event
-      - data
-      description: A server-sent event containing response update content
-      title: ResponseStreamEvent
-    NotFoundErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/NotFoundErrorResponseError'
-      required:
-      - error
-      description: Error response for resource not found
-      title: NotFoundErrorResponse
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code
-        message:
-          type: string
-          description: Human-readable error message
-      required:
-      - code
-      - message
-      title: Error
+    ForbiddenErrorResponseErrorCode:
+      type: string
+      enum:
+      - FORBIDDEN
+      title: ForbiddenErrorResponseErrorCode
     ResponseStreamData:
       oneOf:
       - $ref: '#/components/schemas/ResponseCreatedData'
@@ -403,6 +367,21 @@ components:
       - $ref: '#/components/schemas/StreamingErrorData'
       description: Event data payload (structure depends on event type)
       title: ResponseStreamData
+    Display:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/Content'
+          description: Primary heading/identifier with type discriminator
+        body:
+          $ref: '#/components/schemas/Content'
+          description: Body/description content with type discriminator
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+          description: Opaque key-value metadata for citation display. These attributes contain implementation-specific rendering hints and should be treated as a black-box by clients. The structure and values may vary between citations and should not be relied upon for business logic.
+      title: Display
     ResponseInProgressData:
       type: object
       properties:
@@ -420,24 +399,57 @@ components:
       - response
       description: Data for RESPONSE_IN_PROGRESS event - response processing update
       title: ResponseInProgressData
-    CitationLocation:
+    ResponseStreamEvent:
       type: object
       properties:
-        offset:
-          type: integer
-          description: Zero-based character position in the assistant message where the citation should be inserted
-      description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
-      title: CitationLocation
-    ResponseStatus:
+        event:
+          $ref: '#/components/schemas/StreamEventType'
+        data:
+          $ref: '#/components/schemas/ResponseStreamData'
+      required:
+      - event
+      - data
+      description: A server-sent event containing response update content
+      title: ResponseStreamEvent
+    ActorType:
       type: string
       enum:
-      - CREATED
-      - IN_PROGRESS
-      - COMPLETED
-      - FAILED
-      description: Response processing status
-      title: ResponseStatus
-    ResponseCreatedData:
+      - USER
+      - ASSISTANT
+      description: Message actor type
+      title: ActorType
+    FeedbackOption:
+      type: object
+      properties:
+        callback_id:
+          type: string
+          description: Opaque callback identifier. Pass this value to the feedback endpoint to submit this rating.
+      required:
+      - callback_id
+      title: FeedbackOption
+    Citation:
+      type: object
+      properties:
+        citation_id:
+          type: string
+          description: 'Unique citation identifier (format: `cite_<base62>`). Use this to join with `content_references` on the Message object.'
+        location:
+          $ref: '#/components/schemas/CitationLocation'
+          description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
+        url:
+          type: string
+          format: uri
+          description: URL to the entity
+        display:
+          $ref: '#/components/schemas/Display'
+      title: Citation
+    PlainTextContentItemType:
+      type: string
+      enum:
+      - PLAIN_TEXT
+      description: Content type discriminator
+      title: PlainTextContentItemType
+    ResponseFailedData:
       type: object
       properties:
         event_type:
@@ -447,146 +459,54 @@ components:
           description: Sequential event number in stream. Monotonically increasing counter starting at 1.
         response:
           $ref: '#/components/schemas/Response'
-          description: Newly created response object with CREATED status
+          description: Response object with FAILED status and error details
       required:
       - event_type
       - sequence_number
       - response
-      description: Data for RESPONSE_CREATED event - response initially created
-      title: ResponseCreatedData
-    MessageFeedback:
+      description: Data for RESPONSE_FAILED event - response processing failed
+      title: ResponseFailedData
+    InputRequiredErrorResponse:
       type: object
       properties:
-        helpful:
-          $ref: '#/components/schemas/FeedbackOption'
-          description: Positive feedback option. Use this callback_id to rate the response as helpful.
-        unhelpful:
-          $ref: '#/components/schemas/FeedbackOption'
-          description: Negative feedback option. Use this callback_id to rate the response as unhelpful.
-      description: Feedback options available on an assistant message. When present, this message supports feedback and the callback IDs can be used to submit a rating.
-      title: MessageFeedback
-    OutputItem:
-      oneOf:
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/MessageOutputItemType'
-            description: Output item type discriminator
-          message:
-            $ref: '#/components/schemas/Message'
-        required:
-        - type
-        - message
-        description: MESSAGE variant
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/ReasoningMessageOutputItemType'
-            description: Output item type discriminator
-          reasoning_message:
-            $ref: '#/components/schemas/ReasoningMessage'
-        required:
-        - type
-        - reasoning_message
-        description: REASONING_MESSAGE variant
-      discriminator:
-        propertyName: type
-      description: Output item wrapper with type discriminator
-      title: OutputItem
-    Content:
-      oneOf:
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/PlainTextContentItemType'
-            description: Content type discriminator
-          plain_text:
-            $ref: '#/components/schemas/PlainTextContent'
-        required:
-        - type
-        - plain_text
-        description: PLAIN_TEXT variant
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/CommonmarkTextContentItemType'
-            description: Content type discriminator
-          commonmark_text:
-            $ref: '#/components/schemas/CommonmarkTextContent'
-        required:
-        - type
-        - commonmark_text
-        description: COMMONMARK_TEXT variant
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/MarkdownTextContentItemType'
-            description: Content type discriminator
-          markdown_text:
-            $ref: '#/components/schemas/MarkdownTextContent'
-        required:
-        - type
-        - markdown_text
-        description: MARKDOWN_TEXT variant
-      discriminator:
-        propertyName: type
-      description: Message content with type discriminator
-      title: Content
-    PlainTextContent:
-      type: object
-      properties:
-        text:
-          type: string
-          description: Plain text content
+        error:
+          $ref: '#/components/schemas/InputRequiredErrorResponseError'
       required:
-      - text
-      title: PlainTextContent
-    UnauthorizedErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/UnauthorizedErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: UnauthorizedErrorResponseError
+      - error
+      description: Error response for missing required input field
+      title: InputRequiredErrorResponse
     UnauthorizedErrorResponseErrorCode:
       type: string
       enum:
       - UNAUTHORIZED
       title: UnauthorizedErrorResponseErrorCode
-    ForbiddenErrorResponseError:
+    UnauthorizedErrorResponse:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/ForbiddenErrorResponseErrorCode'
-        message:
-          type: string
+        error:
+          $ref: '#/components/schemas/UnauthorizedErrorResponseError'
       required:
-      - code
-      - message
-      title: ForbiddenErrorResponseError
-    Attribute:
-      type: object
-      properties:
-        key:
-          type: string
-          description: Attribute name
-        value:
-          type: string
-          description: Attribute value
-      required:
-      - key
-      - value
-      description: Key-value pair for citation display metadata. This is an opaque structure that contains rendering hints specific to each citation. Clients should not make assumptions about the keys or values present, as they may vary based on citation type and context.
-      title: Attribute
-    InputRequiredErrorResponseErrorCode:
+      - error
+      description: Error response for unauthorized access
+      title: UnauthorizedErrorResponse
+    ResponseStatus:
       type: string
       enum:
-      - INVALID_INPUT
-      title: InputRequiredErrorResponseErrorCode
+      - CREATED
+      - IN_PROGRESS
+      - COMPLETED
+      - FAILED
+      description: Response processing status
+      title: ResponseStatus
+    UserInput:
+      type: object
+      properties:
+        text:
+          type: string
+          description: User message text
+      required:
+      - text
+      title: UserInput
     Message:
       type: object
       properties:
@@ -634,91 +554,11 @@ components:
       - content
       - created_at
       title: Message
-    NotFoundErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/NotFoundErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: NotFoundErrorResponseError
-    ReasoningMessageOutputItemType:
+    ConversationsConversationIdResponsesStreamPostParametersAccept:
       type: string
       enum:
-      - REASONING_MESSAGE
-      description: Output item type discriminator
-      title: ReasoningMessageOutputItemType
-    Display:
-      type: object
-      properties:
-        title:
-          $ref: '#/components/schemas/Content'
-          description: Primary heading/identifier with type discriminator
-        body:
-          $ref: '#/components/schemas/Content'
-          description: Body/description content with type discriminator
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Attribute'
-          description: Opaque key-value metadata for citation display. These attributes contain implementation-specific rendering hints and should be treated as a black-box by clients. The structure and values may vary between citations and should not be relied upon for business logic.
-      title: Display
-    Citation:
-      type: object
-      properties:
-        citation_id:
-          type: string
-          description: 'Unique citation identifier (format: `cite_<base62>`). Use this to join with `content_references` on the Message object.'
-        location:
-          $ref: '#/components/schemas/CitationLocation'
-          description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
-        url:
-          type: string
-          format: uri
-          description: URL to the entity
-        display:
-          $ref: '#/components/schemas/Display'
-      title: Citation
-    InternalErrorResponseErrorCode:
-      type: string
-      enum:
-      - INTERNAL_ERROR
-      title: InternalErrorResponseErrorCode
-    InputRequiredErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/InputRequiredErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: InputRequiredErrorResponseError
-    ForbiddenErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ForbiddenErrorResponseError'
-      required:
-      - error
-      description: Error response for forbidden access
-      title: ForbiddenErrorResponse
-    ForbiddenErrorResponseErrorCode:
-      type: string
-      enum:
-      - FORBIDDEN
-      title: ForbiddenErrorResponseErrorCode
-    ActorType:
-      type: string
-      enum:
-      - USER
-      - ASSISTANT
-      description: Message actor type
-      title: ActorType
+      - text/event-stream
+      title: ConversationsConversationIdResponsesStreamPostParametersAccept
     CitationContentReference:
       type: object
       properties:
@@ -732,21 +572,320 @@ components:
       - citation_id
       - offset
       title: CitationContentReference
-    FeedbackOption:
+    CommonmarkTextContentItemType:
+      type: string
+      enum:
+      - COMMONMARK_TEXT
+      description: Content type discriminator
+      title: CommonmarkTextContentItemType
+    ForbiddenErrorResponse:
       type: object
       properties:
-        callback_id:
-          type: string
-          description: Opaque callback identifier. Pass this value to the feedback endpoint to submit this rating.
+        error:
+          $ref: '#/components/schemas/ForbiddenErrorResponseError'
       required:
-      - callback_id
-      title: FeedbackOption
+      - error
+      description: Error response for forbidden access
+      title: ForbiddenErrorResponse
+    ReasoningMessageOutputItemType:
+      type: string
+      enum:
+      - REASONING_MESSAGE
+      description: Output item type discriminator
+      title: ReasoningMessageOutputItemType
+    MessageFeedback:
+      type: object
+      properties:
+        helpful:
+          $ref: '#/components/schemas/FeedbackOption'
+          description: Positive feedback option. Use this callback_id to rate the response as helpful.
+        unhelpful:
+          $ref: '#/components/schemas/FeedbackOption'
+          description: Negative feedback option. Use this callback_id to rate the response as unhelpful.
+      description: Feedback options available on an assistant message. When present, this message supports feedback and the callback IDs can be used to submit a rating.
+      title: MessageFeedback
+    CreateResponseRequest:
+      type: object
+      properties:
+        input:
+          $ref: '#/components/schemas/UserInput'
+          description: User input message
+      required:
+      - input
+      title: CreateResponseRequest
+    InternalErrorResponseErrorCode:
+      type: string
+      enum:
+      - INTERNAL_ERROR
+      title: InternalErrorResponseErrorCode
+    InternalErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/InternalErrorResponseError'
+      required:
+      - error
+      description: Error response for internal server error
+      title: InternalErrorResponse
+    StreamingErrorData:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+          description: Error details
+      required:
+      - error
+      description: Data for ERROR event - error that occurs mid-stream
+      title: StreamingErrorData
+    OutputItem:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/MessageOutputItemType'
+            description: Output item type discriminator
+          message:
+            $ref: '#/components/schemas/Message'
+        required:
+        - type
+        - message
+        description: MESSAGE variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/ReasoningMessageOutputItemType'
+            description: Output item type discriminator
+          reasoning_message:
+            $ref: '#/components/schemas/ReasoningMessage'
+        required:
+        - type
+        - reasoning_message
+        description: REASONING_MESSAGE variant
+      discriminator:
+        propertyName: type
+      description: Output item wrapper with type discriminator
+      title: OutputItem
+    InternalErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InternalErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: InternalErrorResponseError
+    UnauthorizedErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/UnauthorizedErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: UnauthorizedErrorResponseError
+    NotFoundErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotFoundErrorResponseError'
+      required:
+      - error
+      description: Error response for resource not found
+      title: NotFoundErrorResponse
+    ForbiddenErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ForbiddenErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: ForbiddenErrorResponseError
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code
+        message:
+          type: string
+          description: Human-readable error message
+      required:
+      - code
+      - message
+      title: Error
+    Attribute:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Attribute name
+        value:
+          type: string
+          description: Attribute value
+      required:
+      - key
+      - value
+      description: Key-value pair for citation display metadata. This is an opaque structure that contains rendering hints specific to each citation. Clients should not make assumptions about the keys or values present, as they may vary based on citation type and context.
+      title: Attribute
+    Content:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/PlainTextContentItemType'
+            description: Content type discriminator
+          plain_text:
+            $ref: '#/components/schemas/PlainTextContent'
+        required:
+        - type
+        - plain_text
+        description: PLAIN_TEXT variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/CommonmarkTextContentItemType'
+            description: Content type discriminator
+          commonmark_text:
+            $ref: '#/components/schemas/CommonmarkTextContent'
+        required:
+        - type
+        - commonmark_text
+        description: COMMONMARK_TEXT variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/MarkdownTextContentItemType'
+            description: Content type discriminator
+          markdown_text:
+            $ref: '#/components/schemas/MarkdownTextContent'
+        required:
+        - type
+        - markdown_text
+        description: MARKDOWN_TEXT variant
+      discriminator:
+        propertyName: type
+      description: Message content with type discriminator
+      title: Content
+    MessageOutputItemType:
+      type: string
+      enum:
+      - MESSAGE
+      description: Output item type discriminator
+      title: MessageOutputItemType
+    NotFoundErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/NotFoundErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: NotFoundErrorResponseError
+    InputRequiredErrorResponseErrorCode:
+      type: string
+      enum:
+      - INVALID_INPUT
+      title: InputRequiredErrorResponseErrorCode
+    ResponseCompletedData:
+      type: object
+      properties:
+        event_type:
+          $ref: '#/components/schemas/StreamEventType'
+        sequence_number:
+          type: integer
+          description: Sequential event number in stream. Monotonically increasing counter starting at 1.
+        response:
+          $ref: '#/components/schemas/Response'
+          description: Final response object with COMPLETED status and all outputs
+      required:
+      - event_type
+      - sequence_number
+      - response
+      description: Data for RESPONSE_COMPLETED event - response successfully completed
+      title: ResponseCompletedData
+    RateLimitExceededErrorResponseErrorCode:
+      type: string
+      enum:
+      - RATE_LIMIT_EXCEEDED
+      title: RateLimitExceededErrorResponseErrorCode
+    InputRequiredErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InputRequiredErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: InputRequiredErrorResponseError
+    ReasoningMessage:
+      type: object
+      properties:
+        reasoning_message_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        conversation_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        response_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        content:
+          $ref: '#/components/schemas/Content'
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (ISO 8601)
+      required:
+      - reasoning_message_id
+      - conversation_id
+      - response_id
+      - content
+      - created_at
+      title: ReasoningMessage
     MarkdownTextContentItemType:
       type: string
       enum:
       - MARKDOWN_TEXT
       description: Content type discriminator
       title: MarkdownTextContentItemType
+    StreamEventType:
+      type: string
+      enum:
+      - RESPONSE_CREATED
+      - RESPONSE_IN_PROGRESS
+      - RESPONSE_OUTPUT_DELTA
+      - RESPONSE_COMPLETED
+      - RESPONSE_FAILED
+      - ERROR
+      description: Response streaming event type
+      title: StreamEventType
+    RateLimitExceededErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/RateLimitExceededErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: RateLimitExceededErrorResponseError
+    NotFoundErrorResponseErrorCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: NotFoundErrorResponseErrorCode
     RateLimitExceededErrorResponse:
       type: object
       properties:
@@ -782,29 +921,41 @@ components:
       - output
       description: Data for RESPONSE_OUTPUT_DELTA event - new output item generated
       title: ResponseOutputDeltaData
-    RateLimitExceededErrorResponseErrorCode:
+    PlainTextContent:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Plain text content
+      required:
+      - text
+      title: PlainTextContent
+    URLAction:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL to open when the action is triggered.
+      required:
+      - url
+      title: URLAction
+    UserInput1:
+      type: object
+      properties:
+        callback_id:
+          type: string
+          description: Opaque callback id for an action the user triggered (e.g. clicking a button rendered in a prior assistant message).
+      required:
+      - callback_id
+      title: UserInput1
+    UrlActionItemType:
       type: string
       enum:
-      - RATE_LIMIT_EXCEEDED
-      title: RateLimitExceededErrorResponseErrorCode
-    CommonmarkTextContentItemType:
-      type: string
-      enum:
-      - COMMONMARK_TEXT
-      description: Content type discriminator
-      title: CommonmarkTextContentItemType
-    PlainTextContentItemType:
-      type: string
-      enum:
-      - PLAIN_TEXT
-      description: Content type discriminator
-      title: PlainTextContentItemType
-    NotFoundErrorResponseErrorCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: NotFoundErrorResponseErrorCode
-    UserInput:
+      - URL_ACTION
+      description: Action type discriminator
+      title: UrlActionItemType
+    UserInput0:
       type: object
       properties:
         text:
@@ -812,90 +963,199 @@ components:
           description: User message text
       required:
       - text
+      title: UserInput0
+    CallbackActionContent:
+      type: object
+      properties:
+        callback_id:
+          type: string
+          description: Opaque callback id for the action the user triggered. Submit this via `input.callback_id` on the create response endpoint to trigger the action.
+      required:
+      - callback_id
+      title: CallbackActionContent
+    Citation_2:
+      type: object
+      properties:
+        citation_id:
+          type: string
+          description: 'Unique citation identifier (format: `cite_<base62>`). Use this to join with `content_references` on the Message object.'
+        url:
+          type: string
+          format: uri
+          description: URL to the entity
+        display:
+          $ref: '#/components/schemas/Display'
+      title: Citation
+    UserInput_2:
+      oneOf:
+      - $ref: '#/components/schemas/UserInput0'
+      - $ref: '#/components/schemas/UserInput1'
+      description: User input for a response. Exactly one of `text` or `callback_id` must be provided.
       title: UserInput
-    StreamingErrorData:
+    Message_2:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/Error'
-          description: Error details
-      required:
-      - error
-      description: Data for ERROR event - error that occurs mid-stream
-      title: StreamingErrorData
-    ConversationsConversationIdResponsesStreamPostParametersAccept:
-      type: string
-      enum:
-      - text/event-stream
-      title: ConversationsConversationIdResponsesStreamPostParametersAccept
-    InternalErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/InternalErrorResponseErrorCode'
-        message:
+        message_id:
           type: string
-      required:
-      - code
-      - message
-      title: InternalErrorResponseError
-    CreateResponseRequest:
-      type: object
-      properties:
-        input:
-          $ref: '#/components/schemas/UserInput'
-          description: User input message
-      required:
-      - input
-      title: CreateResponseRequest
-    InternalErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/InternalErrorResponseError'
-      required:
-      - error
-      description: Error response for internal server error
-      title: InternalErrorResponse
-    MessageOutputItemType:
-      type: string
-      enum:
-      - MESSAGE
-      description: Output item type discriminator
-      title: MessageOutputItemType
-    UnauthorizedErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthorizedErrorResponseError'
-      required:
-      - error
-      description: Error response for unauthorized access
-      title: UnauthorizedErrorResponse
-    StreamEventType:
-      type: string
-      enum:
-      - RESPONSE_CREATED
-      - RESPONSE_IN_PROGRESS
-      - RESPONSE_OUTPUT_DELTA
-      - RESPONSE_COMPLETED
-      - RESPONSE_FAILED
-      - ERROR
-      description: Response streaming event type
-      title: StreamEventType
-    RateLimitExceededErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/RateLimitExceededErrorResponseErrorCode'
-        message:
+          description: A base-62 identifier prefixed by a short resource type
+        conversation_id:
           type: string
+          description: A base-62 identifier prefixed by a short resource type
+        response_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        actor:
+          $ref: '#/components/schemas/ActorType'
+        content:
+          $ref: '#/components/schemas/Content_2'
+        citations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Citation_2'
+          description: Unique citation references in the assistant message. Use `content_references` to determine where in the message text each citation is referenced.
+        content_references:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CitationContentReference'
+          description: Ordered positions in the message text where citations appear (ascending by offset). Each entry references a `Citation` via `citation_id`. Only populated on assistant messages.
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (ISO 8601)
+        feedback:
+          oneOf:
+          - $ref: '#/components/schemas/MessageFeedback'
+          - type: 'null'
+          description: Feedback options for this message. Present only on final assistant messages that support feedback. Use the callback IDs to submit a rating via the feedback endpoint.
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+          description: Actions a user can take in response to this message (e.g. buttons or links). Absent on messages with no actions.
       required:
-      - code
-      - message
-      title: RateLimitExceededErrorResponseError
+      - message_id
+      - conversation_id
+      - response_id
+      - actor
+      - content
+      - created_at
+      title: Message
+    CallbackActionContentItemType:
+      type: string
+      enum:
+      - CALLBACK_ACTION_CONTENT
+      description: Content type discriminator
+      title: CallbackActionContentItemType
+    Action:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/CallbackActionItemType'
+            description: Action type discriminator
+          label:
+            type: string
+            description: Label associated with the action (e.g., button text).
+          callback_action:
+            $ref: '#/components/schemas/CallbackAction'
+        required:
+        - type
+        - label
+        - callback_action
+        description: CALLBACK_ACTION variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/UrlActionItemType'
+            description: Action type discriminator
+          label:
+            type: string
+            description: Label associated with the action (e.g., link text).
+          url_action:
+            $ref: '#/components/schemas/URLAction'
+        required:
+        - type
+        - label
+        - url_action
+        description: URL_ACTION variant
+      discriminator:
+        propertyName: type
+      description: An action a user can take in response to a message. The `type` field determines which action payload is present.
+      title: Action
+    CallbackAction:
+      type: object
+      properties:
+        callback_id:
+          type: string
+          description: Opaque callback identifier for the action. Submit this via `input.callback_id` on the create response endpoint to trigger the action.
+      required:
+      - callback_id
+      title: CallbackAction
+    CallbackActionItemType:
+      type: string
+      enum:
+      - CALLBACK_ACTION
+      description: Action type discriminator
+      title: CallbackActionItemType
+    Content_2:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/PlainTextContentItemType'
+            description: Content type discriminator
+          plain_text:
+            $ref: '#/components/schemas/PlainTextContent'
+        required:
+        - type
+        - plain_text
+        description: PLAIN_TEXT variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/CommonmarkTextContentItemType'
+            description: Content type discriminator
+          commonmark_text:
+            $ref: '#/components/schemas/CommonmarkTextContent'
+        required:
+        - type
+        - commonmark_text
+        description: COMMONMARK_TEXT variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/MarkdownTextContentItemType'
+            description: Content type discriminator
+          markdown_text:
+            $ref: '#/components/schemas/MarkdownTextContent'
+        required:
+        - type
+        - markdown_text
+        description: MARKDOWN_TEXT variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/CallbackActionContentItemType'
+            description: Content type discriminator
+          callback_action:
+            $ref: '#/components/schemas/CallbackActionContent'
+        required:
+        - type
+        - callback_action
+        description: CALLBACK_ACTION_CONTENT variant
+      discriminator:
+        propertyName: type
+      description: Message content with type discriminator
+      title: Content
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
       description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
+x-refined-from:
+- moveworks-beta-conversations-api-openapi.yaml
+- moveworks-conversations-api-openapi.yaml

@@ -1,18 +1,26 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: (Beta) Conversations authentication API
+  title: Events Authentication API
   version: 1.0.0
 servers:
-- url: https://api.moveworks.ai/rest/v1beta1
-  description: US production server
-- url: https://api.jp.moveworks.com/rest/v1beta1
-  description: Japan production server
-- url: https://api.uk.moveworks.com/rest/v1beta1
-  description: UK production server
-- url: https://api.prod4.us.moveworks.com/rest/v1beta1
-  description: US Prod 4 production server
-- url: https://api.prod3.us.moveworks.com/rest/v1beta1
-  description: US Prod 3 production server
+- url: https://api.moveworks.ai
+  description: https://api.moveworks.ai
+- url: https://api-demo.moveworks.ai
+  description: https://api-demo.moveworks.ai
+- url: https://api.am-eu-central.moveworks.ai
+  description: https://api.am-eu-central.moveworks.ai
+- url: https://api.am-ca-central.moveworks.ai
+  description: https://api.am-ca-central.moveworks.ai
+- url: https://api.moveworksgov.ai
+  description: https://api.moveworksgov.ai
+- url: https://api.jp.moveworks.com
+  description: https://api.jp.moveworks.com
+- url: https://api.uk.moveworks.com
+  description: https://api.uk.moveworks.com
+- url: https://api.prod4.us.moveworks.com
+  description: https://api.prod4.us.moveworks.com
+- url: https://api.prod3.us.moveworks.com
+  description: https://api.prod3.us.moveworks.com
 tags:
 - name: authentication
 paths:
@@ -97,12 +105,36 @@ components:
         message:
           type: string
       title: InternalServerError
+    OauthInvalidRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthInvalidRequest
+    OauthUnsupportedGrantType:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthUnsupportedGrantType
     OauthTokenGenerated:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/OauthTokenGeneratedData'
       title: OauthTokenGenerated
+    OauthInvalidClient:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthInvalidClient
     OauthTokenGeneratedData:
       type: object
       properties:
@@ -113,22 +145,6 @@ components:
         token_type:
           type: string
       title: OauthTokenGeneratedData
-    ErrorRateLimitExceeded:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorRateLimitExceeded
-    OauthInvalidRequest:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthInvalidRequest
     ErrorAuthentication:
       type: object
       properties:
@@ -137,33 +153,25 @@ components:
         message:
           type: string
       title: ErrorAuthentication
-    CreateOAuthTokenRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/OauthInvalidRequest'
-      - $ref: '#/components/schemas/OauthUnsupportedGrantType'
-      title: CreateOAuthTokenRequestBadRequestError
-    OauthInvalidClient:
+    ErrorRateLimitExceeded:
       type: object
       properties:
         code:
           type: string
         message:
           type: string
-      title: OauthInvalidClient
+      title: ErrorRateLimitExceeded
+    CreateOAuthTokenRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/OauthInvalidRequest'
+      - $ref: '#/components/schemas/OauthUnsupportedGrantType'
+      title: CreateOAuthTokenRequestBadRequestError
     AuthSuccessful:
       type: object
       properties:
         Message:
           type: string
       title: AuthSuccessful
-    OauthUnsupportedGrantType:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthUnsupportedGrantType
     OauthTokenRequest:
       type: object
       properties:
@@ -182,7 +190,6 @@ components:
       - grant_type
       title: OauthTokenRequest
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer
-      description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.

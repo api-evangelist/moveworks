@@ -1,18 +1,26 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: (Beta) Conversations authentication events API
+  title: Events API
   version: 1.0.0
 servers:
-- url: https://api.moveworks.ai/rest/v1beta1
-  description: US production server
-- url: https://api.jp.moveworks.com/rest/v1beta1
-  description: Japan production server
-- url: https://api.uk.moveworks.com/rest/v1beta1
-  description: UK production server
-- url: https://api.prod4.us.moveworks.com/rest/v1beta1
-  description: US Prod 4 production server
-- url: https://api.prod3.us.moveworks.com/rest/v1beta1
-  description: US Prod 3 production server
+- url: https://api.moveworks.ai
+  description: https://api.moveworks.ai
+- url: https://api-demo.moveworks.ai
+  description: https://api-demo.moveworks.ai
+- url: https://api.am-eu-central.moveworks.ai
+  description: https://api.am-eu-central.moveworks.ai
+- url: https://api.am-ca-central.moveworks.ai
+  description: https://api.am-ca-central.moveworks.ai
+- url: https://api.moveworksgov.ai
+  description: https://api.moveworksgov.ai
+- url: https://api.jp.moveworks.com
+  description: https://api.jp.moveworks.com
+- url: https://api.uk.moveworks.com
+  description: https://api.uk.moveworks.com
+- url: https://api.prod4.us.moveworks.com
+  description: https://api.prod4.us.moveworks.com
+- url: https://api.prod3.us.moveworks.com
+  description: https://api.prod3.us.moveworks.com
 tags:
 - name: events
 paths:
@@ -83,74 +91,6 @@ paths:
               $ref: '#/components/schemas/SendMessageForEventRequest'
 components:
   schemas:
-    MessageScheduledData:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/MessageScheduledDataStatus'
-      title: MessageScheduledData
-    MessageScheduledDataStatus:
-      type: string
-      enum:
-      - RECEIVED
-      title: MessageScheduledDataStatus
-    OauthErrorAuthenticationInvalidToken:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthErrorAuthenticationInvalidToken
-    ErrorRateLimitExceeded:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorRateLimitExceeded
-    SendMessageForEventRequestContext:
-      type: object
-      properties:
-        slots:
-          $ref: '#/components/schemas/SendMessageForEventRequestContextSlots'
-          description: Contextual slots
-      description: Additional contextual data
-      title: SendMessageForEventRequestContext
-    ErrorBadRequest:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorBadRequest
-    SendMessageForEventRequestNotFoundError:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: SendMessageForEventRequestNotFoundError
-    MessageScheduled:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/MessageScheduledData'
-      title: MessageScheduled
-    SendMessageForEventRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/ErrorAuthentication'
-      - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
-      - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
-      title: SendMessageForEventRequestUnauthorizedError
-    SendMessageForEventRequestContextSlots:
-      type: object
-      properties: {}
-      description: Contextual slots
-      title: SendMessageForEventRequestContextSlots
     OauthErrorAuthenticationExpiredToken:
       type: object
       properties:
@@ -159,6 +99,55 @@ components:
         message:
           type: string
       title: OauthErrorAuthenticationExpiredToken
+    SendMessageForEventRequestContext:
+      type: object
+      properties:
+        slots:
+          $ref: '#/components/schemas/SendMessageForEventRequestContextSlots'
+          description: Contextual slots
+      description: Additional contextual data
+      title: SendMessageForEventRequestContext
+    SendMessageForEventRequestNotFoundError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: SendMessageForEventRequestNotFoundError
+    OauthErrorAuthenticationInvalidToken:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthErrorAuthenticationInvalidToken
+    SendMessageForEventRequestContextSlots:
+      type: object
+      properties: {}
+      description: Contextual slots
+      title: SendMessageForEventRequestContextSlots
+    SendMessageForEventRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/ErrorAuthentication'
+      - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
+      - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
+      title: SendMessageForEventRequestUnauthorizedError
+    ErrorRateLimitExceeded:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorRateLimitExceeded
+    MessageScheduledData:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/MessageScheduledDataStatus'
+      title: MessageScheduledData
     ErrorAuthentication:
       type: object
       properties:
@@ -167,6 +156,14 @@ components:
         message:
           type: string
       title: ErrorAuthentication
+    ErrorAuthorization:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorAuthorization
     SendMessageForEventRequest:
       type: object
       properties:
@@ -185,16 +182,26 @@ components:
       - message
       - recipients
       title: SendMessageForEventRequest
-    ErrorAuthorization:
+    MessageScheduledDataStatus:
+      type: string
+      enum:
+      - RECEIVED
+      title: MessageScheduledDataStatus
+    MessageScheduled:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MessageScheduledData'
+      title: MessageScheduled
+    ErrorBadRequest:
       type: object
       properties:
         code:
           type: string
         message:
           type: string
-      title: ErrorAuthorization
+      title: ErrorBadRequest
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer
-      description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.

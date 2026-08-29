@@ -1,18 +1,26 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: (Beta) Conversations authentication deprecated API
+  title: Events Deprecated API
   version: 1.0.0
 servers:
-- url: https://api.moveworks.ai/rest/v1beta1
-  description: US production server
-- url: https://api.jp.moveworks.com/rest/v1beta1
-  description: Japan production server
-- url: https://api.uk.moveworks.com/rest/v1beta1
-  description: UK production server
-- url: https://api.prod4.us.moveworks.com/rest/v1beta1
-  description: US Prod 4 production server
-- url: https://api.prod3.us.moveworks.com/rest/v1beta1
-  description: US Prod 3 production server
+- url: https://api.moveworks.ai
+  description: https://api.moveworks.ai
+- url: https://api-demo.moveworks.ai
+  description: https://api-demo.moveworks.ai
+- url: https://api.am-eu-central.moveworks.ai
+  description: https://api.am-eu-central.moveworks.ai
+- url: https://api.am-ca-central.moveworks.ai
+  description: https://api.am-ca-central.moveworks.ai
+- url: https://api.moveworksgov.ai
+  description: https://api.moveworksgov.ai
+- url: https://api.jp.moveworks.com
+  description: https://api.jp.moveworks.com
+- url: https://api.uk.moveworks.com
+  description: https://api.uk.moveworks.com
+- url: https://api.prod4.us.moveworks.com
+  description: https://api.prod4.us.moveworks.com
+- url: https://api.prod3.us.moveworks.com
+  description: https://api.prod3.us.moveworks.com
 tags:
 - name: deprecated
 paths:
@@ -67,36 +75,6 @@ paths:
               $ref: '#/components/schemas/SendMessageRequest'
 components:
   schemas:
-    ErrorRateLimitExceeded:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorRateLimitExceeded
-    SendMessageRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/ErrorAuthentication'
-      - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
-      - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
-      title: SendMessageRequestForbiddenError
-    ErrorBadRequest:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorBadRequest
-    ErrorAuthentication:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorAuthentication
     OauthErrorAuthenticationExpiredToken:
       type: object
       properties:
@@ -113,6 +91,28 @@ components:
         message:
           type: string
       title: OauthErrorAuthenticationInvalidToken
+    ErrorRateLimitExceeded:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorRateLimitExceeded
+    SendMessageRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/ErrorAuthentication'
+      - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
+      - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
+      title: SendMessageRequestForbiddenError
+    ErrorAuthentication:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorAuthentication
     SendMessageRequest:
       type: object
       properties:
@@ -128,8 +128,15 @@ components:
       - message
       - recipients
       title: SendMessageRequest
+    ErrorBadRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorBadRequest
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer
-      description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
