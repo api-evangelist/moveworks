@@ -4,8 +4,14 @@ info:
   version: 1.0.0
   summary: Create a conversation, request a response, then list the resulting messages.
 sourceDescriptions:
-- name: conversations
-  url: ../openapi/moveworks-conversations-api-openapi.yaml
+- name: conversationsApi
+  url: ../openapi/moveworks-conversations-api-openapi.yml
+  type: openapi
+- name: messagesApi
+  url: ../openapi/moveworks-messages-api-openapi.yml
+  type: openapi
+- name: responsesApi
+  url: ../openapi/moveworks-responses-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: converse-with-assistant
@@ -13,8 +19,8 @@ workflows:
   inputs:
     type: object
     properties:
-      bearer_token: { type: string }
-      user_input: { type: string }
+      bearer_token: {type: string}
+      user_input: {type: string}
   steps:
   - stepId: create-conversation
     operationId: create-conversation

@@ -4,8 +4,11 @@ info:
   version: 1.0.0
   summary: Mint an OAuth client-credentials token, verify it, then send an event-triggered message to employees.
 sourceDescriptions:
-- name: events
-  url: ../openapi/moveworks-events-api-openapi.yaml
+- name: authenticationApi
+  url: ../openapi/moveworks-authentication-api-openapi.yml
+  type: openapi
+- name: eventsApi
+  url: ../openapi/moveworks-events-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: notify-employees-for-event
@@ -13,11 +16,11 @@ workflows:
   inputs:
     type: object
     properties:
-      client_id: { type: string }
-      client_secret: { type: string }
-      event_id: { type: string }
-      message: { type: string }
-      recipients: { type: array, items: { type: string } }
+      client_id: {type: string}
+      client_secret: {type: string}
+      event_id: {type: string}
+      message: {type: string}
+      recipients: {type: array, items: {type: string}}
   steps:
   - stepId: get-token
     operationId: create-o-auth-token
