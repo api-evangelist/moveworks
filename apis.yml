@@ -51,7 +51,7 @@ tags:
 - Enterprise Automation
 - Conversational AI
 - Employee Experience
-- IT Service Management
+- ITSM
 - Enterprise Search
 tags_raw:
 - Company
@@ -110,7 +110,7 @@ apis:
   humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
   baseURL: https://api.moveworks.ai
   tags:
-  - deprecated
+  - Deprecated
   tags_raw:
   - deprecated
   properties:
