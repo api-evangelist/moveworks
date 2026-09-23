@@ -74,7 +74,7 @@ paths:
     post:
       operationId: submit-form
       summary: Submit a Form
-      description: 'This API is primarily used for transactional activity. Performance will be essential. The following example assumes submission of the example form defined here. Anticipated load – Moveworks will call this endpoint every time a user submits a form through our native skill. '
+      description: This API is primarily used for transactional activity. Performance will be essential. The following example assumes submission of the example form defined here. Anticipated load – Moveworks will call this endpoint every time a user submits a form through our native skill.
       tags:
       - smartForms
       parameters:
@@ -115,151 +115,6 @@ paths:
               - submitted_by
 components:
   schemas:
-    FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFormMetadata:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the form being submitted
-        last_updated_at:
-          type: string
-          description: Last updated date as a ISO-8601 UTC timestamp (e.g., 2021-10-20T17:28:52Z). Indicates the freshness of the form.
-      required:
-      - name
-      - last_updated_at
-      title: FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFormMetadata
-    Action:
-      type: object
-      properties:
-        field_name:
-          type: string
-          description: Name of the target field to take action on.
-        visible:
-          type: boolean
-          description: Marks the target field as visible or hidden when the conditions are met.
-        required:
-          type: boolean
-          description: Marks the target field as required or optional when the conditions are met.
-      required:
-      - field_name
-      - visible
-      - required
-      title: Action
-    FieldType:
-      type: string
-      enum:
-      - LABEL
-      - SINGLE_OPTION_PICKER
-      - MULTI_OPTION_PICKER
-      - SINGLE_USER_OPTION_PICKER
-      - MULTI_USER_OPTION_PICKER
-      - SINGLE_LINE_TEXT
-      - MULTI_LINE_TEXT
-      - CHECKBOX
-      - DATE_PICKER
-      - DATETIME_PICKER
-      description: The type of the field.
-      title: FieldType
-    Smart_Forms_listForms_Response_200:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Form'
-      title: Smart Forms_listForms_Response_200
-    Condition:
-      type: object
-      properties:
-        field_name:
-          type: string
-          description: Name of the field whose value needs to be inspected.
-        operator:
-          $ref: '#/components/schemas/ConditionOperator'
-          description: The operator to use to inspect the field_name's value.
-        value:
-          $ref: '#/components/schemas/ConditionValue'
-          description: 'field_name''s value will be compared against this value using the operator specified above. Note: When the operator is EMPTY, NOT_EMPTY, this attribute need not be specified.'
-      required:
-      - field_name
-      - operator
-      title: Condition
-    ConditionValue:
-      oneOf:
-      - type: boolean
-      - type: string
-      - type: array
-        items:
-          type: string
-      description: 'field_name''s value will be compared against this value using the operator specified above. Note: When the operator is EMPTY, NOT_EMPTY, this attribute need not be specified.'
-      title: ConditionValue
-    FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFields:
-      type: object
-      properties: {}
-      description: This is a dictionary where they keys are the "field names" coming from the schema, and the value types are string, list of strings, and boolean. See the example.
-      title: FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFields
-    ConditionOperator:
-      type: string
-      enum:
-      - EMPTY
-      - NOT_EMPTY
-      - IN
-      - NOT_IN
-      - EQUALS
-      - NOT_EQUALS
-      description: The operator to use to inspect the field_name's value.
-      title: ConditionOperator
-    FormDomain:
-      type: string
-      enum:
-      - IT
-      - HR
-      description: Specifies the domain the form belongs to.
-      title: FormDomain
-    Option:
-      type: object
-      properties:
-        label:
-          type: string
-          description: The display value for this option. This will be displayed to the end user.
-        value:
-          type: string
-          description: The response value for this option. This will be used as the field value during form submission.
-      required:
-      - label
-      - value
-      title: Option
-    SubmitFormResponse:
-      type: object
-      properties:
-        ticket_id:
-          type: string
-          description: The display ticket ID of the ticket that was created (if any). null value is allowed. If a valid ticket ID is returned, Moveworks will be able to fetch/poll this ticket to provide updates to the user and to accelerate resolution of their request.
-      title: SubmitFormResponse
-    Rule:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Unique identifier for the rule within the form.
-        logical:
-          $ref: '#/components/schemas/RuleLogical'
-          description: The logical operator to use to combine the conditions
-        conditions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Condition'
-          description: Specifies the conditions that when met, will kick off actions. If the conditions go from met to unmet, the actions will be reversed as well.
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Action'
-          description: Specifies the actions to be taken if the conditions are met.
-      required:
-      - name
-      - conditions
-      - actions
-      title: Rule
     Form:
       type: object
       properties:
@@ -304,6 +159,94 @@ components:
       - url
       - last_updated_at
       title: Form
+    Condition:
+      type: object
+      properties:
+        field_name:
+          type: string
+          description: Name of the field whose value needs to be inspected.
+        operator:
+          $ref: '#/components/schemas/ConditionOperator'
+          description: The operator to use to inspect the field_name's value.
+        value:
+          $ref: '#/components/schemas/ConditionValue'
+          description: 'field_name''s value will be compared against this value using the operator specified above. Note: When the operator is EMPTY, NOT_EMPTY, this attribute need not be specified.'
+      required:
+      - field_name
+      - operator
+      title: Condition
+    FieldType:
+      type: string
+      enum:
+      - LABEL
+      - SINGLE_OPTION_PICKER
+      - MULTI_OPTION_PICKER
+      - SINGLE_USER_OPTION_PICKER
+      - MULTI_USER_OPTION_PICKER
+      - SINGLE_LINE_TEXT
+      - MULTI_LINE_TEXT
+      - CHECKBOX
+      - DATE_PICKER
+      - DATETIME_PICKER
+      description: The type of the field.
+      title: FieldType
+    FormDomain:
+      type: string
+      enum:
+      - IT
+      - HR
+      description: Specifies the domain the form belongs to.
+      title: FormDomain
+    Smart_Forms_listForms_Response_200:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Form'
+      title: Smart Forms_listForms_Response_200
+    FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFormMetadata:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the form being submitted
+        last_updated_at:
+          type: string
+          description: Last updated date as a ISO-8601 UTC timestamp (e.g., 2021-10-20T17:28:52Z). Indicates the freshness of the form.
+      required:
+      - name
+      - last_updated_at
+      title: FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFormMetadata
+    Action:
+      type: object
+      properties:
+        field_name:
+          type: string
+          description: Name of the target field to take action on.
+        visible:
+          type: boolean
+          description: Marks the target field as visible or hidden when the conditions are met.
+        required:
+          type: boolean
+          description: Marks the target field as required or optional when the conditions are met.
+      required:
+      - field_name
+      - visible
+      - required
+      title: Action
+    RuleLogical:
+      type: string
+      enum:
+      - AND
+      - OR
+      description: The logical operator to use to combine the conditions
+      title: RuleLogical
+    FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFields:
+      type: object
+      properties: {}
+      description: This is a dictionary where they keys are the "field names" coming from the schema, and the value types are string, list of strings, and boolean. See the example.
+      title: FormsFormIdSubmitPostRequestBodyContentApplicationJsonSchemaFields
     Field:
       type: object
       properties:
@@ -344,13 +287,70 @@ components:
       - label
       - type
       title: Field
-    RuleLogical:
+    Option:
+      type: object
+      properties:
+        label:
+          type: string
+          description: The display value for this option. This will be displayed to the end user.
+        value:
+          type: string
+          description: The response value for this option. This will be used as the field value during form submission.
+      required:
+      - label
+      - value
+      title: Option
+    ConditionOperator:
       type: string
       enum:
-      - AND
-      - OR
-      description: The logical operator to use to combine the conditions
-      title: RuleLogical
+      - EMPTY
+      - NOT_EMPTY
+      - IN
+      - NOT_IN
+      - EQUALS
+      - NOT_EQUALS
+      description: The operator to use to inspect the field_name's value.
+      title: ConditionOperator
+    SubmitFormResponse:
+      type: object
+      properties:
+        ticket_id:
+          type: string
+          description: The display ticket ID of the ticket that was created (if any). null value is allowed. If a valid ticket ID is returned, Moveworks will be able to fetch/poll this ticket to provide updates to the user and to accelerate resolution of their request.
+      title: SubmitFormResponse
+    Rule:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Unique identifier for the rule within the form.
+        logical:
+          $ref: '#/components/schemas/RuleLogical'
+          description: The logical operator to use to combine the conditions
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Condition'
+          description: Specifies the conditions that when met, will kick off actions. If the conditions go from met to unmet, the actions will be reversed as well.
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+          description: Specifies the actions to be taken if the conditions are met.
+      required:
+      - name
+      - conditions
+      - actions
+      title: Rule
+    ConditionValue:
+      oneOf:
+      - type: boolean
+      - type: string
+      - type: array
+        items:
+          type: string
+      description: 'field_name''s value will be compared against this value using the operator specified above. Note: When the operator is EMPTY, NOT_EMPTY, this attribute need not be specified.'
+      title: ConditionValue
   securitySchemes:
     bearerAuth:
       type: http

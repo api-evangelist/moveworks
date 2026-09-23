@@ -3,7 +3,6 @@
   "sources": [
     "_original/moveworks-beta-conversations-api-openapi.yaml",
     "_original/moveworks-content-gateway-openapi.yaml",
-    "_original/moveworks-conversations-api-openapi.yaml",
     "_original/moveworks-data-api-openapi.yaml",
     "_original/moveworks-events-api-openapi.yaml",
     "_original/moveworks-forms-gateway-openapi.yaml",
@@ -26,17 +25,14 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "sourced from openapi/_original/ (9 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (8 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "moveworks-beta-conversations-api-openapi.yaml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "moveworks-beta-conversations-api-openapi.yaml: declared missing tag: conversations",
     "moveworks-beta-conversations-api-openapi.yaml: declared missing tag: messages",
     "moveworks-beta-conversations-api-openapi.yaml: declared missing tag: responses",
     "moveworks-content-gateway-openapi.yaml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "moveworks-content-gateway-openapi.yaml: declared missing tag: ",
-    "moveworks-conversations-api-openapi.yaml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "moveworks-conversations-api-openapi.yaml: declared missing tag: conversations",
-    "moveworks-conversations-api-openapi.yaml: declared missing tag: messages",
-    "moveworks-conversations-api-openapi.yaml: declared missing tag: responses",
     "moveworks-data-api-openapi.yaml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "moveworks-data-api-openapi.yaml: declared missing tag: ",
     "moveworks-events-api-openapi.yaml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
@@ -51,12 +47,11 @@
     "moveworks-knowledge-gateway-openapi.yaml: declared missing tag: ",
     "moveworks-webhook-listeners-openapi.yaml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "moveworks-webhook-listeners-openapi.yaml: declared missing tag: webhooks",
-    "tag 'conversations' spans 2 source specs (moveworks-beta-conversations-api-openapi.yaml, moveworks-conversations-api-openapi.yaml): per-path servers applied",
-    "tag 'messages' spans 2 source specs (moveworks-beta-conversations-api-openapi.yaml, moveworks-conversations-api-openapi.yaml): per-path servers applied",
-    "tag 'responses' spans 2 source specs (moveworks-beta-conversations-api-openapi.yaml, moveworks-conversations-api-openapi.yaml): per-path servers applied",
-    "tag '' spans 4 source specs (moveworks-content-gateway-openapi.yaml, moveworks-data-api-openapi.yaml, moveworks-identity-gateway-openapi.yaml, moveworks-knowledge-gateway-openapi.yaml): per-path servers applied"
+    "tag '' spans 4 source specs (moveworks-content-gateway-openapi.yaml, moveworks-data-api-openapi.yaml, moveworks-identity-gateway-openapi.yaml, moveworks-knowledge-gateway-openapi.yaml): per-path servers applied",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
+    "_original/moveworks-conversations-api-openapi.yaml: archived document superseded by a larger archived document",
     "moveworks-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "moveworks-conversations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "moveworks-default-api-openapi.yml: previously refined output, superseded by openapi/_original/",

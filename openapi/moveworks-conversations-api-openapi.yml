@@ -1,8 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Moveworks Conversations API
+  title: (Beta) Conversations API
   version: 1.0.0
-  description: 'Operations tagged conversations across 2 of this provider''s published API definitions: moveworks-beta-conversations-api-openapi.yaml, moveworks-conversations-api-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.moveworks.ai/rest/v1beta1
   description: US production server
@@ -14,10 +13,8 @@ servers:
   description: US Prod 4 production server
 - url: https://api.prod3.us.moveworks.com/rest/v1beta1
   description: US Prod 3 production server
-- url: https://api.moveworks.ai/assistant/v1
-  description: US production server
 tags:
-- name: conversations
+- name: Conversations
 paths:
   /conversations:
     get:
@@ -25,7 +22,7 @@ paths:
       summary: List conversations
       description: Retrieves a paginated list of conversations in descending order by `updated_at` time (last accessed first). Only unarchived conversations are retrieved by default.
       tags:
-      - conversations
+      - Conversations
       parameters:
       - name: cursor
         in: query
@@ -101,7 +98,7 @@ paths:
       summary: Create conversation
       description: Creates a new conversation thread. Returns the created Conversation object with a unique `conversation_id`. If `title` is not provided, an AI generated title will be assigned based on the first response.
       tags:
-      - conversations
+      - Conversations
       parameters:
       - name: Authorization
         in: header
@@ -157,24 +154,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateConversationRequest'
-    servers:
-    - url: https://api.moveworks.ai/rest/v1beta1
-      description: US production server
-    - url: https://api.jp.moveworks.com/rest/v1beta1
-      description: Japan production server
-    - url: https://api.uk.moveworks.com/rest/v1beta1
-      description: UK production server
-    - url: https://api.prod4.us.moveworks.com/rest/v1beta1
-      description: US Prod 4 production server
-    - url: https://api.prod3.us.moveworks.com/rest/v1beta1
-      description: US Prod 3 production server
   /conversations/{conversation_id}:
     get:
       operationId: get-conversation
       summary: Get conversation
       description: Retrieves a specific conversation.
       tags:
-      - conversations
+      - Conversations
       parameters:
       - name: conversation_id
         in: path
@@ -236,7 +222,7 @@ paths:
       summary: Update conversation
       description: Updates title, or archive a conversation.
       tags:
-      - conversations
+      - Conversations
       parameters:
       - name: conversation_id
         in: path
@@ -304,17 +290,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UpdateConversationRequest'
-    servers:
-    - url: https://api.moveworks.ai/rest/v1beta1
-      description: US production server
-    - url: https://api.jp.moveworks.com/rest/v1beta1
-      description: Japan production server
-    - url: https://api.uk.moveworks.com/rest/v1beta1
-      description: UK production server
-    - url: https://api.prod4.us.moveworks.com/rest/v1beta1
-      description: US Prod 4 production server
-    - url: https://api.prod3.us.moveworks.com/rest/v1beta1
-      description: US Prod 3 production server
   /conversations/{conversation_id}/events:
     get:
       operationId: list-events
@@ -327,7 +302,7 @@ paths:
 
         Results are ordered chronologically. Use `starting_after` and `ending_at` to define a time range based on previously seen event IDs.'
       tags:
-      - conversations
+      - Conversations
       parameters:
       - name: conversation_id
         in: path
@@ -403,143 +378,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalErrorResponse'
-    servers:
-    - url: https://api.moveworks.ai/rest/v1beta1
-      description: US production server
-    - url: https://api.jp.moveworks.com/rest/v1beta1
-      description: Japan production server
-    - url: https://api.uk.moveworks.com/rest/v1beta1
-      description: UK production server
-    - url: https://api.prod4.us.moveworks.com/rest/v1beta1
-      description: US Prod 4 production server
-    - url: https://api.prod3.us.moveworks.com/rest/v1beta1
-      description: US Prod 3 production server
 components:
   schemas:
-    CreateConversationRequest:
+    Attribute:
       type: object
       properties:
-        title:
+        key:
           type: string
-          description: Optional user-defined title
-      title: CreateConversationRequest
-    CitationLocation:
-      type: object
-      properties:
-        offset:
-          type: integer
-          description: Zero-based character position in the assistant message where the citation should be inserted
-      description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
-      title: CitationLocation
-    MarkdownTextContent:
-      type: object
-      properties:
-        text:
+          description: Attribute name
+        value:
           type: string
-          description: Raw markdown text content. Used when Minerva's chat response `is_commonmark` is not set.
+          description: Attribute value
       required:
-      - text
-      title: MarkdownTextContent
-    ForbiddenErrorResponseErrorCode:
+      - key
+      - value
+      description: Key-value pair for citation display metadata. This is an opaque structure that contains rendering hints specific to each citation. Clients should not make assumptions about the keys or values present, as they may vary based on citation type and context.
+      title: Attribute
+    InvalidTitleErrorResponseErrorCode:
       type: string
       enum:
-      - FORBIDDEN
-      title: ForbiddenErrorResponseErrorCode
-    Display:
+      - INVALID_INPUT
+      title: InvalidTitleErrorResponseErrorCode
+    ListConversationsResponse:
       type: object
       properties:
-        title:
-          $ref: '#/components/schemas/Content'
-          description: Primary heading/identifier with type discriminator
-        body:
-          $ref: '#/components/schemas/Content'
-          description: Body/description content with type discriminator
-        attributes:
+        conversations:
           type: array
           items:
-            $ref: '#/components/schemas/Attribute'
-          description: Opaque key-value metadata for citation display. These attributes contain implementation-specific rendering hints and should be treated as a black-box by clients. The structure and values may vary between citations and should not be relied upon for business logic.
-      title: Display
-    EventType:
-      type: string
-      enum:
-      - MESSAGE_EVENT
-      description: Event type discriminator for event payloads.
-      title: EventType
-    ListEventsResponse:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-          description: Array of event objects, ordered chronologically
+            $ref: '#/components/schemas/Conversation'
+          description: Array of conversations
         metadata:
           $ref: '#/components/schemas/Metadata'
+          description: Metadata (pagination)
       required:
-      - events
-      - metadata
-      title: ListEventsResponse
-    UpdateConversationRequest:
+      - conversations
+      title: ListConversationsResponse
+    InvalidCursorErrorResponse:
       type: object
       properties:
-        title:
-          type: string
-          description: New conversation title (optional)
-        archived:
-          type: boolean
-          description: New archive status (optional)
-      title: UpdateConversationRequest
-    ActorType:
-      type: string
-      enum:
-      - USER
-      - ASSISTANT
-      description: Message actor type
-      title: ActorType
-    FeedbackOption:
-      type: object
-      properties:
-        callback_id:
-          type: string
-          description: Opaque callback identifier. Pass this value to the feedback endpoint to submit this rating.
+        error:
+          $ref: '#/components/schemas/InvalidCursorErrorResponseError'
       required:
-      - callback_id
-      title: FeedbackOption
-    Citation:
-      type: object
-      properties:
-        citation_id:
-          type: string
-          description: 'Unique citation identifier (format: `cite_<base62>`). Use this to join with `content_references` on the Message object.'
-        location:
-          $ref: '#/components/schemas/CitationLocation'
-          description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
-        url:
-          type: string
-          format: uri
-          description: URL to the entity
-        display:
-          $ref: '#/components/schemas/Display'
-      title: Citation
-    EventPayload:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/EventType'
-        message:
-          $ref: '#/components/schemas/Message'
-          description: Present when the event type is MESSAGE_EVENT
-      required:
-      - type
-      description: Event payload. Currently only message events are supported.
-      title: EventPayload
-    PlainTextContentItemType:
-      type: string
-      enum:
-      - PLAIN_TEXT
-      description: Content type discriminator
-      title: PlainTextContentItemType
+      - error
+      description: Error response for invalid pagination cursor
+      title: InvalidCursorErrorResponse
     InvalidTitleErrorResponse:
       type: object
       properties:
@@ -558,11 +440,358 @@ components:
       - error
       description: Error response for unauthorized access
       title: UnauthorizedErrorResponse
+    InvalidCursorErrorResponseErrorCode:
+      type: string
+      enum:
+      - INVALID_CURSOR
+      title: InvalidCursorErrorResponseErrorCode
+    NotFoundErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotFoundErrorResponseError'
+      required:
+      - error
+      description: Error response for resource not found
+      title: NotFoundErrorResponse
+    ListEventsResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+          description: Array of event objects, ordered chronologically
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+      required:
+      - events
+      - metadata
+      title: ListEventsResponse
+    CommonmarkTextContent:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Commonmark-formatted text content
+      required:
+      - text
+      title: CommonmarkTextContent
+    UnauthorizedErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/UnauthorizedErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: UnauthorizedErrorResponseError
+    CreateConversationRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Optional user-defined title
+      title: CreateConversationRequest
+    Citation:
+      type: object
+      properties:
+        citation_id:
+          type: string
+          description: 'Unique citation identifier (format: `cite_<base62>`). Use this to join with `content_references` on the Message object.'
+        location:
+          $ref: '#/components/schemas/CitationLocation'
+          description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
+        url:
+          type: string
+          format: uri
+          description: URL to the entity
+        display:
+          $ref: '#/components/schemas/Display'
+      title: Citation
+    Content:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/PlainTextContentItemType'
+            description: Content type discriminator
+          plain_text:
+            $ref: '#/components/schemas/PlainTextContent'
+        required:
+        - type
+        - plain_text
+        description: PLAIN_TEXT variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/CommonmarkTextContentItemType'
+            description: Content type discriminator
+          commonmark_text:
+            $ref: '#/components/schemas/CommonmarkTextContent'
+        required:
+        - type
+        - commonmark_text
+        description: COMMONMARK_TEXT variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/MarkdownTextContentItemType'
+            description: Content type discriminator
+          markdown_text:
+            $ref: '#/components/schemas/MarkdownTextContent'
+        required:
+        - type
+        - markdown_text
+        description: MARKDOWN_TEXT variant
+      discriminator:
+        propertyName: type
+      description: Message content with type discriminator
+      title: Content
+    InternalErrorResponseErrorCode:
+      type: string
+      enum:
+      - INTERNAL_ERROR
+      title: InternalErrorResponseErrorCode
+    InvalidCursorErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InvalidCursorErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: InvalidCursorErrorResponseError
+    MessageFeedback:
+      type: object
+      properties:
+        helpful:
+          $ref: '#/components/schemas/FeedbackOption'
+          description: Positive feedback option. Use this callback_id to rate the response as helpful.
+        unhelpful:
+          $ref: '#/components/schemas/FeedbackOption'
+          description: Negative feedback option. Use this callback_id to rate the response as unhelpful.
+      description: Feedback options available on an assistant message. When present, this message supports feedback and the callback IDs can be used to submit a rating.
+      title: MessageFeedback
+    InvalidTitleErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InvalidTitleErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: InvalidTitleErrorResponseError
+    ForbiddenErrorResponseErrorCode:
+      type: string
+      enum:
+      - FORBIDDEN
+      title: ForbiddenErrorResponseErrorCode
+    RateLimitExceededErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/RateLimitExceededErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: RateLimitExceededErrorResponseError
+    ForbiddenErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ForbiddenErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: ForbiddenErrorResponseError
+    MarkdownTextContentItemType:
+      type: string
+      enum:
+      - MARKDOWN_TEXT
+      description: Content type discriminator
+      title: MarkdownTextContentItemType
+    MarkdownTextContent:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Raw markdown text content. Used when Minerva's chat response `is_commonmark` is not set.
+      required:
+      - text
+      title: MarkdownTextContent
     UnauthorizedErrorResponseErrorCode:
       type: string
       enum:
       - UNAUTHORIZED
       title: UnauthorizedErrorResponseErrorCode
+    EventPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/EventType'
+        message:
+          $ref: '#/components/schemas/Message'
+          description: Present when the event type is MESSAGE_EVENT
+      required:
+      - type
+      description: Event payload. Currently only message events are supported.
+      title: EventPayload
+    NotFoundErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/NotFoundErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: NotFoundErrorResponseError
+    Conversation:
+      type: object
+      properties:
+        conversation_id:
+          type: string
+          description: A base-62 identifier prefixed by a short resource type
+        title:
+          type: string
+          description: Optional user-defined title
+        archived:
+          type: boolean
+          description: User-controlled flag to mark conversation as archived
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp (ISO 8601)
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp (ISO 8601)
+      required:
+      - conversation_id
+      - created_at
+      - updated_at
+      title: Conversation
+    InternalErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InternalErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: InternalErrorResponseError
+    Metadata:
+      type: object
+      properties:
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: Opaque cursor for next page (null if no more results)
+      title: Metadata
+    CitationContentReference:
+      type: object
+      properties:
+        citation_id:
+          type: string
+          description: References `Citation.citation_id` to link this position to a citation entity.
+        offset:
+          type: integer
+          description: Zero-based character position in the assistant message where the citation appears.
+      required:
+      - citation_id
+      - offset
+      title: CitationContentReference
+    EventType:
+      type: string
+      enum:
+      - MESSAGE_EVENT
+      description: Event type discriminator for event payloads.
+      title: EventType
+    PlainTextContent:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Plain text content
+      required:
+      - text
+      title: PlainTextContent
+    FeedbackOption:
+      type: object
+      properties:
+        callback_id:
+          type: string
+          description: Opaque callback identifier. Pass this value to the feedback endpoint to submit this rating.
+      required:
+      - callback_id
+      title: FeedbackOption
+    InternalErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/InternalErrorResponseError'
+      required:
+      - error
+      description: Error response for internal server error
+      title: InternalErrorResponse
+    ForbiddenErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ForbiddenErrorResponseError'
+      required:
+      - error
+      description: Error response for forbidden access
+      title: ForbiddenErrorResponse
+    RateLimitExceededErrorResponseErrorCode:
+      type: string
+      enum:
+      - RATE_LIMIT_EXCEEDED
+      title: RateLimitExceededErrorResponseErrorCode
+    ActorType:
+      type: string
+      enum:
+      - USER
+      - ASSISTANT
+      description: Message actor type
+      title: ActorType
+    Event:
+      type: object
+      properties:
+        event_id:
+          type: string
+          description: Unique event identifier
+        conversation_id:
+          type: string
+          description: Parent conversation identifier
+        event_payload:
+          $ref: '#/components/schemas/EventPayload'
+      required:
+      - event_id
+      - conversation_id
+      - event_payload
+      title: Event
+    PlainTextContentItemType:
+      type: string
+      enum:
+      - PLAIN_TEXT
+      description: Content type discriminator
+      title: PlainTextContentItemType
     Message:
       type: object
       properties:
@@ -610,287 +839,40 @@ components:
       - content
       - created_at
       title: Message
+    Display:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/Content'
+          description: Primary heading/identifier with type discriminator
+        body:
+          $ref: '#/components/schemas/Content'
+          description: Body/description content with type discriminator
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+          description: Opaque key-value metadata for citation display. These attributes contain implementation-specific rendering hints and should be treated as a black-box by clients. The structure and values may vary between citations and should not be relied upon for business logic.
+      title: Display
+    CitationLocation:
+      type: object
+      properties:
+        offset:
+          type: integer
+          description: Zero-based character position in the assistant message where the citation should be inserted
+      description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
+      title: CitationLocation
+    NotFoundErrorResponseErrorCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: NotFoundErrorResponseErrorCode
     CommonmarkTextContentItemType:
       type: string
       enum:
       - COMMONMARK_TEXT
       description: Content type discriminator
       title: CommonmarkTextContentItemType
-    CitationContentReference:
-      type: object
-      properties:
-        citation_id:
-          type: string
-          description: References `Citation.citation_id` to link this position to a citation entity.
-        offset:
-          type: integer
-          description: Zero-based character position in the assistant message where the citation appears.
-      required:
-      - citation_id
-      - offset
-      title: CitationContentReference
-    InvalidCursorErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/InvalidCursorErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: InvalidCursorErrorResponseError
-    ForbiddenErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ForbiddenErrorResponseError'
-      required:
-      - error
-      description: Error response for forbidden access
-      title: ForbiddenErrorResponse
-    MessageFeedback:
-      type: object
-      properties:
-        helpful:
-          $ref: '#/components/schemas/FeedbackOption'
-          description: Positive feedback option. Use this callback_id to rate the response as helpful.
-        unhelpful:
-          $ref: '#/components/schemas/FeedbackOption'
-          description: Negative feedback option. Use this callback_id to rate the response as unhelpful.
-      description: Feedback options available on an assistant message. When present, this message supports feedback and the callback IDs can be used to submit a rating.
-      title: MessageFeedback
-    InternalErrorResponseErrorCode:
-      type: string
-      enum:
-      - INTERNAL_ERROR
-      title: InternalErrorResponseErrorCode
-    InternalErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/InternalErrorResponseError'
-      required:
-      - error
-      description: Error response for internal server error
-      title: InternalErrorResponse
-    Metadata:
-      type: object
-      properties:
-        next_cursor:
-          type:
-          - string
-          - 'null'
-          description: Opaque cursor for next page (null if no more results)
-      title: Metadata
-    InternalErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/InternalErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: InternalErrorResponseError
-    UnauthorizedErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/UnauthorizedErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: UnauthorizedErrorResponseError
-    NotFoundErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/NotFoundErrorResponseError'
-      required:
-      - error
-      description: Error response for resource not found
-      title: NotFoundErrorResponse
-    ForbiddenErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ForbiddenErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: ForbiddenErrorResponseError
-    Attribute:
-      type: object
-      properties:
-        key:
-          type: string
-          description: Attribute name
-        value:
-          type: string
-          description: Attribute value
-      required:
-      - key
-      - value
-      description: Key-value pair for citation display metadata. This is an opaque structure that contains rendering hints specific to each citation. Clients should not make assumptions about the keys or values present, as they may vary based on citation type and context.
-      title: Attribute
-    Content:
-      oneOf:
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/PlainTextContentItemType'
-            description: Content type discriminator
-          plain_text:
-            $ref: '#/components/schemas/PlainTextContent'
-        required:
-        - type
-        - plain_text
-        description: PLAIN_TEXT variant
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/CommonmarkTextContentItemType'
-            description: Content type discriminator
-          commonmark_text:
-            $ref: '#/components/schemas/CommonmarkTextContent'
-        required:
-        - type
-        - commonmark_text
-        description: COMMONMARK_TEXT variant
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/MarkdownTextContentItemType'
-            description: Content type discriminator
-          markdown_text:
-            $ref: '#/components/schemas/MarkdownTextContent'
-        required:
-        - type
-        - markdown_text
-        description: MARKDOWN_TEXT variant
-      discriminator:
-        propertyName: type
-      description: Message content with type discriminator
-      title: Content
-    Event:
-      type: object
-      properties:
-        event_id:
-          type: string
-          description: Unique event identifier
-        conversation_id:
-          type: string
-          description: Parent conversation identifier
-        event_payload:
-          $ref: '#/components/schemas/EventPayload'
-      required:
-      - event_id
-      - conversation_id
-      - event_payload
-      title: Event
-    NotFoundErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/NotFoundErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: NotFoundErrorResponseError
-    Conversation:
-      type: object
-      properties:
-        conversation_id:
-          type: string
-          description: A base-62 identifier prefixed by a short resource type
-        title:
-          type: string
-          description: Optional user-defined title
-        archived:
-          type: boolean
-          description: User-controlled flag to mark conversation as archived
-        created_at:
-          type: string
-          format: date-time
-          description: Creation timestamp (ISO 8601)
-        updated_at:
-          type: string
-          format: date-time
-          description: Last update timestamp (ISO 8601)
-      required:
-      - conversation_id
-      - created_at
-      - updated_at
-      title: Conversation
-    RateLimitExceededErrorResponseErrorCode:
-      type: string
-      enum:
-      - RATE_LIMIT_EXCEEDED
-      title: RateLimitExceededErrorResponseErrorCode
-    MarkdownTextContentItemType:
-      type: string
-      enum:
-      - MARKDOWN_TEXT
-      description: Content type discriminator
-      title: MarkdownTextContentItemType
-    ListConversationsResponse:
-      type: object
-      properties:
-        conversations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Conversation'
-          description: Array of conversations
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-          description: Metadata (pagination)
-      required:
-      - conversations
-      title: ListConversationsResponse
-    RateLimitExceededErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/RateLimitExceededErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: RateLimitExceededErrorResponseError
-    InvalidTitleErrorResponseErrorCode:
-      type: string
-      enum:
-      - INVALID_INPUT
-      title: InvalidTitleErrorResponseErrorCode
-    InvalidTitleErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/InvalidTitleErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: InvalidTitleErrorResponseError
-    CommonmarkTextContent:
-      type: object
-      properties:
-        text:
-          type: string
-          description: Commonmark-formatted text content
-      required:
-      - text
-      title: CommonmarkTextContent
     RateLimitExceededErrorResponse:
       type: object
       properties:
@@ -900,257 +882,18 @@ components:
       - error
       description: Error response for rate limit exceeded
       title: RateLimitExceededErrorResponse
-    InvalidCursorErrorResponse:
+    UpdateConversationRequest:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/InvalidCursorErrorResponseError'
-      required:
-      - error
-      description: Error response for invalid pagination cursor
-      title: InvalidCursorErrorResponse
-    InvalidCursorErrorResponseErrorCode:
-      type: string
-      enum:
-      - INVALID_CURSOR
-      title: InvalidCursorErrorResponseErrorCode
-    NotFoundErrorResponseErrorCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: NotFoundErrorResponseErrorCode
-    PlainTextContent:
-      type: object
-      properties:
-        text:
+        title:
           type: string
-          description: Plain text content
-      required:
-      - text
-      title: PlainTextContent
-    URLAction:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-          description: URL to open when the action is triggered.
-      required:
-      - url
-      title: URLAction
-    UrlActionItemType:
-      type: string
-      enum:
-      - URL_ACTION
-      description: Action type discriminator
-      title: UrlActionItemType
-    CallbackActionContent:
-      type: object
-      properties:
-        callback_id:
-          type: string
-          description: Opaque callback id for the action the user triggered. Submit this via `input.callback_id` on the create response endpoint to trigger the action.
-      required:
-      - callback_id
-      title: CallbackActionContent
-    Citation_2:
-      type: object
-      properties:
-        citation_id:
-          type: string
-          description: 'Unique citation identifier (format: `cite_<base62>`). Use this to join with `content_references` on the Message object.'
-        url:
-          type: string
-          format: uri
-          description: URL to the entity
-        display:
-          $ref: '#/components/schemas/Display'
-      title: Citation
-    Message_2:
-      type: object
-      properties:
-        message_id:
-          type: string
-          description: A base-62 identifier prefixed by a short resource type
-        conversation_id:
-          type: string
-          description: A base-62 identifier prefixed by a short resource type
-        response_id:
-          type: string
-          description: A base-62 identifier prefixed by a short resource type
-        actor:
-          $ref: '#/components/schemas/ActorType'
-        content:
-          $ref: '#/components/schemas/Content_2'
-        citations:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Citation_2'
-          description: Unique citation references in the assistant message. Use `content_references` to determine where in the message text each citation is referenced.
-        content_references:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CitationContentReference'
-          description: Ordered positions in the message text where citations appear (ascending by offset). Each entry references a `Citation` via `citation_id`. Only populated on assistant messages.
-        created_at:
-          type: string
-          format: date-time
-          description: Creation timestamp (ISO 8601)
-        feedback:
-          oneOf:
-          - $ref: '#/components/schemas/MessageFeedback'
-          - type: 'null'
-          description: Feedback options for this message. Present only on final assistant messages that support feedback. Use the callback IDs to submit a rating via the feedback endpoint.
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Action'
-          description: Actions a user can take in response to this message (e.g. buttons or links). Absent on messages with no actions.
-      required:
-      - message_id
-      - conversation_id
-      - response_id
-      - actor
-      - content
-      - created_at
-      title: Message
-    CallbackActionContentItemType:
-      type: string
-      enum:
-      - CALLBACK_ACTION_CONTENT
-      description: Content type discriminator
-      title: CallbackActionContentItemType
-    Action:
-      oneOf:
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/CallbackActionItemType'
-            description: Action type discriminator
-          label:
-            type: string
-            description: Label associated with the action (e.g., button text).
-          callback_action:
-            $ref: '#/components/schemas/CallbackAction'
-        required:
-        - type
-        - label
-        - callback_action
-        description: CALLBACK_ACTION variant
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/UrlActionItemType'
-            description: Action type discriminator
-          label:
-            type: string
-            description: Label associated with the action (e.g., link text).
-          url_action:
-            $ref: '#/components/schemas/URLAction'
-        required:
-        - type
-        - label
-        - url_action
-        description: URL_ACTION variant
-      discriminator:
-        propertyName: type
-      description: An action a user can take in response to a message. The `type` field determines which action payload is present.
-      title: Action
-    CallbackAction:
-      type: object
-      properties:
-        callback_id:
-          type: string
-          description: Opaque callback identifier for the action. Submit this via `input.callback_id` on the create response endpoint to trigger the action.
-      required:
-      - callback_id
-      title: CallbackAction
-    CallbackActionItemType:
-      type: string
-      enum:
-      - CALLBACK_ACTION
-      description: Action type discriminator
-      title: CallbackActionItemType
-    Content_2:
-      oneOf:
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/PlainTextContentItemType'
-            description: Content type discriminator
-          plain_text:
-            $ref: '#/components/schemas/PlainTextContent'
-        required:
-        - type
-        - plain_text
-        description: PLAIN_TEXT variant
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/CommonmarkTextContentItemType'
-            description: Content type discriminator
-          commonmark_text:
-            $ref: '#/components/schemas/CommonmarkTextContent'
-        required:
-        - type
-        - commonmark_text
-        description: COMMONMARK_TEXT variant
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/MarkdownTextContentItemType'
-            description: Content type discriminator
-          markdown_text:
-            $ref: '#/components/schemas/MarkdownTextContent'
-        required:
-        - type
-        - markdown_text
-        description: MARKDOWN_TEXT variant
-      - type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/CallbackActionContentItemType'
-            description: Content type discriminator
-          callback_action:
-            $ref: '#/components/schemas/CallbackActionContent'
-        required:
-        - type
-        - callback_action
-        description: CALLBACK_ACTION_CONTENT variant
-      discriminator:
-        propertyName: type
-      description: Message content with type discriminator
-      title: Content
-    Event_2:
-      type: object
-      properties:
-        event_id:
-          type: string
-          description: Unique event identifier
-        conversation_id:
-          type: string
-          description: Parent conversation identifier
-        created_at:
-          type: string
-          format: date-time
-          description: Time when this event was created (ISO 8601). Events are ordered chronologically by this value.
-        event_payload:
-          $ref: '#/components/schemas/EventPayload'
-      required:
-      - event_id
-      - conversation_id
-      - created_at
-      - event_payload
-      title: Event
+          description: New conversation title (optional)
+        archived:
+          type: boolean
+          description: New archive status (optional)
+      title: UpdateConversationRequest
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
       description: JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.
-x-refined-from:
-- moveworks-beta-conversations-api-openapi.yaml
-- moveworks-conversations-api-openapi.yaml

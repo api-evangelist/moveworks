@@ -22,17 +22,15 @@ servers:
 - url: https://api.prod3.us.moveworks.com
   description: https://api.prod3.us.moveworks.com
 tags:
-- name: deprecated
+- name: Deprecated
 paths:
   /rest/v1/messages/send:
     post:
       operationId: send-message
       summary: '[Deprecated] Send a message'
-      description: 'Send a message to users. This endpoint is deprecated, but existing integrations will continue to work.
-
-        '
+      description: Send a message to users. This endpoint is deprecated, but existing integrations will continue to work.
       tags:
-      - deprecated
+      - Deprecated
       parameters:
       - name: Authorization
         in: header
@@ -75,36 +73,6 @@ paths:
               $ref: '#/components/schemas/SendMessageRequest'
 components:
   schemas:
-    OauthErrorAuthenticationExpiredToken:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthErrorAuthenticationExpiredToken
-    OauthErrorAuthenticationInvalidToken:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthErrorAuthenticationInvalidToken
-    ErrorRateLimitExceeded:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorRateLimitExceeded
-    SendMessageRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/ErrorAuthentication'
-      - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
-      - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
-      title: SendMessageRequestForbiddenError
     ErrorAuthentication:
       type: object
       properties:
@@ -113,6 +81,14 @@ components:
         message:
           type: string
       title: ErrorAuthentication
+    OauthErrorAuthenticationExpiredToken:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthErrorAuthenticationExpiredToken
     SendMessageRequest:
       type: object
       properties:
@@ -128,6 +104,14 @@ components:
       - message
       - recipients
       title: SendMessageRequest
+    ErrorRateLimitExceeded:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorRateLimitExceeded
     ErrorBadRequest:
       type: object
       properties:
@@ -136,6 +120,20 @@ components:
         message:
           type: string
       title: ErrorBadRequest
+    SendMessageRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/ErrorAuthentication'
+      - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
+      - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
+      title: SendMessageRequestForbiddenError
+    OauthErrorAuthenticationInvalidToken:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthErrorAuthenticationInvalidToken
   securitySchemes:
     Bearer:
       type: http

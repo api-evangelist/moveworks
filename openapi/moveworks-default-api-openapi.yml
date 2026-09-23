@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Moveworks API
   version: 1.0.0
-  description: 'Operations tagged  across 4 of this provider''s published API definitions: moveworks-content-gateway-openapi.yaml, moveworks-data-api-openapi.yaml, moveworks-identity-gateway-openapi.yaml, moveworks-knowledge-gateway-openapi.yaml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged across 4 of this provider''s published API definitions: moveworks-content-gateway-openapi.yaml, moveworks-data-api-openapi.yaml, moveworks-identity-gateway-openapi.yaml, moveworks-knowledge-gateway-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://content-gateway-example.com/v1
   description: https://content-gateway-example.com/v1
@@ -31,9 +31,7 @@ paths:
     get:
       operationId: list-files
       summary: List files
-      description: 'Retrieve files in a specific node, providing features like querying, filtering, and detailed navigational information including parent folder details and direct download URLs.
-
-        '
+      description: Retrieve files in a specific node, providing features like querying, filtering, and detailed navigational information including parent folder details and direct download URLs.
       tags:
       - ''
       parameters:
@@ -111,9 +109,7 @@ paths:
     get:
       operationId: get-file-metadata-and-html-content-body
       summary: Get file metadata and HTML content body
-      description: 'Retrieves metadata and content for a specific file. When the content type is HTML (mime_type: text/html), this endpoint returns the actual HTML content in the response body. For other file types, it provides download path information.
-
-        '
+      description: 'Retrieves metadata and content for a specific file. When the content type is HTML (mime_type: text/html), this endpoint returns the actual HTML content in the response body. For other file types, it provides download path information.'
       tags:
       - ''
       parameters:
@@ -182,9 +178,7 @@ paths:
         The `Content-Type` response header indicates the MIME type of the file (e.g. `application/pdf`, `text/html`). Use this to determine how to handle or display the file.
 
 
-        The `Checksum-SHA256` response header provides a SHA-256 hash of the file contents. Verify this value against the downloaded bytes to confirm the file was not corrupted in transit.
-
-        '
+        The `Checksum-SHA256` response header provides a SHA-256 hash of the file contents. Verify this value against the downloaded bytes to confirm the file was not corrupted in transit.'
       tags:
       - ''
       parameters:
@@ -1117,7 +1111,19 @@ paths:
     get:
       operationId: list-articles
       summary: List Articles
-      description: "<b>Description:</b> <br> The endpoint should return a list of articles in deterministic order. <br> We recommend a rate limit of 10 req/sec for this endpoint.\n<br> <br>\n <b>Usage:</b>\n <br>\nMoveworks will call this endpoint to ingest articles every 4 hours.  <br> Ask your CSE if you wish to increase or decrease the polling frequency."
+      description: 'Description:
+
+        The endpoint should return a list of articles in deterministic order.
+
+        We recommend a rate limit of 10 req/sec for this endpoint.
+
+
+        Usage:
+
+
+        Moveworks will call this endpoint to ingest articles every 4 hours.
+
+        Ask your CSE if you wish to increase or decrease the polling frequency.'
       tags:
       - ''
       parameters:
@@ -1213,6 +1219,23 @@ paths:
       description: http://localhost:5000/myinstance1
 components:
   schemas:
+    PermissionCollectionValue:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionCollectionValuePermissionsItems'
+          description: List of permission mappings for users and groups.
+        permissions_hierarchy:
+          type: array
+          items:
+            type: string
+          description: Hierarchy chain of entity IDs (required if permission model = hierarchy_permission).
+        last_modified_datetime:
+          type: string
+          description: Timestamp of the last permission update.
+      title: PermissionCollectionValue
     node_reference:
       type: object
       properties:
@@ -1227,7 +1250,29 @@ components:
       - id
       - name
       title: node_reference
-    UserCollection:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the user.
+        primary_email_addr:
+          type: string
+          description: Primary email address of the user.
+        full_name:
+          type: string
+          description: Full name of the user.
+        state:
+          type: string
+          description: 'State of the user account. Enum: Active | Inactive'
+        last_modified_datetime:
+          type: string
+          description: Last modification timestamp (ISO 8601).
+        metadata:
+          $ref: '#/components/schemas/UserMetadata'
+          description: Custom key-value metadata for the user.
+      title: User
+    GroupMemberCollection:
       type: object
       properties:
         '@odata.context':
@@ -1235,110 +1280,28 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/User'
+            $ref: '#/components/schemas/GroupMember'
         '@odata.nextLink':
           type: string
-      title: UserCollection
+      title: GroupMemberCollection
+    GroupMember:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Entity type. Enum: USER | GROUP'
+        id:
+          type: string
+          description: ID of the member (user or group).
+        name:
+          type: string
+          description: Name of the member (optional).
+      title: GroupMember
     UserMetadata:
       type: object
       properties: {}
       description: Custom key-value metadata for the user.
       title: UserMetadata
-    ErrorResponseError:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Standard error code (e.g., UNAUTHORIZED, INVALID_ARGUMENT, NOT_FOUND).
-        message:
-          type: string
-          description: Human-readable explanation of the error.
-      required:
-      - code
-      - message
-      title: ErrorResponseError
-    ContentObject:
-      type: object
-      properties:
-        download_path:
-          type: string
-          description: 'URL for the download request. For file streams: use `/{id}/download`. Not required for HTML content.'
-        mime_type:
-          type: string
-          description: 'Used to specify type of content. See our supported MIME types here: https://docs.moveworks.com/api-reference/content-gateway/supported-mime-types.'
-        size:
-          type: integer
-          format: int64
-        sha1_hash:
-          type: string
-      required:
-      - mime_type
-      title: ContentObject
-    PermissionCollectionValuePermissionsItemsAction:
-      type: string
-      enum:
-      - VIEW
-      - UPDATE
-      description: Action permitted on the content.
-      title: PermissionCollectionValuePermissionsItemsAction
-    GroupCollection:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/Group'
-        '@odata.nextLink':
-          type: string
-      title: GroupCollection
-    status_enum:
-      type: string
-      enum:
-      - active
-      - deleted
-      title: status_enum
-    ODataContentResponse:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/Node'
-        '@odata.nextLink':
-          type: string
-          description: URL to fetch the next set of results.
-      title: ODataContentResponse
-    ODataContentMetadataResponse:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        value:
-          $ref: '#/components/schemas/NodeWithContent'
-      title: ODataContentMetadataResponse
-    PermissionsMetadataModel:
-      type: string
-      enum:
-      - resource_permission
-      - hierarchy_permission
-      description: 'Permission model in use. NOTE: `resource_permissions` is the only supported model at this time.'
-      title: PermissionsMetadataModel
-    PermissionsMetadata:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: OData metadata context URL.
-        model:
-          $ref: '#/components/schemas/PermissionsMetadataModel'
-          description: 'Permission model in use. NOTE: `resource_permissions` is the only supported model at this time.'
-      title: PermissionsMetadata
     PermissionCollectionValuePermissionsItems:
       type: object
       properties:
@@ -1352,14 +1315,7 @@ components:
           $ref: '#/components/schemas/PermissionCollectionValuePermissionsItemsAction'
           description: Action permitted on the content.
       title: PermissionCollectionValuePermissionsItems
-    PermissionCollectionValuePermissionsItemsType:
-      type: string
-      enum:
-      - USER
-      - GROUP
-      description: Type of permission entity.
-      title: PermissionCollectionValuePermissionsItemsType
-    GroupMemberCollection:
+    GroupCollection:
       type: object
       properties:
         '@odata.context':
@@ -1367,53 +1323,35 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/GroupMember'
+            $ref: '#/components/schemas/Group'
         '@odata.nextLink':
           type: string
-      title: GroupMemberCollection
-    Node:
+      title: GroupCollection
+    ContentObjectWithBody:
       type: object
       properties:
-        id:
+        download_path:
           type: string
-          format: uuid
-          description: Unique id for each file
-        name:
+          description: 'URL for the download request. For file streams: use `/{id}/download`. Not required for HTML content.'
+        mime_type:
           type: string
-          description: User friendly name for the file
-        status:
-          $ref: '#/components/schemas/status_enum'
-        custom_attributes:
-          $ref: '#/components/schemas/custom_attributes'
-        last_modified_datetime:
+          description: 'Used to specify type of content. See our supported MIME types here: https://docs.moveworks.com/api-reference/content-gateway/supported-mime-types.'
+        size:
+          type: integer
+          format: int64
+        sha1_hash:
           type: string
-          format: date-time
-          description: Used to efficiently ingest content only updated since last ingestion
-        last_modified_by:
+        body:
           type: string
-        created_datetime:
-          type: string
-          format: date-time
-        created_by:
-          type: string
-        external_url:
-          type: string
-          description: External URL to redirect users
-        metadata_url:
-          type: string
-          description: Used to retrieve metadata about individual files
-        content:
-          $ref: '#/components/schemas/ContentObject'
-        parent_info:
-          $ref: '#/components/schemas/node_reference'
-        children_url:
-          type: string
+          description: The HTML content. Required when mime_type is `text/html`.
       required:
-      - id
-      - name
-      - last_modified_datetime
-      - external_url
-      title: Node
+      - mime_type
+      title: ContentObjectWithBody
+    GroupMetadata:
+      type: object
+      properties: {}
+      description: Custom key-value metadata for the group.
+      title: GroupMetadata
     NodeWithContent:
       type: object
       properties:
@@ -1457,7 +1395,37 @@ components:
       - last_modified_datetime
       - external_url
       title: NodeWithContent
-    ContentObjectWithBody:
+    ErrorResponseError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Standard error code (e.g., UNAUTHORIZED, INVALID_ARGUMENT, NOT_FOUND).
+        message:
+          type: string
+          description: Human-readable explanation of the error.
+      required:
+      - code
+      - message
+      title: ErrorResponseError
+    PermissionsMetadataModel:
+      type: string
+      enum:
+      - resource_permission
+      - hierarchy_permission
+      description: 'Permission model in use. NOTE: `resource_permissions` is the only supported model at this time.'
+      title: PermissionsMetadataModel
+    PermissionsMetadata:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: OData metadata context URL.
+        model:
+          $ref: '#/components/schemas/PermissionsMetadataModel'
+          description: 'Permission model in use. NOTE: `resource_permissions` is the only supported model at this time.'
+      title: PermissionsMetadata
+    ContentObject:
       type: object
       properties:
         download_path:
@@ -1471,24 +1439,16 @@ components:
           format: int64
         sha1_hash:
           type: string
-        body:
-          type: string
-          description: The HTML content. Required when mime_type is `text/html`.
       required:
       - mime_type
-      title: ContentObjectWithBody
-    PermissionCollection:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: OData metadata context URL.
-        value:
-          $ref: '#/components/schemas/PermissionCollectionValue'
-        '@odata.nextLink':
-          type: string
-          description: URL to retrieve the next page of permission results.
-      title: PermissionCollection
+      title: ContentObject
+    PermissionCollectionValuePermissionsItemsType:
+      type: string
+      enum:
+      - USER
+      - GROUP
+      description: Type of permission entity.
+      title: PermissionCollectionValuePermissionsItemsType
     Group:
       type: object
       properties:
@@ -1508,41 +1468,103 @@ components:
           $ref: '#/components/schemas/GroupMetadata'
           description: Custom key-value metadata for the group.
       title: Group
-    GroupMember:
+    custom_attributes:
+      type: object
+      additionalProperties:
+        type: string
+      description: A map of string to string for representing custom attributes.
+      title: custom_attributes
+    ODataContentResponse:
       type: object
       properties:
-        type:
+        '@odata.context':
           type: string
-          description: 'Entity type. Enum: USER | GROUP'
+          description: URL to the metadata of the response.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Node'
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+      title: ODataContentResponse
+    PermissionCollection:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: OData metadata context URL.
+        value:
+          $ref: '#/components/schemas/PermissionCollectionValue'
+        '@odata.nextLink':
+          type: string
+          description: URL to retrieve the next page of permission results.
+      title: PermissionCollection
+    status_enum:
+      type: string
+      enum:
+      - active
+      - deleted
+      title: status_enum
+    PermissionCollectionValuePermissionsItemsAction:
+      type: string
+      enum:
+      - VIEW
+      - UPDATE
+      description: Action permitted on the content.
+      title: PermissionCollectionValuePermissionsItemsAction
+    Node:
+      type: object
+      properties:
         id:
           type: string
-          description: ID of the member (user or group).
+          format: uuid
+          description: Unique id for each file
         name:
           type: string
-          description: Name of the member (optional).
-      title: GroupMember
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the user.
-        primary_email_addr:
-          type: string
-          description: Primary email address of the user.
-        full_name:
-          type: string
-          description: Full name of the user.
-        state:
-          type: string
-          description: 'State of the user account. Enum: Active | Inactive'
+          description: User friendly name for the file
+        status:
+          $ref: '#/components/schemas/status_enum'
+        custom_attributes:
+          $ref: '#/components/schemas/custom_attributes'
         last_modified_datetime:
           type: string
-          description: Last modification timestamp (ISO 8601).
-        metadata:
-          $ref: '#/components/schemas/UserMetadata'
-          description: Custom key-value metadata for the user.
-      title: User
+          format: date-time
+          description: Used to efficiently ingest content only updated since last ingestion
+        last_modified_by:
+          type: string
+        created_datetime:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        external_url:
+          type: string
+          description: External URL to redirect users
+        metadata_url:
+          type: string
+          description: Used to retrieve metadata about individual files
+        content:
+          $ref: '#/components/schemas/ContentObject'
+        parent_info:
+          $ref: '#/components/schemas/node_reference'
+        children_url:
+          type: string
+      required:
+      - id
+      - name
+      - last_modified_datetime
+      - external_url
+      title: Node
+    ODataContentMetadataResponse:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        value:
+          $ref: '#/components/schemas/NodeWithContent'
+      title: ODataContentMetadataResponse
     ErrorResponse:
       type: object
       properties:
@@ -1551,35 +1573,217 @@ components:
       required:
       - error
       title: ErrorResponse
-    GroupMetadata:
-      type: object
-      properties: {}
-      description: Custom key-value metadata for the group.
-      title: GroupMetadata
-    PermissionCollectionValue:
+    UserCollection:
       type: object
       properties:
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/PermissionCollectionValuePermissionsItems'
-          description: List of permission mappings for users and groups.
-        permissions_hierarchy:
-          type: array
-          items:
-            type: string
-          description: Hierarchy chain of entity IDs (required if permission model = hierarchy_permission).
-        last_modified_datetime:
+        '@odata.context':
           type: string
-          description: Timestamp of the last permission update.
-      title: PermissionCollectionValue
-    custom_attributes:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        '@odata.nextLink':
+          type: string
+      title: UserCollection
+    UserobjectExternalIdsItems:
       type: object
-      additionalProperties:
-        type: string
-      description: A map of string to string for representing custom attributes.
-      title: custom_attributes
-    plugincallslist:
+      properties:
+        connector_name:
+          type: string
+          description: Name of the connector created in Moveworks Setup
+        external_id:
+          type: string
+          format: uuid
+          description: External ID from the source system
+        source:
+          type: string
+          description: Identifier for the source system.
+      title: UserobjectExternalIdsItems
+    400ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 400ErrorResponse
+    pluginresourcesobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID assigned by the system to a resource being used by a plugin called during an interaction.
+        resource_id:
+          type: string
+          format: uuid
+          description: ID of the resource stored in Moveworks.
+        type:
+          type: string
+          format: uuid
+          description: This field represents the type of resource utilized by a plugin call. AI Assistant can utilize different resources to provide a summarized response such as KNOWLEDE ARTICLE, FILES, TICKET, APPROVAL etc
+        plugin_call_id:
+          type: string
+          format: uuid
+          description: ID of the plugin being called.
+        interaction_id:
+          type: string
+          format: uuid
+          description: ID of the interaction.
+        user_id:
+          type: string
+          format: uuid
+          description: User record ID assigned by the system to a user.
+        conversation_id:
+          type: string
+          format: uuid
+          description: ID of the parent conversation.
+        detail:
+          $ref: '#/components/schemas/PluginresourcesobjectDetail'
+          description: This is a JSON object which contains metadata per resource type.
+        cited:
+          type: boolean
+          description: This field denotes if the utilized resource was cited in the AI Assistant response or not.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was utilized by a plugin.
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the plugin resource entry was last updated in this table.
+      title: pluginresourcesobject
+    403ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 403ErrorResponse
+    interactionsobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID assigned by a system to a interaction. An interaction is either an input from a user to the system, or a response from the system the the user.
+        conversation_id:
+          type: string
+          format: uuid
+          description: ID of the parent conversation.
+        user_id:
+          type: string
+          format: uuid
+          description: User record ID assigned by the system to a user.
+        actor:
+          type: string
+          description: This field differentiates user v/s bot interactions.
+        platform:
+          type: string
+          description: 'This field denotes the platform where the interaction took place. For example: slack, msteams.'
+        type:
+          type: string
+          description: This field defines the type of the interaction.
+        label:
+          type: string
+          description: This field defines the label for UI form submission interaction type.
+        parent_interaction_id:
+          type: string
+          format: uuid
+          description: Parent interaction ID for bot messages and user actions such as form submissions/button clicks/link clicks
+        detail:
+          $ref: '#/components/schemas/InteractionsobjectDetail'
+          description: This is a JSON object which contains metadata per interaction type.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the interaction was initiated.
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the interaction entry is last updated in this table.
+      title: interactionsobject
+    plugincallsobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID assigned by the system to a plugin being called by AI Assistant for a interaction.
+        interaction_id:
+          type: string
+          format: uuid
+          description: ID of the interaction for which the plugin is called
+        conversation_id:
+          type: string
+          format: uuid
+          description: ID of the parent conversation.
+        plugin_name:
+          type: string
+          description: Name of the plugin being called by the AI Assistant. This field will also contain custom plugin names for Agent Studio use-cases
+        user_id:
+          type: string
+          format: uuid
+          description: User record ID assigned by the system to a user.
+        served:
+          type: boolean
+          description: This field denotes if the plugin was actually served to the end user
+        used:
+          type: boolean
+          description: This field denotes if the plugin was used in the interaction. Action plugin are used only when they have completed the full workflow for an end users, search plugin will always be used if they are served
+        plugin_update_time:
+          type: string
+          format: date-time
+          description: This field denotes the time when the plugin was last updated. For example, Access software plugin can be updated at later point in time, once the approver has approved the software approval access.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the plugin call was initiated.
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the plugin call entry is last updated in this table
+      title: plugincallsobject
+    ConversationsobjectDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Resource type of the approval. Populated for `CONVERSATION_TYPE_APPROVAL_REQUEST_NOTIFICATION`.
+        source:
+          type: string
+          description: External system source of the approval. Populated for `CONVERSATION_TYPE_APPROVAL_REQUEST_NOTIFICATION`.
+        domain:
+          type: string
+          description: Domain of the approval. Populated for `CONVERSATION_TYPE_APPROVAL_REQUEST_NOTIFICATION`.
+        usecase_id:
+          type: string
+          description: Creator Studio usecase ID. Populated for `CONVERSATION_TYPE_EVENTS_NOTIFICATION` and `CONVERSATION_TYPE_AMBIENT_AGENT_NOTIFICATION`.
+        usecase_name:
+          type: string
+          description: Creator Studio usecase name. Populated for `CONVERSATION_TYPE_EVENTS_NOTIFICATION` and `CONVERSATION_TYPE_AMBIENT_AGENT_NOTIFICATION`.
+        ticket_id:
+          type: string
+          description: Ticket ID associated with the conversation. Populated for `CONVERSATION_TYPE_TICKET_UPDATE_NOTIFICATION`, `CONVERSATION_TYPE_TICKET_WATCHER_NOTIFICATION`, `CONVERSATION_TYPE_TICKET_WAITING_NOTIFICATION`, `CONVERSATION_TYPE_TICKET_NUDGE_NOTIFICATION`, and `CONVERSATION_TYPE_TICKET_INTERCEPTION`.
+        campaign_id:
+          type: string
+          description: Campaign ID for the comms notification. Populated for `CONVERSATION_TYPE_COMMS_NOTIFICATION`.
+        campaign_name:
+          type: string
+          description: Campaign name for the comms notification. Populated for `CONVERSATION_TYPE_COMMS_NOTIFICATION`.
+        channel_id:
+          type: string
+          description: Channel ID where the interception occurred. Populated for `CONVERSATION_TYPE_CHANNEL_INTERCEPTION`.
+        channel_name:
+          type: string
+          description: Channel name where the interception occurred. Populated for `CONVERSATION_TYPE_CHANNEL_INTERCEPTION`.
+        content:
+          type: string
+          description: Message or ticket description content that triggered the interception. Populated for `CONVERSATION_TYPE_CHANNEL_INTERCEPTION` (message content) and `CONVERSATION_TYPE_TICKET_INTERCEPTION` (ticket description).
+      description: Type-specific metadata about the conversation. The fields present depend on the value of `type`. See each field's description for which conversation types populate it.
+      title: ConversationsobjectDetail
+    users:
       type: object
       properties:
         '@odata.context':
@@ -1591,16 +1795,16 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/plugincallsobject'
-      title: plugincallslist
-    403ErrorResponse:
+            $ref: '#/components/schemas/userobject'
+      title: users
+    404ErrorResponse:
       type: object
       properties:
         code:
           type: string
         message:
           type: string
-      title: 403ErrorResponse
+      title: 404ErrorResponse
     PluginresourcesobjectDetail:
       type: object
       properties:
@@ -1660,104 +1864,7 @@ components:
             RESOURCE_TYPE_FILE'
       description: This is a JSON object which contains metadata per resource type.
       title: PluginresourcesobjectDetail
-    429ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 429ErrorResponse
-    400ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 400ErrorResponse
-    userobject:
-      type: object
-      properties:
-        id:
-          type: string
-          description: User record id generated and stored in Moveworks for the end user
-        email_addr:
-          type: string
-          description: Email of the end user stored in Moveworks. This field is ingested from your systems and reflect the value present in your systems.
-        access_to_bot:
-          type: boolean
-          description: Denotes if the end user has access to Moveworks Assistant or not. This is evaluated through the bot access rule configured in Moveworks Setup.
-        first_name:
-          type: string
-          description: First name of the end user. This field is ingested from your systems and reflect the value present in your systems.
-        last_name:
-          type: string
-          description: Last name of the end user.This field is ingested from your systems and reflect the value present in your systems.
-        user_preferred_language:
-          type: string
-          description: User preferred language set from the end user. EN-US is the default value for this field
-        first_interaction_time:
-          type: string
-          format: date-time
-          description: Time stamp for the first interaction for the end user.
-        latest_interaction_time:
-          type: string
-          format: date-time
-          description: Time stamp for the latest interaction of the end user.
-        external_ids:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserobjectExternalIdsItems'
-        last_updated_time:
-          type: string
-          format: date-time
-          description: Last updated time for the user entry.
-      title: userobject
-    interactionsobject:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: UUID assigned by a system to a interaction. An interaction is either an input from a user to the system, or a response from the system the the user.
-        conversation_id:
-          type: string
-          format: uuid
-          description: ID of the parent conversation.
-        user_id:
-          type: string
-          format: uuid
-          description: User record ID assigned by the system to a user.
-        actor:
-          type: string
-          description: This field differentiates user v/s bot interactions.
-        platform:
-          type: string
-          description: 'This field denotes the platform where the interaction took place. For example: slack, msteams.'
-        type:
-          type: string
-          description: This field defines the type of the interaction.
-        label:
-          type: string
-          description: This field defines the label for UI form submission interaction type.
-        parent_interaction_id:
-          type: string
-          format: uuid
-          description: Parent interaction ID for bot messages and user actions such as form submissions/button clicks/link clicks
-        detail:
-          $ref: '#/components/schemas/InteractionsobjectDetail'
-          description: This is a JSON object which contains metadata per interaction type.
-        created_time:
-          type: string
-          format: date-time
-          description: Timestamp when the interaction was initiated.
-        last_updated_time:
-          type: string
-          format: date-time
-          description: Timestamp when the interaction entry is last updated in this table.
-      title: interactionsobject
-    users:
+    interactions:
       type: object
       properties:
         '@odata.context':
@@ -1769,22 +1876,8 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/userobject'
-      title: users
-    UserobjectExternalIdsItems:
-      type: object
-      properties:
-        connector_name:
-          type: string
-          description: Name of the connector created in Moveworks Setup
-        external_id:
-          type: string
-          format: uuid
-          description: External ID from the source system
-        source:
-          type: string
-          description: Identifier for the source system.
-      title: UserobjectExternalIdsItems
+            $ref: '#/components/schemas/interactionsobject'
+      title: interactions
     500ErrorResponse:
       type: object
       properties:
@@ -1793,14 +1886,20 @@ components:
         message:
           type: string
       title: 500ErrorResponse
-    404ErrorResponse:
+    plugincallslist:
       type: object
       properties:
-        code:
+        '@odata.context':
           type: string
-        message:
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
           type: string
-      title: 404ErrorResponse
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/plugincallsobject'
+      title: plugincallslist
     conversations:
       type: object
       properties:
@@ -1815,90 +1914,20 @@ components:
           items:
             $ref: '#/components/schemas/conversationsobject'
       title: conversations
-    ConversationsobjectDetail:
+    pluginresources:
       type: object
       properties:
-        type:
+        '@odata.context':
           type: string
-          description: Resource type of the approval. Populated for `CONVERSATION_TYPE_APPROVAL_REQUEST_NOTIFICATION`.
-        source:
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
           type: string
-          description: External system source of the approval. Populated for `CONVERSATION_TYPE_APPROVAL_REQUEST_NOTIFICATION`.
-        domain:
-          type: string
-          description: Domain of the approval. Populated for `CONVERSATION_TYPE_APPROVAL_REQUEST_NOTIFICATION`.
-        usecase_id:
-          type: string
-          description: Creator Studio usecase ID. Populated for `CONVERSATION_TYPE_EVENTS_NOTIFICATION` and `CONVERSATION_TYPE_AMBIENT_AGENT_NOTIFICATION`.
-        usecase_name:
-          type: string
-          description: Creator Studio usecase name. Populated for `CONVERSATION_TYPE_EVENTS_NOTIFICATION` and `CONVERSATION_TYPE_AMBIENT_AGENT_NOTIFICATION`.
-        ticket_id:
-          type: string
-          description: Ticket ID associated with the conversation. Populated for `CONVERSATION_TYPE_TICKET_UPDATE_NOTIFICATION`, `CONVERSATION_TYPE_TICKET_WATCHER_NOTIFICATION`, `CONVERSATION_TYPE_TICKET_WAITING_NOTIFICATION`, `CONVERSATION_TYPE_TICKET_NUDGE_NOTIFICATION`, and `CONVERSATION_TYPE_TICKET_INTERCEPTION`.
-        campaign_id:
-          type: string
-          description: Campaign ID for the comms notification. Populated for `CONVERSATION_TYPE_COMMS_NOTIFICATION`.
-        campaign_name:
-          type: string
-          description: Campaign name for the comms notification. Populated for `CONVERSATION_TYPE_COMMS_NOTIFICATION`.
-        channel_id:
-          type: string
-          description: Channel ID where the interception occurred. Populated for `CONVERSATION_TYPE_CHANNEL_INTERCEPTION`.
-        channel_name:
-          type: string
-          description: Channel name where the interception occurred. Populated for `CONVERSATION_TYPE_CHANNEL_INTERCEPTION`.
-        content:
-          type: string
-          description: Message or ticket description content that triggered the interception. Populated for `CONVERSATION_TYPE_CHANNEL_INTERCEPTION` (message content) and `CONVERSATION_TYPE_TICKET_INTERCEPTION` (ticket description).
-      description: Type-specific metadata about the conversation. The fields present depend on the value of `type`. See each field's description for which conversation types populate it.
-      title: ConversationsobjectDetail
-    pluginresourcesobject:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: UUID assigned by the system to a resource being used by a plugin called during an interaction.
-        resource_id:
-          type: string
-          format: uuid
-          description: ID of the resource stored in Moveworks.
-        type:
-          type: string
-          format: uuid
-          description: This field represents the type of resource utilized by a plugin call. AI Assistant can utilize different resources to provide a summarized response such as KNOWLEDE ARTICLE, FILES, TICKET, APPROVAL etc
-        plugin_call_id:
-          type: string
-          format: uuid
-          description: ID of the plugin being called.
-        interaction_id:
-          type: string
-          format: uuid
-          description: ID of the interaction.
-        user_id:
-          type: string
-          format: uuid
-          description: User record ID assigned by the system to a user.
-        conversation_id:
-          type: string
-          format: uuid
-          description: ID of the parent conversation.
-        detail:
-          $ref: '#/components/schemas/PluginresourcesobjectDetail'
-          description: This is a JSON object which contains metadata per resource type.
-        cited:
-          type: boolean
-          description: This field denotes if the utilized resource was cited in the AI Assistant response or not.
-        created_time:
-          type: string
-          format: date-time
-          description: Timestamp when the resource was utilized by a plugin.
-        last_updated_time:
-          type: string
-          format: date-time
-          description: Timestamp when the plugin resource entry was last updated in this table.
-      title: pluginresourcesobject
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/pluginresourcesobject'
+      title: pluginresources
     conversationsobject:
       type: object
       properties:
@@ -1959,82 +1988,61 @@ components:
           description: This field provides list of types of files that were uploaded during a file upload interaction (INTERACTION_TYPE_CONTENT_UPLOAD). We do not record the file names as user can also upload a private file
       description: This is a JSON object which contains metadata per interaction type.
       title: InteractionsobjectDetail
-    plugincallsobject:
+    429ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 429ErrorResponse
+    userobject:
       type: object
       properties:
         id:
           type: string
-          format: uuid
-          description: UUID assigned by the system to a plugin being called by AI Assistant for a interaction.
-        interaction_id:
+          description: User record id generated and stored in Moveworks for the end user
+        email_addr:
           type: string
-          format: uuid
-          description: ID of the interaction for which the plugin is called
-        conversation_id:
-          type: string
-          format: uuid
-          description: ID of the parent conversation.
-        plugin_name:
-          type: string
-          description: Name of the plugin being called by the AI Assistant. This field will also contain custom plugin names for Agent Studio use-cases
-        user_id:
-          type: string
-          format: uuid
-          description: User record ID assigned by the system to a user.
-        served:
+          description: Email of the end user stored in Moveworks. This field is ingested from your systems and reflect the value present in your systems.
+        access_to_bot:
           type: boolean
-          description: This field denotes if the plugin was actually served to the end user
-        used:
-          type: boolean
-          description: This field denotes if the plugin was used in the interaction. Action plugin are used only when they have completed the full workflow for an end users, search plugin will always be used if they are served
-        plugin_update_time:
+          description: Denotes if the end user has access to Moveworks Assistant or not. This is evaluated through the bot access rule configured in Moveworks Setup.
+        first_name:
+          type: string
+          description: First name of the end user. This field is ingested from your systems and reflect the value present in your systems.
+        last_name:
+          type: string
+          description: Last name of the end user.This field is ingested from your systems and reflect the value present in your systems.
+        user_preferred_language:
+          type: string
+          description: User preferred language set from the end user. EN-US is the default value for this field
+        first_interaction_time:
           type: string
           format: date-time
-          description: This field denotes the time when the plugin was last updated. For example, Access software plugin can be updated at later point in time, once the approver has approved the software approval access.
-        created_time:
+          description: Time stamp for the first interaction for the end user.
+        latest_interaction_time:
           type: string
           format: date-time
-          description: Timestamp when the plugin call was initiated.
+          description: Time stamp for the latest interaction of the end user.
+        external_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserobjectExternalIdsItems'
         last_updated_time:
           type: string
           format: date-time
-          description: Timestamp when the plugin call entry is last updated in this table
-      title: plugincallsobject
-    interactions:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        '@odata.nextLink':
-          type: string
-          description: URL to fetch the next set of results.
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/interactionsobject'
-      title: interactions
-    pluginresources:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        '@odata.nextLink':
-          type: string
-          description: URL to fetch the next set of results.
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/pluginresourcesobject'
-      title: pluginresources
-    UserUserState:
+          description: Last updated time for the user entry.
+      title: userobject
+    UserUserWorkStatus:
       type: string
       enum:
-      - ACTIVE
-      - INACTIVE
-      description: Specifies the state of the user
-      title: UserUserState
+      - UNKNOWN_WORK_STATUS
+      - CONTINGENT
+      - INTERN
+      - FULL_TIME
+      description: Employement type of the user
+      title: UserUserWorkStatus
     UserUserEmploymentInfo:
       type: object
       properties:
@@ -2067,75 +2075,6 @@ components:
         employment_location:
           $ref: '#/components/schemas/UserUserEmploymentInfoEmploymentLocation'
       title: UserUserEmploymentInfo
-    User_2:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/UserUser'
-        system_identity:
-          $ref: '#/components/schemas/UserSystemIdentity'
-        last_updated_at:
-          type: string
-          format: timestamp
-          description: Represents the timestamp indicating the most recent modification or update made to the user's information (in ISO-8601 UTC)
-      required:
-      - user
-      - system_identity
-      - last_updated_at
-      title: User
-    listUsers_Response_200:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/User_2'
-        next_page_token:
-          type: string
-          description: The value provided serves as the starting point for fetching the next page of records. In the next call, use this value as the pageToken parameter.
-      required:
-      - results
-      title: listUsers_Response_200
-    UserUserEmploymentInfoEmploymentLocation:
-      type: object
-      properties:
-        location:
-          type: string
-          description: Specifies the location of the office
-        office:
-          type: string
-          description: Denotes the name of the office
-        country_code:
-          type: string
-          description: Specifies the country code of the employee in E.164 format
-        region:
-          type: string
-          description: The geographical region to which the office is assigned
-        timezone:
-          type: string
-          description: Indicates the time zone in which the office is located
-      title: UserUserEmploymentInfoEmploymentLocation
-    UserUserWorkStatus:
-      type: string
-      enum:
-      - UNKNOWN_WORK_STATUS
-      - CONTINGENT
-      - INTERN
-      - FULL_TIME
-      description: Employement type of the user
-      title: UserUserWorkStatus
-    UserSystemIdentity:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Refers to the unique identifier assigned to the user in the identity gateway. This is usually primary key of the external system
-        username:
-          type: string
-          description: Refers to the username of the user in the identity system. This is usually lookup key of the external system
-      required:
-      - id
-      title: UserSystemIdentity
     UserUser:
       type: object
       properties:
@@ -2167,6 +2106,86 @@ components:
       - state
       - universal_identifier
       title: UserUser
+    User_2:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserUser'
+        system_identity:
+          $ref: '#/components/schemas/UserSystemIdentity'
+        last_updated_at:
+          type: string
+          format: timestamp
+          description: Represents the timestamp indicating the most recent modification or update made to the user's information (in ISO-8601 UTC)
+      required:
+      - user
+      - system_identity
+      - last_updated_at
+      title: User
+    UserUserState:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+      description: Specifies the state of the user
+      title: UserUserState
+    UserUserEmploymentInfoEmploymentLocation:
+      type: object
+      properties:
+        location:
+          type: string
+          description: Specifies the location of the office
+        office:
+          type: string
+          description: Denotes the name of the office
+        country_code:
+          type: string
+          description: Specifies the country code of the employee in E.164 format
+        region:
+          type: string
+          description: The geographical region to which the office is assigned
+        timezone:
+          type: string
+          description: Indicates the time zone in which the office is located
+      title: UserUserEmploymentInfoEmploymentLocation
+    UserSystemIdentity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Refers to the unique identifier assigned to the user in the identity gateway. This is usually primary key of the external system
+        username:
+          type: string
+          description: Refers to the username of the user in the identity system. This is usually lookup key of the external system
+      required:
+      - id
+      title: UserSystemIdentity
+    listUsers_Response_200:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User_2'
+        next_page_token:
+          type: string
+          description: The value provided serves as the starting point for fetching the next page of records. In the next call, use this value as the pageToken parameter.
+      required:
+      - results
+      title: listUsers_Response_200
+    listArticles_Response_200:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Article'
+        next_page_token:
+          type: string
+          description: The value provided serves as the starting point for fetching the next page of records. In the next call, use this value as the pageToken parameter.
+      required:
+      - results
+      title: listArticles_Response_200
     Article:
       type: object
       properties:
@@ -2202,19 +2221,6 @@ components:
       - body
       - link
       title: Article
-    listArticles_Response_200:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Article'
-        next_page_token:
-          type: string
-          description: The value provided serves as the starting point for fetching the next page of records. In the next call, use this value as the pageToken parameter.
-      required:
-      - results
-      title: listArticles_Response_200
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

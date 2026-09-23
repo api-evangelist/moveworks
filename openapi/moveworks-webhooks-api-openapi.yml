@@ -22,7 +22,7 @@ servers:
 - url: https://api.prod3.us.moveworks.com
   description: https://api.prod3.us.moveworks.com
 tags:
-- name: webhooks
+- name: Webhooks
 paths:
   /webhooks/v1/listeners/{listener_id}/notify:
     post:
@@ -30,7 +30,7 @@ paths:
       summary: Send a webhook to a webhook listener
       description: Sends a webhook to a webhook listener. The listener must be defined in Agent Studio.
       tags:
-      - webhooks
+      - Webhooks
       parameters:
       - name: listener_id
         in: path
@@ -74,15 +74,6 @@ paths:
                 description: Any type
 components:
   schemas:
-    WebhooksV1ListenersListenerIdNotifyPostResponsesContentApplicationJsonSchemaError:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: Details about the authorization failure.
-      title: WebhooksV1ListenersListenerIdNotifyPostResponsesContentApplicationJsonSchemaError
     Webhooks_sendAWebhookToAWebhookListener_Response_200:
       type: object
       properties:
@@ -99,6 +90,15 @@ components:
         error:
           $ref: '#/components/schemas/WebhooksV1ListenersListenerIdNotifyPostResponsesContentApplicationJsonSchemaError'
       title: SendAWebhookToAWebhookListenerRequestUnauthorizedError
+    WebhooksV1ListenersListenerIdNotifyPostResponsesContentApplicationJsonSchemaError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: Details about the authorization failure.
+      title: WebhooksV1ListenersListenerIdNotifyPostResponsesContentApplicationJsonSchemaError
   securitySchemes:
     bearerAuth:
       type: http

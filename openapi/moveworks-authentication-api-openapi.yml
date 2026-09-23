@@ -22,17 +22,15 @@ servers:
 - url: https://api.prod3.us.moveworks.com
   description: https://api.prod3.us.moveworks.com
 tags:
-- name: authentication
+- name: Authentication
 paths:
   /oauth/v1/token:
     post:
       operationId: create-o-auth-token
       summary: Create an OAuth token
-      description: 'Generate an Access Token using OAuth 2.0 Client Credentials for authentication in subsequent API calls to other endpoints. See [Credentials Management - OAuth 2.0 Client](/reference/get-api-keys) for more info.
-
-        '
+      description: Generate an Access Token using OAuth 2.0 Client Credentials for authentication in subsequent API calls to other endpoints. See Credentials Management - OAuth 2.0 Client for more info.
       tags:
-      - authentication
+      - Authentication
       responses:
         '200':
           description: Token created
@@ -74,7 +72,7 @@ paths:
       operationId: test-auth
       summary: Test API Key
       tags:
-      - authentication
+      - Authentication
       parameters:
       - name: Authorization
         in: header
@@ -97,36 +95,6 @@ paths:
                 $ref: '#/components/schemas/ErrorAuthentication'
 components:
   schemas:
-    InternalServerError:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: InternalServerError
-    OauthInvalidRequest:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthInvalidRequest
-    OauthUnsupportedGrantType:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthUnsupportedGrantType
-    OauthTokenGenerated:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/OauthTokenGeneratedData'
-      title: OauthTokenGenerated
     OauthInvalidClient:
       type: object
       properties:
@@ -135,16 +103,6 @@ components:
         message:
           type: string
       title: OauthInvalidClient
-    OauthTokenGeneratedData:
-      type: object
-      properties:
-        access_token:
-          type: string
-        expires_in:
-          type: integer
-        token_type:
-          type: string
-      title: OauthTokenGeneratedData
     ErrorAuthentication:
       type: object
       properties:
@@ -153,25 +111,6 @@ components:
         message:
           type: string
       title: ErrorAuthentication
-    ErrorRateLimitExceeded:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorRateLimitExceeded
-    CreateOAuthTokenRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/OauthInvalidRequest'
-      - $ref: '#/components/schemas/OauthUnsupportedGrantType'
-      title: CreateOAuthTokenRequestBadRequestError
-    AuthSuccessful:
-      type: object
-      properties:
-        Message:
-          type: string
-      title: AuthSuccessful
     OauthTokenRequest:
       type: object
       properties:
@@ -189,6 +128,65 @@ components:
       - client_secret
       - grant_type
       title: OauthTokenRequest
+    OauthTokenGeneratedData:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        token_type:
+          type: string
+      title: OauthTokenGeneratedData
+    OauthUnsupportedGrantType:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthUnsupportedGrantType
+    OauthInvalidRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthInvalidRequest
+    ErrorRateLimitExceeded:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorRateLimitExceeded
+    InternalServerError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: InternalServerError
+    AuthSuccessful:
+      type: object
+      properties:
+        Message:
+          type: string
+      title: AuthSuccessful
+    OauthTokenGenerated:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/OauthTokenGeneratedData'
+      title: OauthTokenGenerated
+    CreateOAuthTokenRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/OauthInvalidRequest'
+      - $ref: '#/components/schemas/OauthUnsupportedGrantType'
+      title: CreateOAuthTokenRequestBadRequestError
   securitySchemes:
     Bearer:
       type: http
