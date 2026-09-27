@@ -47,7 +47,7 @@ modified: '2026-07-20'
 tags:
 - Company
 - Artificial Intelligence
-- Agentic AI
+- AI Agents
 - AI Assistant
 - Enterprise Automation
 - Conversational AI
@@ -71,7 +71,7 @@ maintainers:
   email: info@apis.io
 apis:
 - aid: moveworks:moveworks-authentication-api
-  name: Moveworks authentication API
+  name: Moveworks Authentication API
   description: The authentication API from Moveworks — 2 operation(s) for authentication.
   humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
   baseURL: https://api.moveworks.ai
@@ -83,7 +83,7 @@ apis:
   - type: OpenAPI
     url: openapi/moveworks-authentication-api-openapi.yml
 - aid: moveworks:moveworks-conversations-api
-  name: Moveworks conversations API
+  name: Moveworks Conversations API
   description: The conversations API from Moveworks — 3 operation(s) for conversations.
   humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
   baseURL: https://api.moveworks.ai
@@ -94,19 +94,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/moveworks-conversations-api-openapi.yml
-- aid: moveworks:moveworks-default-api
-  name: Moveworks Default API
-  description: The Default API from Moveworks — 14 operation(s) for default.
-  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
-  baseURL: https://api.moveworks.ai
-  tags: []
-  tags_raw:
-  - Default
-  properties:
-  - type: OpenAPI
-    url: openapi/moveworks-default-api-openapi.yml
 - aid: moveworks:moveworks-deprecated-api
-  name: Moveworks deprecated API
+  name: Moveworks Deprecated API
   description: The deprecated API from Moveworks — 1 operation(s) for deprecated.
   humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
   baseURL: https://api.moveworks.ai
@@ -118,7 +107,7 @@ apis:
   - type: OpenAPI
     url: openapi/moveworks-deprecated-api-openapi.yml
 - aid: moveworks:moveworks-events-api
-  name: Moveworks events API
+  name: Moveworks Events API
   description: The events API from Moveworks — 1 operation(s) for events.
   humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
   baseURL: https://api.moveworks.ai
@@ -130,7 +119,7 @@ apis:
   - type: OpenAPI
     url: openapi/moveworks-events-api-openapi.yml
 - aid: moveworks:moveworks-messages-api
-  name: Moveworks messages API
+  name: Moveworks Messages API
   description: The messages API from Moveworks — 3 operation(s) for messages.
   humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
   baseURL: https://api.moveworks.ai
@@ -142,7 +131,7 @@ apis:
   - type: OpenAPI
     url: openapi/moveworks-messages-api-openapi.yml
 - aid: moveworks:moveworks-responses-api
-  name: Moveworks responses API
+  name: Moveworks Responses API
   description: The responses API from Moveworks — 3 operation(s) for responses.
   humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
   baseURL: https://api.moveworks.ai
@@ -154,7 +143,7 @@ apis:
   - type: OpenAPI
     url: openapi/moveworks-responses-api-openapi.yml
 - aid: moveworks:moveworks-smartforms-api
-  name: Moveworks smartForms API
+  name: Moveworks Smart Forms API
   description: The smartForms API from Moveworks — 3 operation(s) for smartforms.
   humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
   baseURL: https://api.moveworks.ai
@@ -165,7 +154,7 @@ apis:
   - type: OpenAPI
     url: openapi/moveworks-smartforms-api-openapi.yml
 - aid: moveworks:moveworks-webhooks-api
-  name: Moveworks webhooks API
+  name: Moveworks Webhooks API
   description: The webhooks API from Moveworks — 1 operation(s) for webhooks.
   humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
   baseURL: https://api.moveworks.ai
@@ -176,6 +165,102 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/moveworks-webhooks-api-openapi.yml
+- aid: moveworks:moveworks-articles-api
+  name: Moveworks Articles API
+  description: The Articles API from Moveworks — 1 operation(s) for articles.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - Articles
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-articles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moveworks.com/api-reference/overview
+- aid: moveworks:moveworks-files-api
+  name: Moveworks Files API
+  description: The Files API from Moveworks — 5 operation(s) for files.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-files-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moveworks.com/api-reference/overview
+- aid: moveworks:moveworks-groups-api
+  name: Moveworks Groups API
+  description: The Groups API from Moveworks — 2 operation(s) for groups.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-groups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moveworks.com/api-reference/overview
+- aid: moveworks:moveworks-interactions-api
+  name: Moveworks Interactions API
+  description: The Interactions API from Moveworks — 1 operation(s) for interactions.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - Interactions
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-interactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moveworks.com/api-reference/overview
+- aid: moveworks:moveworks-plugin-calls-api
+  name: Moveworks Plugin Calls API
+  description: The Plugin Calls API from Moveworks — 1 operation(s) for plugin calls.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - Plugin Calls
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-plugin-calls-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moveworks.com/api-reference/overview
+- aid: moveworks:moveworks-plugin-resources-api
+  name: Moveworks Plugin Resources API
+  description: The Plugin Resources API from Moveworks — 1 operation(s) for plugin resources.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - Plugin Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-plugin-resources-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moveworks.com/api-reference/overview
+- aid: moveworks:moveworks-records-api
+  name: Moveworks Records API
+  description: Exported AI Assistant interaction records
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - Records
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-records-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moveworks.com/api-reference/overview
+- aid: moveworks:moveworks-users-api
+  name: Moveworks Users API
+  description: The Users API from Moveworks — 2 operation(s) for users.
+  humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
+  baseURL: https://api.moveworks.ai
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/moveworks-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moveworks.com/api-reference/overview
 common:
 # --- identity / discoverability ---
 - type: Website
@@ -287,3 +372,8 @@ x-enrichment:
   status: enriched
   artifacts_added: 25
   pass: local-v1
+x-parent: servicenow
+x-relationship: acquisition
+x-status: acquired
+x-acquired-by: servicenow
+x-acquired: 2025

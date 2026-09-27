@@ -1,0 +1,279 @@
+openapi: 3.2.0
+info:
+  title: Data Plugin Resources API
+  version: 1.0.0
+servers:
+- url: https://api.moveworks.ai/export/v1/records
+  description: US PROD server. If you are located in the US region please use this server URL
+- url: https://api.am-eu-central.moveworks.ai/export/v1/records
+  description: EU PROD server. If you are located in the EU region please use this server URL
+- url: https://api.am-ca-central.moveworks.ai/export/v1/records
+  description: CA PROD server. If you are located in the CA region please use this server URL
+- url: https://api.moveworksgov.ai/export/v1/records
+  description: Govcloud PROD server. If you are on GovCloud infrastrucutre (US region) please use this server URL
+- url: https://api.jp.moveworks.com/export/v1/records
+  description: Japan production server
+- url: https://api.uk.moveworks.com/export/v1/records
+  description: UK production server
+- url: https://api.prod4.us.moveworks.com/export/v1/records
+  description: US Prod 4 production server
+- url: https://api.prod3.us.moveworks.com/export/v1/records
+  description: US Prod 3 production server
+tags:
+- name: Plugin Resources
+paths:
+  /plugin-resources:
+    get:
+      operationId: list-plugin-resources
+      summary: List Plugin Resources
+      description: Retrieve all resources used by AI Assistant during an interaction.
+      tags:
+      - Plugin Resources
+      parameters:
+      - name: $filter
+        in: query
+        description: This option allows the client to filter the resource that is address by request URL
+        required: false
+        schema:
+          type: string
+      - name: $select
+        in: query
+        description: This option allow the client to request a limited set of properties of an entity
+        required: false
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        description: This option allow the client to request resources in either ascending or descending order
+        required: false
+        schema:
+          type: string
+      - name: $top
+        in: query
+        description: This option request the number of items to be included in the result
+        required: false
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        description: This query option requests the number of items in the queried collection that are to be skipped and not included in the result.
+        required: false
+        schema:
+          type: integer
+      - name: $count
+        in: query
+        description: This option allows clients to request a count of the matching resources included with the resources in the result
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved list of interactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pluginresources'
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+        '403':
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ErrorResponse'
+        '404':
+          description: URL not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404ErrorResponse'
+        '429':
+          description: Rate limiting exceeding error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/429ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ErrorResponse'
+components:
+  schemas:
+    404ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 404ErrorResponse
+    pluginresources:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/pluginresourcesobject'
+      title: pluginresources
+    429ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 429ErrorResponse
+    400ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 400ErrorResponse
+    500ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 500ErrorResponse
+    pluginresourcesobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID assigned by the system to a resource being used by a plugin called during an interaction.
+        resource_id:
+          type: string
+          format: uuid
+          description: ID of the resource stored in Moveworks.
+        type:
+          type: string
+          format: uuid
+          description: This field represents the type of resource utilized by a plugin call. AI Assistant can utilize different resources to provide a summarized response such as KNOWLEDE ARTICLE, FILES, TICKET, APPROVAL etc
+        plugin_call_id:
+          type: string
+          format: uuid
+          description: ID of the plugin being called.
+        interaction_id:
+          type: string
+          format: uuid
+          description: ID of the interaction.
+        user_id:
+          type: string
+          format: uuid
+          description: User record ID assigned by the system to a user.
+        conversation_id:
+          type: string
+          format: uuid
+          description: ID of the parent conversation.
+        detail:
+          $ref: '#/components/schemas/PluginresourcesobjectDetail'
+          description: This is a JSON object which contains metadata per resource type.
+        cited:
+          type: boolean
+          description: This field denotes if the utilized resource was cited in the AI Assistant response or not.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was utilized by a plugin.
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the plugin resource entry was last updated in this table.
+      title: pluginresourcesobject
+    PluginresourcesobjectDetail:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: 'This field denotes the resource domain configured in Moveworks Setup while configuring Content ingestion & Ticketing. Domain is defined for resources of types:
+
+            RESOURCE_TYPE_APPROVAL
+
+            RESOURCE_TYPE_FORM
+
+            RESOURCE_TYPE_TICKET
+
+            RESOURCE_TYPE_KNOWLEDGE'
+        external_resource_id:
+          type: string
+          format: uuid
+          description: Service portal ID for the resource of type RESOURCE_TYPE_KNOWLEDGE. This field can be used to join data from external system. Please note external resource ID is not provided for FILE & EXTERNAL KNOWLEDGE (Public knowledge enabled in Moveworks)
+        name:
+          type: string
+          description: 'Name of the resource being used by the plugin, populated for resources of types:
+
+            RESOURCE_TYPE_FILE
+
+            RESOURCE_TYPE_FORM
+
+            RESOURCE_TYPE_KNOWLEDGE'
+        snippet:
+          type: string
+          description: 'Exact snippet from the resource being used to provide the summarized response, populated for resource types
+
+            RESOURCE_TYPE_FILE
+
+            RESOURCE_TYPE_KNOWLEDGE'
+        source:
+          type: string
+          description: 'Name of the external sources from which the resource is being fetched from, populated for resource types
+
+            RESOURCE_TYPE_TICKET
+
+            RESOURCE_TYPE_APPROVAL'
+        type:
+          type: string
+          description: 'Contains sub-type of approval or type of the ticket creation : User initiated v/s bot initiated, populated for resource types
+
+            RESOURCE_TYPE_TICKET
+
+            RESOURCE_TYPE_APPROVAL'
+        url:
+          type: string
+          description: 'External system URL of the resource, populated for resource types
+
+            RESOURCE_TYPE_TICKET
+
+            RESOURCE_TYPE_KNOWLEDGE
+
+            RESOURCE_TYPE_FILE'
+      description: This is a JSON object which contains metadata per resource type.
+      title: PluginresourcesobjectDetail
+    403ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 403ErrorResponse
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+    OAuth2:
+      type: http
+      scheme: bearer
