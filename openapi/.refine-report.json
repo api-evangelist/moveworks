@@ -9,7 +9,7 @@
     "_original/moveworks-identity-gateway-openapi.yaml",
     "_original/moveworks-knowledge-gateway-openapi.yaml",
     "_original/moveworks-webhook-listeners-openapi.yaml",
-    "moveworks-servicenow-records-api-openapi.yml"
+    "moveworks-records-api-openapi.yml"
   ],
   "outputs": [
     "moveworks-conversations-api-openapi.yml",
@@ -29,12 +29,10 @@
     "moveworks-webhooks-api-openapi.yml",
     "moveworks-records-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 2 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [
-    "moveworks-servicenow-records-api-openapi.yml: previously refined output kept for 5 operation(s) no archived document covers (e.g. /records/conversations get, /records/interactions get, /records/plugin-calls get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+    "moveworks-records-api-openapi.yml: previously refined output kept for 5 operation(s) no archived document covers (e.g. /records/conversations get, /records/interactions get, /records/plugin-calls get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
   ],
   "notes": [
     "1 archived document(s) dropped as subsets of other archived documents",
@@ -83,19 +81,24 @@
     "moveworks-webhook-listeners-openapi.yaml: declared missing tag: webhooks",
     "tag 'conversations' spans 2 source specs (moveworks-beta-conversations-api-openapi.yaml, moveworks-data-api-openapi.yaml): per-path servers applied",
     "tag 'Users' spans 3 source specs (moveworks-content-gateway-openapi.yaml, moveworks-data-api-openapi.yaml, moveworks-identity-gateway-openapi.yaml): per-path servers applied",
-    "superseded outputs removed: moveworks-default-api-openapi.yml, moveworks-servicenow-records-api-openapi.yml",
-    "apis.yml register: written (+8 apis, 16 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "_original/moveworks-conversations-api-openapi.yaml: archived document superseded by a larger archived document",
+    "moveworks-articles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "moveworks-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "moveworks-conversations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "moveworks-default-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "moveworks-deprecated-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "moveworks-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "moveworks-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "moveworks-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "moveworks-interactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "moveworks-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "moveworks-plugin-calls-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "moveworks-plugin-resources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "moveworks-responses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "moveworks-smartforms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "moveworks-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "moveworks-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }

@@ -110,44 +110,6 @@ paths:
                 $ref: '#/components/schemas/500ErrorResponse'
 components:
   schemas:
-    404ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 404ErrorResponse
-    plugincallslist:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        '@odata.nextLink':
-          type: string
-          description: URL to fetch the next set of results.
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/plugincallsobject'
-      title: plugincallslist
-    429ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 429ErrorResponse
-    400ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 400ErrorResponse
     500ErrorResponse:
       type: object
       properties:
@@ -156,6 +118,38 @@ components:
         message:
           type: string
       title: 500ErrorResponse
+    403ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 403ErrorResponse
+    400ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 400ErrorResponse
+    429ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 429ErrorResponse
+    404ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 404ErrorResponse
     plugincallsobject:
       type: object
       properties:
@@ -197,14 +191,20 @@ components:
           format: date-time
           description: Timestamp when the plugin call entry is last updated in this table
       title: plugincallsobject
-    403ErrorResponse:
+    plugincallslist:
       type: object
       properties:
-        code:
+        '@odata.context':
           type: string
-        message:
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
           type: string
-      title: 403ErrorResponse
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/plugincallsobject'
+      title: plugincallslist
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

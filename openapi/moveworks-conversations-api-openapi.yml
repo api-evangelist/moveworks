@@ -430,96 +430,20 @@ paths:
       description: US Prod 3 production server
 components:
   schemas:
-    NotFoundErrorResponseErrorCode:
-      type: string
-      enum:
-      - NOT_FOUND
-      title: NotFoundErrorResponseErrorCode
-    NotFoundErrorResponseError:
+    Attribute:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/NotFoundErrorResponseErrorCode'
-        message:
+        key:
           type: string
+          description: Attribute name
+        value:
+          type: string
+          description: Attribute value
       required:
-      - code
-      - message
-      title: NotFoundErrorResponseError
-    InvalidTitleErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/InvalidTitleErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: InvalidTitleErrorResponseError
-    InvalidTitleErrorResponseErrorCode:
-      type: string
-      enum:
-      - INVALID_INPUT
-      title: InvalidTitleErrorResponseErrorCode
-    CreateConversationRequest:
-      type: object
-      properties:
-        title:
-          type: string
-          description: Optional user-defined title
-      title: CreateConversationRequest
-    Event:
-      type: object
-      properties:
-        event_id:
-          type: string
-          description: Unique event identifier
-        conversation_id:
-          type: string
-          description: Parent conversation identifier
-        event_payload:
-          $ref: '#/components/schemas/EventPayload'
-      required:
-      - event_id
-      - conversation_id
-      - event_payload
-      title: Event
-    UnauthorizedErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/UnauthorizedErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: UnauthorizedErrorResponseError
-    UnauthorizedErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthorizedErrorResponseError'
-      required:
-      - error
-      description: Error response for unauthorized access
-      title: UnauthorizedErrorResponse
-    Display:
-      type: object
-      properties:
-        title:
-          $ref: '#/components/schemas/Content'
-          description: Primary heading/identifier with type discriminator
-        body:
-          $ref: '#/components/schemas/Content'
-          description: Body/description content with type discriminator
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Attribute'
-          description: Opaque key-value metadata for citation display. These attributes contain implementation-specific rendering hints and should be treated as a black-box by clients. The structure and values may vary between citations and should not be relied upon for business logic.
-      title: Display
+      - key
+      - value
+      description: Key-value pair for citation display metadata. This is an opaque structure that contains rendering hints specific to each citation. Clients should not make assumptions about the keys or values present, as they may vary based on citation type and context.
+      title: Attribute
     Message:
       type: object
       properties:
@@ -567,76 +491,6 @@ components:
       - content
       - created_at
       title: Message
-    ListConversationsResponse:
-      type: object
-      properties:
-        conversations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Conversation'
-          description: Array of conversations
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-          description: Metadata (pagination)
-      required:
-      - conversations
-      title: ListConversationsResponse
-    ForbiddenErrorResponseError:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/ForbiddenErrorResponseErrorCode'
-        message:
-          type: string
-      required:
-      - code
-      - message
-      title: ForbiddenErrorResponseError
-    EventPayload:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/EventType'
-        message:
-          $ref: '#/components/schemas/Message'
-          description: Present when the event type is MESSAGE_EVENT
-      required:
-      - type
-      description: Event payload. Currently only message events are supported.
-      title: EventPayload
-    InternalErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/InternalErrorResponseError'
-      required:
-      - error
-      description: Error response for internal server error
-      title: InternalErrorResponse
-    FeedbackOption:
-      type: object
-      properties:
-        callback_id:
-          type: string
-          description: Opaque callback identifier. Pass this value to the feedback endpoint to submit this rating.
-      required:
-      - callback_id
-      title: FeedbackOption
-    InvalidTitleErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/InvalidTitleErrorResponseError'
-      required:
-      - error
-      description: Error response for invalid conversation title
-      title: InvalidTitleErrorResponse
-    CommonmarkTextContentItemType:
-      type: string
-      enum:
-      - COMMONMARK_TEXT
-      description: Content type discriminator
-      title: CommonmarkTextContentItemType
     ActorType:
       type: string
       enum:
@@ -644,15 +498,6 @@ components:
       - ASSISTANT
       description: Message actor type
       title: ActorType
-    PlainTextContent:
-      type: object
-      properties:
-        text:
-          type: string
-          description: Plain text content
-      required:
-      - text
-      title: PlainTextContent
     Conversation:
       type: object
       properties:
@@ -678,60 +523,6 @@ components:
       - created_at
       - updated_at
       title: Conversation
-    ListEventsResponse:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-          description: Array of event objects, ordered chronologically
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-      required:
-      - events
-      - metadata
-      title: ListEventsResponse
-    MessageFeedback:
-      type: object
-      properties:
-        helpful:
-          $ref: '#/components/schemas/FeedbackOption'
-          description: Positive feedback option. Use this callback_id to rate the response as helpful.
-        unhelpful:
-          $ref: '#/components/schemas/FeedbackOption'
-          description: Negative feedback option. Use this callback_id to rate the response as unhelpful.
-      description: Feedback options available on an assistant message. When present, this message supports feedback and the callback IDs can be used to submit a rating.
-      title: MessageFeedback
-    NotFoundErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/NotFoundErrorResponseError'
-      required:
-      - error
-      description: Error response for resource not found
-      title: NotFoundErrorResponse
-    InternalErrorResponseErrorCode:
-      type: string
-      enum:
-      - INTERNAL_ERROR
-      title: InternalErrorResponseErrorCode
-    InvalidCursorErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/InvalidCursorErrorResponseError'
-      required:
-      - error
-      description: Error response for invalid pagination cursor
-      title: InvalidCursorErrorResponse
-    EventType:
-      type: string
-      enum:
-      - MESSAGE_EVENT
-      description: Event type discriminator for event payloads.
-      title: EventType
     RateLimitExceededErrorResponseError:
       type: object
       properties:
@@ -743,11 +534,6 @@ components:
       - code
       - message
       title: RateLimitExceededErrorResponseError
-    RateLimitExceededErrorResponseErrorCode:
-      type: string
-      enum:
-      - RATE_LIMIT_EXCEEDED
-      title: RateLimitExceededErrorResponseErrorCode
     Content:
       oneOf:
       - type: object
@@ -787,95 +573,46 @@ components:
         propertyName: type
       description: Message content with type discriminator
       title: Content
-    CitationLocation:
-      type: object
-      properties:
-        offset:
-          type: integer
-          description: Zero-based character position in the assistant message where the citation should be inserted
-      description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
-      title: CitationLocation
-    RateLimitExceededErrorResponse:
+    InvalidCursorErrorResponse:
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/RateLimitExceededErrorResponseError'
+          $ref: '#/components/schemas/InvalidCursorErrorResponseError'
       required:
       - error
-      description: Error response for rate limit exceeded
-      title: RateLimitExceededErrorResponse
-    Attribute:
+      description: Error response for invalid pagination cursor
+      title: InvalidCursorErrorResponse
+    ListConversationsResponse:
       type: object
       properties:
-        key:
-          type: string
-          description: Attribute name
-        value:
-          type: string
-          description: Attribute value
+        conversations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Conversation'
+          description: Array of conversations
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+          description: Metadata (pagination)
       required:
-      - key
-      - value
-      description: Key-value pair for citation display metadata. This is an opaque structure that contains rendering hints specific to each citation. Clients should not make assumptions about the keys or values present, as they may vary based on citation type and context.
-      title: Attribute
-    UpdateConversationRequest:
-      type: object
-      properties:
-        title:
-          type: string
-          description: New conversation title (optional)
-        archived:
-          type: boolean
-          description: New archive status (optional)
-      title: UpdateConversationRequest
-    InvalidCursorErrorResponseErrorCode:
+      - conversations
+      title: ListConversationsResponse
+    PlainTextContentItemType:
       type: string
       enum:
-      - INVALID_CURSOR
-      title: InvalidCursorErrorResponseErrorCode
-    UnauthorizedErrorResponseErrorCode:
-      type: string
-      enum:
-      - UNAUTHORIZED
-      title: UnauthorizedErrorResponseErrorCode
-    ForbiddenErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ForbiddenErrorResponseError'
-      required:
-      - error
-      description: Error response for forbidden access
-      title: ForbiddenErrorResponse
-    MarkdownTextContent:
-      type: object
-      properties:
-        text:
-          type: string
-          description: Raw markdown text content. Used when Minerva's chat response `is_commonmark` is not set.
-      required:
-      - text
-      title: MarkdownTextContent
-    MarkdownTextContentItemType:
-      type: string
-      enum:
-      - MARKDOWN_TEXT
+      - PLAIN_TEXT
       description: Content type discriminator
-      title: MarkdownTextContentItemType
-    ForbiddenErrorResponseErrorCode:
-      type: string
-      enum:
-      - FORBIDDEN
-      title: ForbiddenErrorResponseErrorCode
-    Metadata:
+      title: PlainTextContentItemType
+    MessageFeedback:
       type: object
       properties:
-        next_cursor:
-          type:
-          - string
-          - 'null'
-          description: Opaque cursor for next page (null if no more results)
-      title: Metadata
+        helpful:
+          $ref: '#/components/schemas/FeedbackOption'
+          description: Positive feedback option. Use this callback_id to rate the response as helpful.
+        unhelpful:
+          $ref: '#/components/schemas/FeedbackOption'
+          description: Negative feedback option. Use this callback_id to rate the response as unhelpful.
+      description: Feedback options available on an assistant message. When present, this message supports feedback and the callback IDs can be used to submit a rating.
+      title: MessageFeedback
     Citation:
       type: object
       properties:
@@ -892,6 +629,114 @@ components:
         display:
           $ref: '#/components/schemas/Display'
       title: Citation
+    NotFoundErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotFoundErrorResponseError'
+      required:
+      - error
+      description: Error response for resource not found
+      title: NotFoundErrorResponse
+    RateLimitExceededErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/RateLimitExceededErrorResponseError'
+      required:
+      - error
+      description: Error response for rate limit exceeded
+      title: RateLimitExceededErrorResponse
+    InvalidTitleErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/InvalidTitleErrorResponseError'
+      required:
+      - error
+      description: Error response for invalid conversation title
+      title: InvalidTitleErrorResponse
+    UpdateConversationRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: New conversation title (optional)
+        archived:
+          type: boolean
+          description: New archive status (optional)
+      title: UpdateConversationRequest
+    Display:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/Content'
+          description: Primary heading/identifier with type discriminator
+        body:
+          $ref: '#/components/schemas/Content'
+          description: Body/description content with type discriminator
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+          description: Opaque key-value metadata for citation display. These attributes contain implementation-specific rendering hints and should be treated as a black-box by clients. The structure and values may vary between citations and should not be relied upon for business logic.
+      title: Display
+    EventType:
+      type: string
+      enum:
+      - MESSAGE_EVENT
+      description: Event type discriminator for event payloads.
+      title: EventType
+    EventPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/EventType'
+        message:
+          $ref: '#/components/schemas/Message'
+          description: Present when the event type is MESSAGE_EVENT
+      required:
+      - type
+      description: Event payload. Currently only message events are supported.
+      title: EventPayload
+    PlainTextContent:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Plain text content
+      required:
+      - text
+      title: PlainTextContent
+    CreateConversationRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Optional user-defined title
+      title: CreateConversationRequest
+    InvalidTitleErrorResponseErrorCode:
+      type: string
+      enum:
+      - INVALID_INPUT
+      title: InvalidTitleErrorResponseErrorCode
+    InvalidTitleErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/InvalidTitleErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: InvalidTitleErrorResponseError
+    CommonmarkTextContentItemType:
+      type: string
+      enum:
+      - COMMONMARK_TEXT
+      description: Content type discriminator
+      title: CommonmarkTextContentItemType
     InvalidCursorErrorResponseError:
       type: object
       properties:
@@ -903,17 +748,102 @@ components:
       - code
       - message
       title: InvalidCursorErrorResponseError
-    InternalErrorResponseError:
+    InvalidCursorErrorResponseErrorCode:
+      type: string
+      enum:
+      - INVALID_CURSOR
+      title: InvalidCursorErrorResponseErrorCode
+    RateLimitExceededErrorResponseErrorCode:
+      type: string
+      enum:
+      - RATE_LIMIT_EXCEEDED
+      title: RateLimitExceededErrorResponseErrorCode
+    ListEventsResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+          description: Array of event objects, ordered chronologically
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+      required:
+      - events
+      - metadata
+      title: ListEventsResponse
+    UnauthorizedErrorResponseErrorCode:
+      type: string
+      enum:
+      - UNAUTHORIZED
+      title: UnauthorizedErrorResponseErrorCode
+    UnauthorizedErrorResponseError:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/InternalErrorResponseErrorCode'
+          $ref: '#/components/schemas/UnauthorizedErrorResponseErrorCode'
         message:
           type: string
       required:
       - code
       - message
-      title: InternalErrorResponseError
+      title: UnauthorizedErrorResponseError
+    NotFoundErrorResponseErrorCode:
+      type: string
+      enum:
+      - NOT_FOUND
+      title: NotFoundErrorResponseErrorCode
+    Event:
+      type: object
+      properties:
+        event_id:
+          type: string
+          description: Unique event identifier
+        conversation_id:
+          type: string
+          description: Parent conversation identifier
+        event_payload:
+          $ref: '#/components/schemas/EventPayload'
+      required:
+      - event_id
+      - conversation_id
+      - event_payload
+      title: Event
+    NotFoundErrorResponseError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/NotFoundErrorResponseErrorCode'
+        message:
+          type: string
+      required:
+      - code
+      - message
+      title: NotFoundErrorResponseError
+    Metadata:
+      type: object
+      properties:
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: Opaque cursor for next page (null if no more results)
+      title: Metadata
+    UnauthorizedErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthorizedErrorResponseError'
+      required:
+      - error
+      description: Error response for unauthorized access
+      title: UnauthorizedErrorResponse
+    MarkdownTextContentItemType:
+      type: string
+      enum:
+      - MARKDOWN_TEXT
+      description: Content type discriminator
+      title: MarkdownTextContentItemType
     CommonmarkTextContent:
       type: object
       properties:
@@ -923,12 +853,15 @@ components:
       required:
       - text
       title: CommonmarkTextContent
-    PlainTextContentItemType:
-      type: string
-      enum:
-      - PLAIN_TEXT
-      description: Content type discriminator
-      title: PlainTextContentItemType
+    FeedbackOption:
+      type: object
+      properties:
+        callback_id:
+          type: string
+          description: Opaque callback identifier. Pass this value to the feedback endpoint to submit this rating.
+      required:
+      - callback_id
+      title: FeedbackOption
     CitationContentReference:
       type: object
       properties:
@@ -942,38 +875,87 @@ components:
       - citation_id
       - offset
       title: CitationContentReference
-    404ErrorResponse:
+    ForbiddenErrorResponseError:
       type: object
       properties:
         code:
-          type: string
+          $ref: '#/components/schemas/ForbiddenErrorResponseErrorCode'
         message:
           type: string
-      title: 404ErrorResponse
-    403ErrorResponse:
+      required:
+      - code
+      - message
+      title: ForbiddenErrorResponseError
+    CitationLocation:
+      type: object
+      properties:
+        offset:
+          type: integer
+          description: Zero-based character position in the assistant message where the citation should be inserted
+      description: '**Deprecated:** Use `Message.content_references` for positional data instead. This field will no longer be populated starting May 12, 2026 for both new and existing messages.'
+      title: CitationLocation
+    ForbiddenErrorResponseErrorCode:
+      type: string
+      enum:
+      - FORBIDDEN
+      title: ForbiddenErrorResponseErrorCode
+    ForbiddenErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ForbiddenErrorResponseError'
+      required:
+      - error
+      description: Error response for forbidden access
+      title: ForbiddenErrorResponse
+    InternalErrorResponseError:
       type: object
       properties:
         code:
-          type: string
+          $ref: '#/components/schemas/InternalErrorResponseErrorCode'
         message:
           type: string
-      title: 403ErrorResponse
-    429ErrorResponse:
+      required:
+      - code
+      - message
+      title: InternalErrorResponseError
+    InternalErrorResponse:
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 429ErrorResponse
-    400ErrorResponse:
+        error:
+          $ref: '#/components/schemas/InternalErrorResponseError'
+      required:
+      - error
+      description: Error response for internal server error
+      title: InternalErrorResponse
+    InternalErrorResponseErrorCode:
+      type: string
+      enum:
+      - INTERNAL_ERROR
+      title: InternalErrorResponseErrorCode
+    MarkdownTextContent:
       type: object
       properties:
-        code:
+        text:
           type: string
-        message:
+          description: Raw markdown text content. Used when Minerva's chat response `is_commonmark` is not set.
+      required:
+      - text
+      title: MarkdownTextContent
+    conversations:
+      type: object
+      properties:
+        '@odata.context':
           type: string
-      title: 400ErrorResponse
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/conversationsobject'
+      title: conversations
     ConversationsobjectDetail:
       type: object
       properties:
@@ -1012,20 +994,6 @@ components:
           description: Message or ticket description content that triggered the interception. Populated for `CONVERSATION_TYPE_CHANNEL_INTERCEPTION` (message content) and `CONVERSATION_TYPE_TICKET_INTERCEPTION` (ticket description).
       description: Type-specific metadata about the conversation. The fields present depend on the value of `type`. See each field's description for which conversation types populate it.
       title: ConversationsobjectDetail
-    conversations:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        '@odata.nextLink':
-          type: string
-          description: URL to fetch the next set of results.
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/conversationsobject'
-      title: conversations
     500ErrorResponse:
       type: object
       properties:
@@ -1034,6 +1002,14 @@ components:
         message:
           type: string
       title: 500ErrorResponse
+    400ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 400ErrorResponse
     conversationsobject:
       type: object
       properties:
@@ -1062,6 +1038,30 @@ components:
           $ref: '#/components/schemas/ConversationsobjectDetail'
           description: Type-specific metadata about the conversation. The fields present depend on the value of `type`. See each field's description for which conversation types populate it.
       title: conversationsobject
+    429ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 429ErrorResponse
+    404ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 404ErrorResponse
+    403ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 403ErrorResponse
   securitySchemes:
     BearerAuth:
       type: http

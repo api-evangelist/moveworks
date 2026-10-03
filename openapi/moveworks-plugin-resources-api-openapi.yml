@@ -110,52 +110,6 @@ paths:
                 $ref: '#/components/schemas/500ErrorResponse'
 components:
   schemas:
-    404ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 404ErrorResponse
-    pluginresources:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        '@odata.nextLink':
-          type: string
-          description: URL to fetch the next set of results.
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/pluginresourcesobject'
-      title: pluginresources
-    429ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 429ErrorResponse
-    400ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 400ErrorResponse
-    500ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 500ErrorResponse
     pluginresourcesobject:
       type: object
       properties:
@@ -202,6 +156,52 @@ components:
           format: date-time
           description: Timestamp when the plugin resource entry was last updated in this table.
       title: pluginresourcesobject
+    500ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 500ErrorResponse
+    pluginresources:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/pluginresourcesobject'
+      title: pluginresources
+    400ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 400ErrorResponse
+    429ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 429ErrorResponse
+    404ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 404ErrorResponse
     PluginresourcesobjectDetail:
       type: object
       properties:

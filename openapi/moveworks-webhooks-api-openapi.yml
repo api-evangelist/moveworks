@@ -74,6 +74,15 @@ paths:
                 description: Any type
 components:
   schemas:
+    WebhooksV1ListenersListenerIdNotifyPostResponsesContentApplicationJsonSchemaError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: Details about the authorization failure.
+      title: WebhooksV1ListenersListenerIdNotifyPostResponsesContentApplicationJsonSchemaError
     SendAWebhookToAWebhookListenerRequestUnauthorizedError:
       type: object
       properties:
@@ -90,15 +99,6 @@ components:
           type: string
           description: The status of the event receipt.
       title: Webhooks_sendAWebhookToAWebhookListener_Response_200
-    WebhooksV1ListenersListenerIdNotifyPostResponsesContentApplicationJsonSchemaError:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: Details about the authorization failure.
-      title: WebhooksV1ListenersListenerIdNotifyPostResponsesContentApplicationJsonSchemaError
   securitySchemes:
     bearerAuth:
       type: http

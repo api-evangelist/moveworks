@@ -110,76 +110,6 @@ paths:
                 $ref: '#/components/schemas/500ErrorResponse'
 components:
   schemas:
-    404ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 404ErrorResponse
-    interactions:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        '@odata.nextLink':
-          type: string
-          description: URL to fetch the next set of results.
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/interactionsobject'
-      title: interactions
-    InteractionsobjectDetail:
-      type: object
-      properties:
-        content:
-          type: string
-          description: This field contains the free form text, link URL, Button name according to interaction type.
-        domain:
-          type: string
-          description: This the interaction level detected domain. Domain is only predicted for free form text interaction type. In some cases, domain of individual utterances may differ from the primary domain detected per conversation.
-        entity:
-          type: string
-          description: This field contains the topic as detected per each interaction. Topic is only predicted for free form text interaction type.
-        type:
-          type: string
-          description: This field indicates which type of resource were accessed during an link click interaction.
-        detail:
-          type: string
-          description: This field indicates the form name which was submitted
-        resource_id:
-          type: string
-          description: 'This field provides the resource ID that was accessed by the end user during an link click interaction, or when a user submits a ticket via UI form
-
-            INTERACTION_TYPE_LINK_CLICK
-
-            INTERACTION_TYPE_UIFORM_SUBMISSION'
-        file_types:
-          type: array
-          items:
-            type: string
-          description: This field provides list of types of files that were uploaded during a file upload interaction (INTERACTION_TYPE_CONTENT_UPLOAD). We do not record the file names as user can also upload a private file
-      description: This is a JSON object which contains metadata per interaction type.
-      title: InteractionsobjectDetail
-    429ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 429ErrorResponse
-    400ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 400ErrorResponse
     interactionsobject:
       type: object
       properties:
@@ -231,6 +161,76 @@ components:
         message:
           type: string
       title: 500ErrorResponse
+    interactions:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/interactionsobject'
+      title: interactions
+    400ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 400ErrorResponse
+    429ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 429ErrorResponse
+    InteractionsobjectDetail:
+      type: object
+      properties:
+        content:
+          type: string
+          description: This field contains the free form text, link URL, Button name according to interaction type.
+        domain:
+          type: string
+          description: This the interaction level detected domain. Domain is only predicted for free form text interaction type. In some cases, domain of individual utterances may differ from the primary domain detected per conversation.
+        entity:
+          type: string
+          description: This field contains the topic as detected per each interaction. Topic is only predicted for free form text interaction type.
+        type:
+          type: string
+          description: This field indicates which type of resource were accessed during an link click interaction.
+        detail:
+          type: string
+          description: This field indicates the form name which was submitted
+        resource_id:
+          type: string
+          description: 'This field provides the resource ID that was accessed by the end user during an link click interaction, or when a user submits a ticket via UI form
+
+            INTERACTION_TYPE_LINK_CLICK
+
+            INTERACTION_TYPE_UIFORM_SUBMISSION'
+        file_types:
+          type: array
+          items:
+            type: string
+          description: This field provides list of types of files that were uploaded during a file upload interaction (INTERACTION_TYPE_CONTENT_UPLOAD). We do not record the file names as user can also upload a private file
+      description: This is a JSON object which contains metadata per interaction type.
+      title: InteractionsobjectDetail
+    404ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 404ErrorResponse
     403ErrorResponse:
       type: object
       properties:
