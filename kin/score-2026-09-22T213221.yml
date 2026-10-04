@@ -1,21 +1,19 @@
-# Kin Score artifact — moveworks — 2026-09-02T224043
+# Kin Score artifact — moveworks — 2026-09-22T213221
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: moveworks
-  schema_version: 0.18.0
-  scored_at: '2026-09-02'
-  run_ts: 2026-09-02T224043
-  composite: 55.8
+  schema_version: 0.22.0
+  scored_at: '2026-09-22'
+  run_ts: 2026-09-22T213221
+  composite: 55.2
   band: strong
   facets:
     discoverability: 81.5
-    contract_quality: 62.7
-    governance: 18.2
+    contract_quality: 63.1
+    contract_governance: 18.2
     operational_transparency: 65.8
     developer_ergonomics: 58.9
-    commercial_clarity: 47.4
-    contract_governance: 18.2
     access_clarity: 47.4
   agent_readiness:
     score: 42.3
@@ -50,4 +48,4 @@ kin_score:
       total: 9
       derived: 0
       coverage: 0.0
-      callable: 88.9
+      callable: 100.0

@@ -183,6 +183,8 @@ apis:
   humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
   baseURL: https://api.moveworks.ai
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -195,6 +197,8 @@ apis:
   humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
   baseURL: https://api.moveworks.ai
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -255,6 +259,8 @@ apis:
   humanURL: https://docs.moveworks.com/api-reference/events-api/events-api
   baseURL: https://api.moveworks.ai
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
