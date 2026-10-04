@@ -127,19 +127,21 @@ paths:
         '410':
           $ref: '#/components/responses/Gone'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Gone:
-      description: The requested API version has been deprecated and sunset (RFC-style 410 Gone).
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    count:
+      name: $count
+      in: query
+      required: false
+      description: When true, include the total record count in the response.
+      schema:
+        type: boolean
+    nextLink:
+      name: '@odata.nextLink'
+      in: query
+      required: false
+      description: Opaque cursor returned by a previous page for server-driven pagination.
+      schema:
+        type: string
   schemas:
     Error:
       type: object
@@ -169,21 +171,19 @@ components:
           items:
             type: object
             additionalProperties: true
-  parameters:
-    nextLink:
-      name: '@odata.nextLink'
-      in: query
-      required: false
-      description: Opaque cursor returned by a previous page for server-driven pagination.
-      schema:
-        type: string
-    count:
-      name: $count
-      in: query
-      required: false
-      description: When true, include the total record count in the response.
-      schema:
-        type: boolean
+  responses:
+    Gone:
+      description: The requested API version has been deprecated and sunset (RFC-style 410 Gone).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

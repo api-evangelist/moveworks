@@ -95,22 +95,6 @@ paths:
                 $ref: '#/components/schemas/ErrorAuthentication'
 components:
   schemas:
-    ErrorAuthentication:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorAuthentication
-    OauthUnsupportedGrantType:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthUnsupportedGrantType
     ErrorRateLimitExceeded:
       type: object
       properties:
@@ -119,37 +103,6 @@ components:
         message:
           type: string
       title: ErrorRateLimitExceeded
-    CreateOAuthTokenRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/OauthInvalidRequest'
-      - $ref: '#/components/schemas/OauthUnsupportedGrantType'
-      title: CreateOAuthTokenRequestBadRequestError
-    OauthTokenGeneratedData:
-      type: object
-      properties:
-        access_token:
-          type: string
-        expires_in:
-          type: integer
-        token_type:
-          type: string
-      title: OauthTokenGeneratedData
-    OauthInvalidClient:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthInvalidClient
-    OauthInvalidRequest:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthInvalidRequest
     OauthTokenRequest:
       type: object
       properties:
@@ -167,12 +120,25 @@ components:
       - client_secret
       - grant_type
       title: OauthTokenRequest
-    OauthTokenGenerated:
+    AuthSuccessful:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/OauthTokenGeneratedData'
-      title: OauthTokenGenerated
+        Message:
+          type: string
+      title: AuthSuccessful
+    OauthUnsupportedGrantType:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthUnsupportedGrantType
+    CreateOAuthTokenRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/OauthInvalidRequest'
+      - $ref: '#/components/schemas/OauthUnsupportedGrantType'
+      title: CreateOAuthTokenRequestBadRequestError
     InternalServerError:
       type: object
       properties:
@@ -181,12 +147,46 @@ components:
         message:
           type: string
       title: InternalServerError
-    AuthSuccessful:
+    OauthInvalidRequest:
       type: object
       properties:
-        Message:
+        code:
           type: string
-      title: AuthSuccessful
+        message:
+          type: string
+      title: OauthInvalidRequest
+    ErrorAuthentication:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorAuthentication
+    OauthInvalidClient:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthInvalidClient
+    OauthTokenGeneratedData:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        token_type:
+          type: string
+      title: OauthTokenGeneratedData
+    OauthTokenGenerated:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/OauthTokenGeneratedData'
+      title: OauthTokenGenerated
   securitySchemes:
     Bearer:
       type: http

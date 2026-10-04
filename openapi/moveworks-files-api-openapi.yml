@@ -360,16 +360,82 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    PermissionsMetadata:
+    PermissionCollection:
       type: object
       properties:
         '@odata.context':
           type: string
           description: OData metadata context URL.
-        model:
-          $ref: '#/components/schemas/PermissionsMetadataModel'
-          description: 'Permission model in use. NOTE: `resource_permissions` is the only supported model at this time.'
-      title: PermissionsMetadata
+        value:
+          $ref: '#/components/schemas/PermissionCollectionValue'
+        '@odata.nextLink':
+          type: string
+          description: URL to retrieve the next page of permission results.
+      title: PermissionCollection
+    Node:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique id for each file
+        name:
+          type: string
+          description: User friendly name for the file
+        status:
+          $ref: '#/components/schemas/status_enum'
+        custom_attributes:
+          $ref: '#/components/schemas/custom_attributes'
+        last_modified_datetime:
+          type: string
+          format: date-time
+          description: Used to efficiently ingest content only updated since last ingestion
+        last_modified_by:
+          type: string
+        created_datetime:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        external_url:
+          type: string
+          description: External URL to redirect users
+        metadata_url:
+          type: string
+          description: Used to retrieve metadata about individual files
+        content:
+          $ref: '#/components/schemas/ContentObject'
+        parent_info:
+          $ref: '#/components/schemas/node_reference'
+        children_url:
+          type: string
+      required:
+      - id
+      - name
+      - last_modified_datetime
+      - external_url
+      title: Node
+    PermissionCollectionValuePermissionsItemsAction:
+      type: string
+      enum:
+      - VIEW
+      - UPDATE
+      description: Action permitted on the content.
+      title: PermissionCollectionValuePermissionsItemsAction
+    node_reference:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        path:
+          type: string
+      required:
+      - id
+      - name
+      title: node_reference
     ODataContentResponse:
       type: object
       properties:
@@ -427,133 +493,23 @@ components:
       - last_modified_datetime
       - external_url
       title: NodeWithContent
-    PermissionCollectionValue:
+    ContentObject:
       type: object
       properties:
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/PermissionCollectionValuePermissionsItems'
-          description: List of permission mappings for users and groups.
-        permissions_hierarchy:
-          type: array
-          items:
-            type: string
-          description: Hierarchy chain of entity IDs (required if permission model = hierarchy_permission).
-        last_modified_datetime:
+        download_path:
           type: string
-          description: Timestamp of the last permission update.
-      title: PermissionCollectionValue
-    PermissionCollection:
-      type: object
-      properties:
-        '@odata.context':
+          description: 'URL for the download request. For file streams: use `/{id}/download`. Not required for HTML content.'
+        mime_type:
           type: string
-          description: OData metadata context URL.
-        value:
-          $ref: '#/components/schemas/PermissionCollectionValue'
-        '@odata.nextLink':
-          type: string
-          description: URL to retrieve the next page of permission results.
-      title: PermissionCollection
-    ODataContentMetadataResponse:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        value:
-          $ref: '#/components/schemas/NodeWithContent'
-      title: ODataContentMetadataResponse
-    status_enum:
-      type: string
-      enum:
-      - active
-      - deleted
-      title: status_enum
-    PermissionsMetadataModel:
-      type: string
-      enum:
-      - resource_permission
-      - hierarchy_permission
-      description: 'Permission model in use. NOTE: `resource_permissions` is the only supported model at this time.'
-      title: PermissionsMetadataModel
-    Node:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique id for each file
-        name:
-          type: string
-          description: User friendly name for the file
-        status:
-          $ref: '#/components/schemas/status_enum'
-        custom_attributes:
-          $ref: '#/components/schemas/custom_attributes'
-        last_modified_datetime:
-          type: string
-          format: date-time
-          description: Used to efficiently ingest content only updated since last ingestion
-        last_modified_by:
-          type: string
-        created_datetime:
-          type: string
-          format: date-time
-        created_by:
-          type: string
-        external_url:
-          type: string
-          description: External URL to redirect users
-        metadata_url:
-          type: string
-          description: Used to retrieve metadata about individual files
-        content:
-          $ref: '#/components/schemas/ContentObject'
-        parent_info:
-          $ref: '#/components/schemas/node_reference'
-        children_url:
+          description: 'Used to specify type of content. See our supported MIME types here: https://docs.moveworks.com/api-reference/content-gateway/supported-mime-types.'
+        size:
+          type: integer
+          format: int64
+        sha1_hash:
           type: string
       required:
-      - id
-      - name
-      - last_modified_datetime
-      - external_url
-      title: Node
-    ErrorResponseError:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Standard error code (e.g., UNAUTHORIZED, INVALID_ARGUMENT, NOT_FOUND).
-        message:
-          type: string
-          description: Human-readable explanation of the error.
-      required:
-      - code
-      - message
-      title: ErrorResponseError
-    PermissionCollectionValuePermissionsItems:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/PermissionCollectionValuePermissionsItemsType'
-          description: Type of permission entity.
-        id:
-          type: string
-          description: Entity ID (user or group). Wildcard (`*`), used in conjunction with `type` `GROUP`, can be used to denote all Users.
-        action:
-          $ref: '#/components/schemas/PermissionCollectionValuePermissionsItemsAction'
-          description: Action permitted on the content.
-      title: PermissionCollectionValuePermissionsItems
-    PermissionCollectionValuePermissionsItemsAction:
-      type: string
-      enum:
-      - VIEW
-      - UPDATE
-      description: Action permitted on the content.
-      title: PermissionCollectionValuePermissionsItemsAction
+      - mime_type
+      title: ContentObject
     ContentObjectWithBody:
       type: object
       properties:
@@ -574,36 +530,25 @@ components:
       required:
       - mime_type
       title: ContentObjectWithBody
-    custom_attributes:
-      type: object
-      additionalProperties:
-        type: string
-      description: A map of string to string for representing custom attributes.
-      title: custom_attributes
-    ContentObject:
-      type: object
-      properties:
-        download_path:
-          type: string
-          description: 'URL for the download request. For file streams: use `/{id}/download`. Not required for HTML content.'
-        mime_type:
-          type: string
-          description: 'Used to specify type of content. See our supported MIME types here: https://docs.moveworks.com/api-reference/content-gateway/supported-mime-types.'
-        size:
-          type: integer
-          format: int64
-        sha1_hash:
-          type: string
-      required:
-      - mime_type
-      title: ContentObject
-    PermissionCollectionValuePermissionsItemsType:
+    status_enum:
       type: string
       enum:
-      - USER
-      - GROUP
-      description: Type of permission entity.
-      title: PermissionCollectionValuePermissionsItemsType
+      - active
+      - deleted
+      title: status_enum
+    ErrorResponseError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Standard error code (e.g., UNAUTHORIZED, INVALID_ARGUMENT, NOT_FOUND).
+        message:
+          type: string
+          description: Human-readable explanation of the error.
+      required:
+      - code
+      - message
+      title: ErrorResponseError
     ErrorResponse:
       type: object
       properties:
@@ -612,17 +557,72 @@ components:
       required:
       - error
       title: ErrorResponse
-    node_reference:
+    PermissionsMetadata:
       type: object
       properties:
+        '@odata.context':
+          type: string
+          description: OData metadata context URL.
+        model:
+          $ref: '#/components/schemas/PermissionsMetadataModel'
+          description: 'Permission model in use. NOTE: `resource_permissions` is the only supported model at this time.'
+      title: PermissionsMetadata
+    PermissionCollectionValue:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionCollectionValuePermissionsItems'
+          description: List of permission mappings for users and groups.
+        permissions_hierarchy:
+          type: array
+          items:
+            type: string
+          description: Hierarchy chain of entity IDs (required if permission model = hierarchy_permission).
+        last_modified_datetime:
+          type: string
+          description: Timestamp of the last permission update.
+      title: PermissionCollectionValue
+    PermissionsMetadataModel:
+      type: string
+      enum:
+      - resource_permission
+      - hierarchy_permission
+      description: 'Permission model in use. NOTE: `resource_permissions` is the only supported model at this time.'
+      title: PermissionsMetadataModel
+    ODataContentMetadataResponse:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        value:
+          $ref: '#/components/schemas/NodeWithContent'
+      title: ODataContentMetadataResponse
+    PermissionCollectionValuePermissionsItems:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/PermissionCollectionValuePermissionsItemsType'
+          description: Type of permission entity.
         id:
           type: string
-          format: uuid
-        name:
-          type: string
-        path:
-          type: string
-      required:
-      - id
-      - name
-      title: node_reference
+          description: Entity ID (user or group). Wildcard (`*`), used in conjunction with `type` `GROUP`, can be used to denote all Users.
+        action:
+          $ref: '#/components/schemas/PermissionCollectionValuePermissionsItemsAction'
+          description: Action permitted on the content.
+      title: PermissionCollectionValuePermissionsItems
+    custom_attributes:
+      type: object
+      additionalProperties:
+        type: string
+      description: A map of string to string for representing custom attributes.
+      title: custom_attributes
+    PermissionCollectionValuePermissionsItemsType:
+      type: string
+      enum:
+      - USER
+      - GROUP
+      description: Type of permission entity.
+      title: PermissionCollectionValuePermissionsItemsType

@@ -73,22 +73,6 @@ paths:
               $ref: '#/components/schemas/SendMessageRequest'
 components:
   schemas:
-    ErrorAuthentication:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorAuthentication
-    OauthErrorAuthenticationInvalidToken:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthErrorAuthenticationInvalidToken
     ErrorRateLimitExceeded:
       type: object
       properties:
@@ -97,14 +81,20 @@ components:
         message:
           type: string
       title: ErrorRateLimitExceeded
-    OauthErrorAuthenticationExpiredToken:
+    OauthErrorAuthenticationInvalidToken:
       type: object
       properties:
         code:
           type: string
         message:
           type: string
-      title: OauthErrorAuthenticationExpiredToken
+      title: OauthErrorAuthenticationInvalidToken
+    SendMessageRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/ErrorAuthentication'
+      - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
+      - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
+      title: SendMessageRequestForbiddenError
     ErrorBadRequest:
       type: object
       properties:
@@ -113,12 +103,22 @@ components:
         message:
           type: string
       title: ErrorBadRequest
-    SendMessageRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/ErrorAuthentication'
-      - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
-      - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
-      title: SendMessageRequestForbiddenError
+    ErrorAuthentication:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorAuthentication
+    OauthErrorAuthenticationExpiredToken:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthErrorAuthenticationExpiredToken
     SendMessageRequest:
       type: object
       properties:

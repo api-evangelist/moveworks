@@ -110,71 +110,14 @@ paths:
                 $ref: '#/components/schemas/500ErrorResponse'
 components:
   schemas:
-    interactionsobject:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: UUID assigned by a system to a interaction. An interaction is either an input from a user to the system, or a response from the system the the user.
-        conversation_id:
-          type: string
-          format: uuid
-          description: ID of the parent conversation.
-        user_id:
-          type: string
-          format: uuid
-          description: User record ID assigned by the system to a user.
-        actor:
-          type: string
-          description: This field differentiates user v/s bot interactions.
-        platform:
-          type: string
-          description: 'This field denotes the platform where the interaction took place. For example: slack, msteams.'
-        type:
-          type: string
-          description: This field defines the type of the interaction.
-        label:
-          type: string
-          description: This field defines the label for UI form submission interaction type.
-        parent_interaction_id:
-          type: string
-          format: uuid
-          description: Parent interaction ID for bot messages and user actions such as form submissions/button clicks/link clicks
-        detail:
-          $ref: '#/components/schemas/InteractionsobjectDetail'
-          description: This is a JSON object which contains metadata per interaction type.
-        created_time:
-          type: string
-          format: date-time
-          description: Timestamp when the interaction was initiated.
-        last_updated_time:
-          type: string
-          format: date-time
-          description: Timestamp when the interaction entry is last updated in this table.
-      title: interactionsobject
-    500ErrorResponse:
+    403ErrorResponse:
       type: object
       properties:
         code:
           type: string
         message:
           type: string
-      title: 500ErrorResponse
-    interactions:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        '@odata.nextLink':
-          type: string
-          description: URL to fetch the next set of results.
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/interactionsobject'
-      title: interactions
+      title: 403ErrorResponse
     400ErrorResponse:
       type: object
       properties:
@@ -223,6 +166,57 @@ components:
           description: This field provides list of types of files that were uploaded during a file upload interaction (INTERACTION_TYPE_CONTENT_UPLOAD). We do not record the file names as user can also upload a private file
       description: This is a JSON object which contains metadata per interaction type.
       title: InteractionsobjectDetail
+    500ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 500ErrorResponse
+    interactionsobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID assigned by a system to a interaction. An interaction is either an input from a user to the system, or a response from the system the the user.
+        conversation_id:
+          type: string
+          format: uuid
+          description: ID of the parent conversation.
+        user_id:
+          type: string
+          format: uuid
+          description: User record ID assigned by the system to a user.
+        actor:
+          type: string
+          description: This field differentiates user v/s bot interactions.
+        platform:
+          type: string
+          description: 'This field denotes the platform where the interaction took place. For example: slack, msteams.'
+        type:
+          type: string
+          description: This field defines the type of the interaction.
+        label:
+          type: string
+          description: This field defines the label for UI form submission interaction type.
+        parent_interaction_id:
+          type: string
+          format: uuid
+          description: Parent interaction ID for bot messages and user actions such as form submissions/button clicks/link clicks
+        detail:
+          $ref: '#/components/schemas/InteractionsobjectDetail'
+          description: This is a JSON object which contains metadata per interaction type.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the interaction was initiated.
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the interaction entry is last updated in this table.
+      title: interactionsobject
     404ErrorResponse:
       type: object
       properties:
@@ -231,14 +225,20 @@ components:
         message:
           type: string
       title: 404ErrorResponse
-    403ErrorResponse:
+    interactions:
       type: object
       properties:
-        code:
+        '@odata.context':
           type: string
-        message:
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
           type: string
-      title: 403ErrorResponse
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/interactionsobject'
+      title: interactions
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

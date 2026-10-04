@@ -152,6 +152,11 @@ paths:
       description: http://localhost:5000/myinstance1
 components:
   schemas:
+    UserMetadata:
+      type: object
+      properties: {}
+      description: Custom key-value metadata for the user.
+      title: UserMetadata
     User:
       type: object
       properties:
@@ -187,6 +192,14 @@ components:
       - code
       - message
       title: ErrorResponseError
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorResponseError'
+      required:
+      - error
+      title: ErrorResponse
     UserCollection:
       type: object
       properties:
@@ -199,19 +212,6 @@ components:
         '@odata.nextLink':
           type: string
       title: UserCollection
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ErrorResponseError'
-      required:
-      - error
-      title: ErrorResponse
-    UserMetadata:
-      type: object
-      properties: {}
-      description: Custom key-value metadata for the user.
-      title: UserMetadata
     403ErrorResponse:
       type: object
       properties:
@@ -220,14 +220,6 @@ components:
         message:
           type: string
       title: 403ErrorResponse
-    500ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 500ErrorResponse
     400ErrorResponse:
       type: object
       properties:
@@ -244,28 +236,6 @@ components:
         message:
           type: string
       title: 429ErrorResponse
-    UserobjectExternalIdsItems:
-      type: object
-      properties:
-        connector_name:
-          type: string
-          description: Name of the connector created in Moveworks Setup
-        external_id:
-          type: string
-          format: uuid
-          description: External ID from the source system
-        source:
-          type: string
-          description: Identifier for the source system.
-      title: UserobjectExternalIdsItems
-    404ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 404ErrorResponse
     users:
       type: object
       properties:
@@ -280,6 +250,14 @@ components:
           items:
             $ref: '#/components/schemas/userobject'
       title: users
+    500ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 500ErrorResponse
     userobject:
       type: object
       properties:
@@ -318,22 +296,28 @@ components:
           format: date-time
           description: Last updated time for the user entry.
       title: userobject
-    User_2:
+    UserobjectExternalIdsItems:
       type: object
       properties:
-        user:
-          $ref: '#/components/schemas/UserUser'
-        system_identity:
-          $ref: '#/components/schemas/UserSystemIdentity'
-        last_updated_at:
+        connector_name:
           type: string
-          format: timestamp
-          description: Represents the timestamp indicating the most recent modification or update made to the user's information (in ISO-8601 UTC)
-      required:
-      - user
-      - system_identity
-      - last_updated_at
-      title: User
+          description: Name of the connector created in Moveworks Setup
+        external_id:
+          type: string
+          format: uuid
+          description: External ID from the source system
+        source:
+          type: string
+          description: Identifier for the source system.
+      title: UserobjectExternalIdsItems
+    404ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 404ErrorResponse
     UserUserEmploymentInfoEmploymentLocation:
       type: object
       properties:
@@ -353,66 +337,6 @@ components:
           type: string
           description: Indicates the time zone in which the office is located
       title: UserUserEmploymentInfoEmploymentLocation
-    UserUser:
-      type: object
-      properties:
-        state:
-          $ref: '#/components/schemas/UserUserState'
-          description: Specifies the state of the user
-        universal_identifier:
-          type: string
-          description: Unique identifier of the user. This field should always be populated. It will be used to uniquely identify a user across different systems.
-        email_addr:
-          type: string
-          format: email
-          description: Email address of the user
-        first_name:
-          type: string
-          description: First name of the user
-        last_name:
-          type: string
-          description: Last name of the user
-        full_name:
-          type: string
-          description: Full name of the user
-        work_status:
-          $ref: '#/components/schemas/UserUserWorkStatus'
-          description: Employement type of the user
-        employment_info:
-          $ref: '#/components/schemas/UserUserEmploymentInfo'
-      required:
-      - state
-      - universal_identifier
-      title: UserUser
-    UserUserState:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
-      description: Specifies the state of the user
-      title: UserUserState
-    UserUserWorkStatus:
-      type: string
-      enum:
-      - UNKNOWN_WORK_STATUS
-      - CONTINGENT
-      - INTERN
-      - FULL_TIME
-      description: Employement type of the user
-      title: UserUserWorkStatus
-    listUsers_Response_200:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/User_2'
-        next_page_token:
-          type: string
-          description: The value provided serves as the starting point for fetching the next page of records. In the next call, use this value as the pageToken parameter.
-      required:
-      - results
-      title: listUsers_Response_200
     UserUserEmploymentInfo:
       type: object
       properties:
@@ -445,6 +369,37 @@ components:
         employment_location:
           $ref: '#/components/schemas/UserUserEmploymentInfoEmploymentLocation'
       title: UserUserEmploymentInfo
+    UserUser:
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/UserUserState'
+          description: Specifies the state of the user
+        universal_identifier:
+          type: string
+          description: Unique identifier of the user. This field should always be populated. It will be used to uniquely identify a user across different systems.
+        email_addr:
+          type: string
+          format: email
+          description: Email address of the user
+        first_name:
+          type: string
+          description: First name of the user
+        last_name:
+          type: string
+          description: Last name of the user
+        full_name:
+          type: string
+          description: Full name of the user
+        work_status:
+          $ref: '#/components/schemas/UserUserWorkStatus'
+          description: Employement type of the user
+        employment_info:
+          $ref: '#/components/schemas/UserUserEmploymentInfo'
+      required:
+      - state
+      - universal_identifier
+      title: UserUser
     UserSystemIdentity:
       type: object
       properties:
@@ -457,6 +412,51 @@ components:
       required:
       - id
       title: UserSystemIdentity
+    User_2:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserUser'
+        system_identity:
+          $ref: '#/components/schemas/UserSystemIdentity'
+        last_updated_at:
+          type: string
+          format: timestamp
+          description: Represents the timestamp indicating the most recent modification or update made to the user's information (in ISO-8601 UTC)
+      required:
+      - user
+      - system_identity
+      - last_updated_at
+      title: User
+    UserUserWorkStatus:
+      type: string
+      enum:
+      - UNKNOWN_WORK_STATUS
+      - CONTINGENT
+      - INTERN
+      - FULL_TIME
+      description: Employement type of the user
+      title: UserUserWorkStatus
+    UserUserState:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+      description: Specifies the state of the user
+      title: UserUserState
+    listUsers_Response_200:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User_2'
+        next_page_token:
+          type: string
+          description: The value provided serves as the starting point for fetching the next page of records. In the next call, use this value as the pageToken parameter.
+      required:
+      - results
+      title: listUsers_Response_200
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
