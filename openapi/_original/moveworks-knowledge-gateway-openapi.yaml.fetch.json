@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.moveworks.com/openapi/knowledge-gateway.yaml",
+ "requested_url": "https://docs.moveworks.com/openapi/knowledge-gateway.yaml",
+ "status": 200,
+ "content_type": "application/x-yaml; charset=utf-8",
+ "bytes": 8771,
+ "sha256": "46178ce35c8fed5a4cb8ba6ddd2c7be683c115b8bc680d2431c13e7db7e5d75c",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}

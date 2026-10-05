@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.moveworks.com/openapi/forms-gateway.yaml",
+ "requested_url": "https://docs.moveworks.com/openapi/forms-gateway.yaml",
+ "status": 200,
+ "content_type": "application/x-yaml; charset=utf-8",
+ "bytes": 13596,
+ "sha256": "60d1c9c0ec5e7c384b5ec8a651e47626069102dd4d8a886661e9f289b7efa533",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}

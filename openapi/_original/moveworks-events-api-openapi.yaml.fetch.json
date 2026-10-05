@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.moveworks.com/openapi/events-api.yaml",
+ "requested_url": "https://docs.moveworks.com/openapi/events-api.yaml",
+ "status": 200,
+ "content_type": "application/x-yaml; charset=utf-8",
+ "bytes": 13164,
+ "sha256": "df1b443d5235b7a45012e88172b3fbd04a09b6a7b5bbda3e56a1e4742cb25dbf",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}

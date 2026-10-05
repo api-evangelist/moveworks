@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.moveworks.com/openapi/data-api.yaml",
+ "requested_url": "https://docs.moveworks.com/openapi/data-api.yaml",
+ "status": 200,
+ "content_type": "application/x-yaml; charset=utf-8",
+ "bytes": 37579,
+ "sha256": "51ded6f764547d99c235e65676d30fa98845823760379b5ec6570710a0451eb8",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}

@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.moveworks.com/openapi/webhook-listeners.yaml",
+ "requested_url": "https://docs.moveworks.com/openapi/webhook-listeners.yaml",
+ "status": 200,
+ "content_type": "application/x-yaml; charset=utf-8",
+ "bytes": 3702,
+ "sha256": "07e9b6048929d22cbf07a19df9ddd5ab5baddcf318bcac19bb9c987ba8193d55",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}

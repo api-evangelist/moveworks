@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.moveworks.com/openapi/deprecated-conversations-api.yaml",
+ "requested_url": "https://docs.moveworks.com/openapi/deprecated-conversations-api.yaml",
+ "status": 200,
+ "content_type": "application/x-yaml; charset=utf-8",
+ "bytes": 61786,
+ "sha256": "90dc2c52871e54ffe572230dc6b2198f9e2e5c6f96ec0ff5a57856fe2a0a507d",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
