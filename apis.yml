@@ -268,6 +268,8 @@ apis:
   - type: Documentation
     url: https://docs.moveworks.com/api-reference/overview
 common:
+- type: Plans
+  url: plans/moveworks-plans-pricing.yml
 # --- identity / discoverability ---
 - type: Website
   url: https://www.moveworks.com
