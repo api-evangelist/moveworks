@@ -1,0 +1,22 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://www.moveworks.com/us/en/pricing
+sources:
+- https://www.moveworks.com/us/en/pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: negotiated
+delivery:
+  delivery: unclear
+  method: page
+  read: '2026-10-07'
+published: false
+note: No numeric price is published on the pricing page; Page offers only a custom quote via sales contact;
+  no numeric prices for the product (only Forrester ROI claims of 256% ROI and $11.5M savings, which are
+  not prices).
+plan_count: 0
+plans: []
