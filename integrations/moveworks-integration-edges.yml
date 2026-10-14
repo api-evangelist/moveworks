@@ -2,6 +2,7 @@ generated: '2026-10-13'
 method: searched
 checked:
 - https://azuremarketplace.microsoft.com/
+- https://marketplace.atlassian.com/
 marketplace_apps: []
 edges:
 - partner_name: Microsoft Azure Marketplace
@@ -19,3 +20,21 @@ edges:
   seller_name: Moveworks
   detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
+- partner_name: Atlassian Marketplace
+  partner: atlassian
+  partner_match: aggregator
+  type: marketplace
+  marketplace: atlassian
+  channel: partner-built
+  relationship: platform-app
+  direction: third-party
+  evidence: https://marketplace.atlassian.com/vendors/1217675/moveworks-inc
+  listing_count: 2
+  apps:
+  - Moveworks
+  - Moveworks for Confluence
+  publisher_name: Moveworks, Inc.
+  detected_by: sweep-devtools.py
+  detected: '2026-10-14'
+source:
+- https://marketplace.atlassian.com/
