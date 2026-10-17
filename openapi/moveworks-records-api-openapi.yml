@@ -127,6 +127,19 @@ paths:
         '410':
           $ref: '#/components/responses/Gone'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Gone:
+      description: The requested API version has been deprecated and sunset (RFC-style 410 Gone).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     count:
       name: $count
@@ -171,19 +184,6 @@ components:
           items:
             type: object
             additionalProperties: true
-  responses:
-    Gone:
-      description: The requested API version has been deprecated and sunset (RFC-style 410 Gone).
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

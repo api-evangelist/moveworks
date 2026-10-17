@@ -117,6 +117,19 @@ paths:
                 $ref: '#/components/schemas/listArticles_Response_200'
 components:
   schemas:
+    listArticles_Response_200:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Article'
+        next_page_token:
+          type: string
+          description: The value provided serves as the starting point for fetching the next page of records. In the next call, use this value as the pageToken parameter.
+      required:
+      - results
+      title: listArticles_Response_200
     Article:
       type: object
       properties:
@@ -152,19 +165,6 @@ components:
       - body
       - link
       title: Article
-    listArticles_Response_200:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Article'
-        next_page_token:
-          type: string
-          description: The value provided serves as the starting point for fetching the next page of records. In the next call, use this value as the pageToken parameter.
-      required:
-      - results
-      title: listArticles_Response_200
   securitySchemes:
     bearerAuth:
       type: http

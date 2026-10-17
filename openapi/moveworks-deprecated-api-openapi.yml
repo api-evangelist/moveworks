@@ -73,14 +73,6 @@ paths:
               $ref: '#/components/schemas/SendMessageRequest'
 components:
   schemas:
-    ErrorRateLimitExceeded:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorRateLimitExceeded
     OauthErrorAuthenticationInvalidToken:
       type: object
       properties:
@@ -89,12 +81,22 @@ components:
         message:
           type: string
       title: OauthErrorAuthenticationInvalidToken
-    SendMessageRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/ErrorAuthentication'
-      - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
-      - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
-      title: SendMessageRequestForbiddenError
+    ErrorRateLimitExceeded:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorRateLimitExceeded
+    OauthErrorAuthenticationExpiredToken:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthErrorAuthenticationExpiredToken
     ErrorBadRequest:
       type: object
       properties:
@@ -111,14 +113,12 @@ components:
         message:
           type: string
       title: ErrorAuthentication
-    OauthErrorAuthenticationExpiredToken:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthErrorAuthenticationExpiredToken
+    SendMessageRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/ErrorAuthentication'
+      - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
+      - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
+      title: SendMessageRequestForbiddenError
     SendMessageRequest:
       type: object
       properties:

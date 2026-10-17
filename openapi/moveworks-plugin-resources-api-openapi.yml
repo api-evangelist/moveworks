@@ -110,98 +110,6 @@ paths:
                 $ref: '#/components/schemas/500ErrorResponse'
 components:
   schemas:
-    403ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 403ErrorResponse
-    400ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 400ErrorResponse
-    429ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 429ErrorResponse
-    pluginresources:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        '@odata.nextLink':
-          type: string
-          description: URL to fetch the next set of results.
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/pluginresourcesobject'
-      title: pluginresources
-    500ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 500ErrorResponse
-    pluginresourcesobject:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: UUID assigned by the system to a resource being used by a plugin called during an interaction.
-        resource_id:
-          type: string
-          format: uuid
-          description: ID of the resource stored in Moveworks.
-        type:
-          type: string
-          format: uuid
-          description: This field represents the type of resource utilized by a plugin call. AI Assistant can utilize different resources to provide a summarized response such as KNOWLEDE ARTICLE, FILES, TICKET, APPROVAL etc
-        plugin_call_id:
-          type: string
-          format: uuid
-          description: ID of the plugin being called.
-        interaction_id:
-          type: string
-          format: uuid
-          description: ID of the interaction.
-        user_id:
-          type: string
-          format: uuid
-          description: User record ID assigned by the system to a user.
-        conversation_id:
-          type: string
-          format: uuid
-          description: ID of the parent conversation.
-        detail:
-          $ref: '#/components/schemas/PluginresourcesobjectDetail'
-          description: This is a JSON object which contains metadata per resource type.
-        cited:
-          type: boolean
-          description: This field denotes if the utilized resource was cited in the AI Assistant response or not.
-        created_time:
-          type: string
-          format: date-time
-          description: Timestamp when the resource was utilized by a plugin.
-        last_updated_time:
-          type: string
-          format: date-time
-          description: Timestamp when the plugin resource entry was last updated in this table.
-      title: pluginresourcesobject
     PluginresourcesobjectDetail:
       type: object
       properties:
@@ -261,6 +169,22 @@ components:
             RESOURCE_TYPE_FILE'
       description: This is a JSON object which contains metadata per resource type.
       title: PluginresourcesobjectDetail
+    429ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 429ErrorResponse
+    500ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 500ErrorResponse
     404ErrorResponse:
       type: object
       properties:
@@ -269,6 +193,82 @@ components:
         message:
           type: string
       title: 404ErrorResponse
+    pluginresources:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/pluginresourcesobject'
+      title: pluginresources
+    403ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 403ErrorResponse
+    400ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 400ErrorResponse
+    pluginresourcesobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID assigned by the system to a resource being used by a plugin called during an interaction.
+        resource_id:
+          type: string
+          format: uuid
+          description: ID of the resource stored in Moveworks.
+        type:
+          type: string
+          format: uuid
+          description: This field represents the type of resource utilized by a plugin call. AI Assistant can utilize different resources to provide a summarized response such as KNOWLEDE ARTICLE, FILES, TICKET, APPROVAL etc
+        plugin_call_id:
+          type: string
+          format: uuid
+          description: ID of the plugin being called.
+        interaction_id:
+          type: string
+          format: uuid
+          description: ID of the interaction.
+        user_id:
+          type: string
+          format: uuid
+          description: User record ID assigned by the system to a user.
+        conversation_id:
+          type: string
+          format: uuid
+          description: ID of the parent conversation.
+        detail:
+          $ref: '#/components/schemas/PluginresourcesobjectDetail'
+          description: This is a JSON object which contains metadata per resource type.
+        cited:
+          type: boolean
+          description: This field denotes if the utilized resource was cited in the AI Assistant response or not.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was utilized by a plugin.
+        last_updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the plugin resource entry was last updated in this table.
+      title: pluginresourcesobject
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

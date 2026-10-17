@@ -89,19 +89,6 @@ paths:
               $ref: '#/components/schemas/SendMessageForEventRequest'
 components:
   schemas:
-    SendMessageForEventRequestContextSlots:
-      type: object
-      properties: {}
-      description: Contextual slots
-      title: SendMessageForEventRequestContextSlots
-    ErrorRateLimitExceeded:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorRateLimitExceeded
     OauthErrorAuthenticationInvalidToken:
       type: object
       properties:
@@ -110,36 +97,25 @@ components:
         message:
           type: string
       title: OauthErrorAuthenticationInvalidToken
-    ErrorBadRequest:
+    MessageScheduledData:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/MessageScheduledDataStatus'
+      title: MessageScheduledData
+    ErrorRateLimitExceeded:
       type: object
       properties:
         code:
           type: string
         message:
           type: string
-      title: ErrorBadRequest
-    ErrorAuthorization:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: ErrorAuthorization
-    SendMessageForEventRequestContext:
-      type: object
-      properties:
-        slots:
-          $ref: '#/components/schemas/SendMessageForEventRequestContextSlots'
-          description: Contextual slots
-      description: Additional contextual data
-      title: SendMessageForEventRequestContext
-    SendMessageForEventRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/ErrorAuthentication'
-      - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
-      - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
-      title: SendMessageForEventRequestUnauthorizedError
+      title: ErrorRateLimitExceeded
+    MessageScheduledDataStatus:
+      type: string
+      enum:
+      - RECEIVED
+      title: MessageScheduledDataStatus
     SendMessageForEventRequestNotFoundError:
       type: object
       properties:
@@ -148,6 +124,39 @@ components:
         message:
           type: string
       title: SendMessageForEventRequestNotFoundError
+    ErrorAuthorization:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorAuthorization
+    MessageScheduled:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MessageScheduledData'
+      title: MessageScheduled
+    SendMessageForEventRequestContextSlots:
+      type: object
+      properties: {}
+      description: Contextual slots
+      title: SendMessageForEventRequestContextSlots
+    OauthErrorAuthenticationExpiredToken:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: OauthErrorAuthenticationExpiredToken
+    SendMessageForEventRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/ErrorAuthentication'
+      - $ref: '#/components/schemas/OauthErrorAuthenticationInvalidToken'
+      - $ref: '#/components/schemas/OauthErrorAuthenticationExpiredToken'
+      title: SendMessageForEventRequestUnauthorizedError
     SendMessageForEventRequest:
       type: object
       properties:
@@ -166,11 +175,22 @@ components:
       - message
       - recipients
       title: SendMessageForEventRequest
-    MessageScheduledDataStatus:
-      type: string
-      enum:
-      - RECEIVED
-      title: MessageScheduledDataStatus
+    ErrorBadRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: ErrorBadRequest
+    SendMessageForEventRequestContext:
+      type: object
+      properties:
+        slots:
+          $ref: '#/components/schemas/SendMessageForEventRequestContextSlots'
+          description: Contextual slots
+      description: Additional contextual data
+      title: SendMessageForEventRequestContext
     ErrorAuthentication:
       type: object
       properties:
@@ -179,26 +199,6 @@ components:
         message:
           type: string
       title: ErrorAuthentication
-    OauthErrorAuthenticationExpiredToken:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: OauthErrorAuthenticationExpiredToken
-    MessageScheduled:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/MessageScheduledData'
-      title: MessageScheduled
-    MessageScheduledData:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/MessageScheduledDataStatus'
-      title: MessageScheduledData
   securitySchemes:
     Bearer:
       type: http

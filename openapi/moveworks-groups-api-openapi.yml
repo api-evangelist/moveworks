@@ -184,31 +184,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    GroupMemberCollection:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupMember'
-        '@odata.nextLink':
-          type: string
-      title: GroupMemberCollection
-    GroupMember:
-      type: object
-      properties:
-        type:
-          type: string
-          description: 'Entity type. Enum: USER | GROUP'
-        id:
-          type: string
-          description: ID of the member (user or group).
-        name:
-          type: string
-          description: Name of the member (optional).
-      title: GroupMember
     GroupCollection:
       type: object
       properties:
@@ -221,6 +196,31 @@ components:
         '@odata.nextLink':
           type: string
       title: GroupCollection
+    GroupMemberCollection:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMember'
+        '@odata.nextLink':
+          type: string
+      title: GroupMemberCollection
+    GroupMetadata:
+      type: object
+      properties: {}
+      description: Custom key-value metadata for the group.
+      title: GroupMetadata
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorResponseError'
+      required:
+      - error
+      title: ErrorResponse
     ErrorResponseError:
       type: object
       properties:
@@ -234,19 +234,19 @@ components:
       - code
       - message
       title: ErrorResponseError
-    ErrorResponse:
+    GroupMember:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/ErrorResponseError'
-      required:
-      - error
-      title: ErrorResponse
-    GroupMetadata:
-      type: object
-      properties: {}
-      description: Custom key-value metadata for the group.
-      title: GroupMetadata
+        type:
+          type: string
+          description: 'Entity type. Enum: USER | GROUP'
+        id:
+          type: string
+          description: ID of the member (user or group).
+        name:
+          type: string
+          description: Name of the member (optional).
+      title: GroupMember
     Group:
       type: object
       properties:

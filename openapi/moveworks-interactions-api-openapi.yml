@@ -110,22 +110,6 @@ paths:
                 $ref: '#/components/schemas/500ErrorResponse'
 components:
   schemas:
-    403ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 403ErrorResponse
-    400ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 400ErrorResponse
     429ErrorResponse:
       type: object
       properties:
@@ -174,6 +158,36 @@ components:
         message:
           type: string
       title: 500ErrorResponse
+    404ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 404ErrorResponse
+    403ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 403ErrorResponse
+    interactions:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/interactionsobject'
+      title: interactions
     interactionsobject:
       type: object
       properties:
@@ -217,28 +231,14 @@ components:
           format: date-time
           description: Timestamp when the interaction entry is last updated in this table.
       title: interactionsobject
-    404ErrorResponse:
+    400ErrorResponse:
       type: object
       properties:
         code:
           type: string
         message:
           type: string
-      title: 404ErrorResponse
-    interactions:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        '@odata.nextLink':
-          type: string
-          description: URL to fetch the next set of results.
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/interactionsobject'
-      title: interactions
+      title: 400ErrorResponse
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

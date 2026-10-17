@@ -179,6 +179,14 @@ components:
           $ref: '#/components/schemas/UserMetadata'
           description: Custom key-value metadata for the user.
       title: User
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorResponseError'
+      required:
+      - error
+      title: ErrorResponse
     ErrorResponseError:
       type: object
       properties:
@@ -192,14 +200,6 @@ components:
       - code
       - message
       title: ErrorResponseError
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ErrorResponseError'
-      required:
-      - error
-      title: ErrorResponse
     UserCollection:
       type: object
       properties:
@@ -212,6 +212,58 @@ components:
         '@odata.nextLink':
           type: string
       title: UserCollection
+    UserobjectExternalIdsItems:
+      type: object
+      properties:
+        connector_name:
+          type: string
+          description: Name of the connector created in Moveworks Setup
+        external_id:
+          type: string
+          format: uuid
+          description: External ID from the source system
+        source:
+          type: string
+          description: Identifier for the source system.
+      title: UserobjectExternalIdsItems
+    users:
+      type: object
+      properties:
+        '@odata.context':
+          type: string
+          description: URL to the metadata of the response.
+        '@odata.nextLink':
+          type: string
+          description: URL to fetch the next set of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/userobject'
+      title: users
+    429ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 429ErrorResponse
+    500ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 500ErrorResponse
+    404ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      title: 404ErrorResponse
     403ErrorResponse:
       type: object
       properties:
@@ -228,36 +280,6 @@ components:
         message:
           type: string
       title: 400ErrorResponse
-    429ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 429ErrorResponse
-    users:
-      type: object
-      properties:
-        '@odata.context':
-          type: string
-          description: URL to the metadata of the response.
-        '@odata.nextLink':
-          type: string
-          description: URL to fetch the next set of results.
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/userobject'
-      title: users
-    500ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 500ErrorResponse
     userobject:
       type: object
       properties:
@@ -296,28 +318,26 @@ components:
           format: date-time
           description: Last updated time for the user entry.
       title: userobject
-    UserobjectExternalIdsItems:
+    UserUserState:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+      description: Specifies the state of the user
+      title: UserUserState
+    listUsers_Response_200:
       type: object
       properties:
-        connector_name:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User_2'
+        next_page_token:
           type: string
-          description: Name of the connector created in Moveworks Setup
-        external_id:
-          type: string
-          format: uuid
-          description: External ID from the source system
-        source:
-          type: string
-          description: Identifier for the source system.
-      title: UserobjectExternalIdsItems
-    404ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      title: 404ErrorResponse
+          description: The value provided serves as the starting point for fetching the next page of records. In the next call, use this value as the pageToken parameter.
+      required:
+      - results
+      title: listUsers_Response_200
     UserUserEmploymentInfoEmploymentLocation:
       type: object
       properties:
@@ -337,6 +357,22 @@ components:
           type: string
           description: Indicates the time zone in which the office is located
       title: UserUserEmploymentInfoEmploymentLocation
+    User_2:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserUser'
+        system_identity:
+          $ref: '#/components/schemas/UserSystemIdentity'
+        last_updated_at:
+          type: string
+          format: timestamp
+          description: Represents the timestamp indicating the most recent modification or update made to the user's information (in ISO-8601 UTC)
+      required:
+      - user
+      - system_identity
+      - last_updated_at
+      title: User
     UserUserEmploymentInfo:
       type: object
       properties:
@@ -400,6 +436,15 @@ components:
       - state
       - universal_identifier
       title: UserUser
+    UserUserWorkStatus:
+      type: string
+      enum:
+      - UNKNOWN_WORK_STATUS
+      - CONTINGENT
+      - INTERN
+      - FULL_TIME
+      description: Employement type of the user
+      title: UserUserWorkStatus
     UserSystemIdentity:
       type: object
       properties:
@@ -412,51 +457,6 @@ components:
       required:
       - id
       title: UserSystemIdentity
-    User_2:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/UserUser'
-        system_identity:
-          $ref: '#/components/schemas/UserSystemIdentity'
-        last_updated_at:
-          type: string
-          format: timestamp
-          description: Represents the timestamp indicating the most recent modification or update made to the user's information (in ISO-8601 UTC)
-      required:
-      - user
-      - system_identity
-      - last_updated_at
-      title: User
-    UserUserWorkStatus:
-      type: string
-      enum:
-      - UNKNOWN_WORK_STATUS
-      - CONTINGENT
-      - INTERN
-      - FULL_TIME
-      description: Employement type of the user
-      title: UserUserWorkStatus
-    UserUserState:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
-      description: Specifies the state of the user
-      title: UserUserState
-    listUsers_Response_200:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/User_2'
-        next_page_token:
-          type: string
-          description: The value provided serves as the starting point for fetching the next page of records. In the next call, use this value as the pageToken parameter.
-      required:
-      - results
-      title: listUsers_Response_200
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
