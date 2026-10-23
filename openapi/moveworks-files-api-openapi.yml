@@ -626,3 +626,9 @@ components:
       - active
       - deleted
       title: status_enum
+x-provenance:
+  method: harvested
+  publisher: Moveworks
+  source: https://docs.moveworks.com/openapi/content-gateway.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
