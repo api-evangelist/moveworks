@@ -1,0 +1,2204 @@
+{
+  "info": {
+    "_postman_id": "2d6161ce-dc86-4e2b-9053-5dd060aa3cee",
+    "name": "Content Gateway Files API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:59:07.000Z",
+    "updatedAt": "2026-10-22T01:59:08.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-2d6161ce-dc86-4e2b-9053-5dd060aa3cee"
+  },
+  "item": [
+    {
+      "name": "files",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "download",
+              "item": [
+                {
+                  "name": "Download file",
+                  "id": "f74eecac-c337-4fb7-b090-0446954b8178",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/octet-stream"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/files/:id/download",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "files",
+                        ":id",
+                        "download"
+                      ],
+                      "variable": [
+                        {
+                          "id": "6462c6af-b161-4347-86d3-0b24db7b1e49",
+                          "key": "id",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Retrieves and downloads the entire media file based on the specified file ID.\n\nThe response body is the raw binary content of the file. Treat the response body as a byte stream and write it directly to disk or pass it to a file handler.\n\nThe `Content-Type` response header indicates the MIME type of the file (e.g. `application/pdf`, `text/html`). Use this to determine how to handle or display the file.\n\nThe `Checksum-SHA256` response header provides a SHA-256 hash of the file contents. Verify this value against the downloaded bytes to confirm the file was not corrupted in transit."
+                  },
+                  "response": [
+                    {
+                      "id": "1934dfdd-307f-4ac3-92c7-45f47dc23585",
+                      "name": "Successfully retrieved the file. The response body is the raw binary content of the file.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/octet-stream"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/download",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "download"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/octet-stream"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "<binary>",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-1934dfdd-307f-4ac3-92c7-45f47dc23585"
+                    },
+                    {
+                      "id": "e9611d32-1618-4c29-8ab6-8bfc035599ef",
+                      "name": "Bad Request - The request could not be understood by the server due to malformed syntax.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/download",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "download"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-e9611d32-1618-4c29-8ab6-8bfc035599ef"
+                    },
+                    {
+                      "id": "dcc90dad-2cf0-4341-85ef-da90cf9bd9a9",
+                      "name": "Unauthorized - Authentication is required and has failed or has not yet been provided.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/download",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "download"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-dcc90dad-2cf0-4341-85ef-da90cf9bd9a9"
+                    },
+                    {
+                      "id": "f71b72d3-92d3-44b8-b7f2-98c4ccca4a22",
+                      "name": "Forbidden - Server understood the request but refuses to authorize it.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/download",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "download"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-f71b72d3-92d3-44b8-b7f2-98c4ccca4a22"
+                    },
+                    {
+                      "id": "51b6734e-b8cb-4469-ab1d-929fd8b3e9f2",
+                      "name": "Not Found - The requested file could not be found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/download",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "download"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-51b6734e-b8cb-4469-ab1d-929fd8b3e9f2"
+                    },
+                    {
+                      "id": "b3c499da-3c56-430d-96b1-9b230c871ea5",
+                      "name": "Too Many Requests - Rate limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/download",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "download"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-b3c499da-3c56-430d-96b1-9b230c871ea5"
+                    },
+                    {
+                      "id": "36836f6f-e391-42d5-ac6f-6da73d611fa6",
+                      "name": "Internal Server Error - The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/download",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "download"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-36836f6f-e391-42d5-ac6f-6da73d611fa6"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:59:08.000Z",
+                  "updatedAt": "2026-10-22T01:59:08.000Z",
+                  "uid": "35240-f74eecac-c337-4fb7-b090-0446954b8178"
+                }
+              ],
+              "id": "23a4dfc8-3066-411c-afd5-5ea05b3c3b59",
+              "createdAt": "2026-10-22T01:59:08.000Z",
+              "updatedAt": "2026-10-22T01:59:08.000Z",
+              "uid": "35240-23a4dfc8-3066-411c-afd5-5ea05b3c3b59"
+            },
+            {
+              "name": "permissions",
+              "item": [
+                {
+                  "name": "Get content permissions",
+                  "id": "fed7bc15-317d-4120-a3ec-87fc36655c4e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/files/:id/permissions?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "files",
+                        ":id",
+                        "permissions"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of items to return per page (default pagination)",
+                          "key": "$top",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Number of items to skip (default pagination offset)",
+                          "key": "$skip",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                          "key": "$skiptoken",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "$filter",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "$select",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "$orderby",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "3bdc182c-ca91-475a-86f7-6639a247a9ab",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Returns all user/group permissions on content. If permission model is 'hierarchy_permission', then `permissions_hierarchy` must be provided in the response."
+                  },
+                  "response": [
+                    {
+                      "id": "9bcadbc8-53fc-4fb8-b46e-9a9fa96acfda",
+                      "name": "Content permission response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/permissions?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "permissions"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of items to return per page (default pagination)",
+                              "key": "$top",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Number of items to skip (default pagination offset)",
+                              "key": "$skip",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                              "key": "$skiptoken",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$filter",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$select",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$orderby",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"@odata.context\": \"<string>\",\n  \"value\": {\n    \"permissions\": [\n      {\n        \"type\": \"GROUP\",\n        \"id\": \"<string>\",\n        \"action\": \"UPDATE\"\n      },\n      {\n        \"type\": \"USER\",\n        \"id\": \"<string>\",\n        \"action\": \"UPDATE\"\n      }\n    ],\n    \"permissions_hierarchy\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"last_modified_datetime\": \"<string>\"\n  },\n  \"@odata.nextLink\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-9bcadbc8-53fc-4fb8-b46e-9a9fa96acfda"
+                    },
+                    {
+                      "id": "d82ee8b8-6bf3-49da-9ecd-ef510425f383",
+                      "name": "Bad Request - The request was invalid or cannot be served.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/permissions?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "permissions"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of items to return per page (default pagination)",
+                              "key": "$top",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Number of items to skip (default pagination offset)",
+                              "key": "$skip",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                              "key": "$skiptoken",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$filter",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$select",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$orderby",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-d82ee8b8-6bf3-49da-9ecd-ef510425f383"
+                    },
+                    {
+                      "id": "e49d24d5-a76c-415e-b4ab-109649165652",
+                      "name": "Unauthorized - The request requires user authentication.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/permissions?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "permissions"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of items to return per page (default pagination)",
+                              "key": "$top",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Number of items to skip (default pagination offset)",
+                              "key": "$skip",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                              "key": "$skiptoken",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$filter",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$select",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$orderby",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-e49d24d5-a76c-415e-b4ab-109649165652"
+                    },
+                    {
+                      "id": "0014192f-8265-498c-bf23-911554f20014",
+                      "name": "Forbidden - The server understood the request but refuses to authorize it.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/permissions?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "permissions"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of items to return per page (default pagination)",
+                              "key": "$top",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Number of items to skip (default pagination offset)",
+                              "key": "$skip",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                              "key": "$skiptoken",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$filter",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$select",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$orderby",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-0014192f-8265-498c-bf23-911554f20014"
+                    },
+                    {
+                      "id": "31f44b2f-f757-49b8-bafc-875be365896a",
+                      "name": "Not Found - The requested resource could not be found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/permissions?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "permissions"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of items to return per page (default pagination)",
+                              "key": "$top",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Number of items to skip (default pagination offset)",
+                              "key": "$skip",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                              "key": "$skiptoken",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$filter",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$select",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$orderby",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-31f44b2f-f757-49b8-bafc-875be365896a"
+                    },
+                    {
+                      "id": "69915114-9253-4d73-9244-653d934de350",
+                      "name": "Too Many Requests - Rate limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/permissions?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "permissions"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of items to return per page (default pagination)",
+                              "key": "$top",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Number of items to skip (default pagination offset)",
+                              "key": "$skip",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                              "key": "$skiptoken",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$filter",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$select",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$orderby",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-69915114-9253-4d73-9244-653d934de350"
+                    },
+                    {
+                      "id": "19175a80-310c-436f-8be8-b9e812cb5634",
+                      "name": "Internal Server Error - The server encountered an unexpected condition.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/permissions?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "permissions"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of items to return per page (default pagination)",
+                              "key": "$top",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Number of items to skip (default pagination offset)",
+                              "key": "$skip",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                              "key": "$skiptoken",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$filter",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$select",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$orderby",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-19175a80-310c-436f-8be8-b9e812cb5634"
+                    },
+                    {
+                      "id": "6e48f0a8-1868-4759-ae29-21f8f62c0c9c",
+                      "name": "Service Unavailable - The server is currently unable to handle the request.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/:id/permissions?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            ":id",
+                            "permissions"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of items to return per page (default pagination)",
+                              "key": "$top",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Number of items to skip (default pagination offset)",
+                              "key": "$skip",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                              "key": "$skiptoken",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$filter",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$select",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "$orderby",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Service Unavailable",
+                      "code": 503,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-6e48f0a8-1868-4759-ae29-21f8f62c0c9c"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:59:08.000Z",
+                  "updatedAt": "2026-10-22T01:59:08.000Z",
+                  "uid": "35240-fed7bc15-317d-4120-a3ec-87fc36655c4e"
+                }
+              ],
+              "id": "35e48daf-9556-4c25-af48-32437badb356",
+              "createdAt": "2026-10-22T01:59:08.000Z",
+              "updatedAt": "2026-10-22T01:59:08.000Z",
+              "uid": "35240-35e48daf-9556-4c25-af48-32437badb356"
+            },
+            {
+              "name": "Get file metadata and HTML content body",
+              "id": "0638fca3-0641-4318-828b-96b10e23d0f5",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/files/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "files",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "7a98e883-b9bb-4220-b979-e4909c1c3cee",
+                      "key": "id",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Retrieves metadata and content for a specific file. When the content type is HTML (mime_type: text/html), this endpoint returns the actual HTML content in the response body. For other file types, it provides download path information."
+              },
+              "response": [
+                {
+                  "id": "b62429c6-a5fb-47d7-b5bd-40cec7c0ef78",
+                  "name": "Successfully retrieved metadata of content",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/files/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "files",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"@odata.context\": \"<string>\",\n  \"value\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"last_modified_datetime\": \"<dateTime>\",\n    \"external_url\": \"<string>\",\n    \"status\": \"deleted\",\n    \"custom_attributes\": {\n      \"ipsum3bc\": \"<string>\",\n      \"Duis1a9\": \"<string>\"\n    },\n    \"last_modified_by\": \"<string>\",\n    \"created_datetime\": \"<dateTime>\",\n    \"created_by\": \"<string>\",\n    \"metadata_url\": \"<string>\",\n    \"content\": {\n      \"mime_type\": \"<string>\",\n      \"download_path\": \"<string>\",\n      \"size\": \"<long>\",\n      \"sha1_hash\": \"<string>\",\n      \"body\": \"<string>\"\n    },\n    \"parent_info\": {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"path\": \"<string>\"\n    },\n    \"children_url\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:08.000Z",
+                  "updatedAt": "2026-10-22T01:59:08.000Z",
+                  "uid": "35240-b62429c6-a5fb-47d7-b5bd-40cec7c0ef78"
+                },
+                {
+                  "id": "91ac764b-a67b-499a-a0f0-41280c36e087",
+                  "name": "Bad Request - The request could not be understood by the server due to malformed syntax.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/files/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "files",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:08.000Z",
+                  "updatedAt": "2026-10-22T01:59:08.000Z",
+                  "uid": "35240-91ac764b-a67b-499a-a0f0-41280c36e087"
+                },
+                {
+                  "id": "cf6df875-14cb-4b37-b73c-712796549bac",
+                  "name": "Unauthorized - Authentication is required and has failed or has not yet been provided.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/files/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "files",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:08.000Z",
+                  "updatedAt": "2026-10-22T01:59:08.000Z",
+                  "uid": "35240-cf6df875-14cb-4b37-b73c-712796549bac"
+                },
+                {
+                  "id": "45ecd007-cc1e-439d-8968-3179a4639fe2",
+                  "name": "Forbidden - Server understood the request but refuses to authorize it.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/files/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "files",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:08.000Z",
+                  "updatedAt": "2026-10-22T01:59:08.000Z",
+                  "uid": "35240-45ecd007-cc1e-439d-8968-3179a4639fe2"
+                },
+                {
+                  "id": "5d6b7c38-cf57-49ee-bfc3-7139532e24ea",
+                  "name": "Not Found - The requested file could not be found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/files/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "files",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:08.000Z",
+                  "updatedAt": "2026-10-22T01:59:08.000Z",
+                  "uid": "35240-5d6b7c38-cf57-49ee-bfc3-7139532e24ea"
+                },
+                {
+                  "id": "237147e7-0b55-4629-a7fa-cfc3e7bdb070",
+                  "name": "Too Many Requests - Rate limit exceeded.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/files/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "files",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:08.000Z",
+                  "updatedAt": "2026-10-22T01:59:08.000Z",
+                  "uid": "35240-237147e7-0b55-4629-a7fa-cfc3e7bdb070"
+                },
+                {
+                  "id": "c0ee1a5c-d79c-4423-b825-d83f28379d98",
+                  "name": "Internal Server Error - The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/files/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "files",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:08.000Z",
+                  "updatedAt": "2026-10-22T01:59:08.000Z",
+                  "uid": "35240-c0ee1a5c-d79c-4423-b825-d83f28379d98"
+                }
+              ],
+              "createdAt": "2026-10-22T01:59:08.000Z",
+              "updatedAt": "2026-10-22T01:59:08.000Z",
+              "uid": "35240-0638fca3-0641-4318-828b-96b10e23d0f5"
+            }
+          ],
+          "id": "1bf9ddc8-54f4-4c13-a854-a41b32d4d706",
+          "createdAt": "2026-10-22T01:59:08.000Z",
+          "updatedAt": "2026-10-22T01:59:08.000Z",
+          "uid": "35240-1bf9ddc8-54f4-4c13-a854-a41b32d4d706"
+        },
+        {
+          "name": "permissions",
+          "item": [
+            {
+              "name": "metadata",
+              "item": [
+                {
+                  "name": "Get permission model metadata",
+                  "id": "6042569b-b554-4eeb-a88d-13c4e8e7d7fc",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/files/permissions/metadata",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "files",
+                        "permissions",
+                        "metadata"
+                      ]
+                    },
+                    "description": "Returns the current permission evaluation model. NOTE: `resource_permissions` is the only supported model at this time."
+                  },
+                  "response": [
+                    {
+                      "id": "e6048854-edee-4a1f-91f7-4fbe42dd1f71",
+                      "name": "Permissions metadata response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/permissions/metadata",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            "permissions",
+                            "metadata"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"@odata.context\": \"<string>\",\n  \"model\": \"resource_permission\"\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-e6048854-edee-4a1f-91f7-4fbe42dd1f71"
+                    },
+                    {
+                      "id": "768d301e-c9b0-4910-802e-bdeff63862a2",
+                      "name": "Bad Request - The request was invalid or cannot be served.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/permissions/metadata",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            "permissions",
+                            "metadata"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-768d301e-c9b0-4910-802e-bdeff63862a2"
+                    },
+                    {
+                      "id": "b96f6cf1-e6d0-412e-8e83-93677bcea907",
+                      "name": "Unauthorized - The request requires user authentication.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/permissions/metadata",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            "permissions",
+                            "metadata"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-b96f6cf1-e6d0-412e-8e83-93677bcea907"
+                    },
+                    {
+                      "id": "9e1d505c-453c-4363-b812-4534c506d76a",
+                      "name": "Forbidden - The server understood the request but refuses to authorize it.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/permissions/metadata",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            "permissions",
+                            "metadata"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-9e1d505c-453c-4363-b812-4534c506d76a"
+                    },
+                    {
+                      "id": "44ea0931-b22e-4a88-bbe3-eac2ff87b715",
+                      "name": "Not Found - The requested resource could not be found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/permissions/metadata",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            "permissions",
+                            "metadata"
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-44ea0931-b22e-4a88-bbe3-eac2ff87b715"
+                    },
+                    {
+                      "id": "6ad5e057-b9dd-49d4-92df-cee60808816a",
+                      "name": "Too Many Requests - Rate limit exceeded.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/permissions/metadata",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            "permissions",
+                            "metadata"
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-6ad5e057-b9dd-49d4-92df-cee60808816a"
+                    },
+                    {
+                      "id": "fd411a59-bf2c-4491-84d6-40a79a902d94",
+                      "name": "Internal Server Error - The server encountered an unexpected condition.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/permissions/metadata",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            "permissions",
+                            "metadata"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-fd411a59-bf2c-4491-84d6-40a79a902d94"
+                    },
+                    {
+                      "id": "3e175b8c-5d70-4240-916f-953e96c1eb12",
+                      "name": "Service Unavailable - The server is currently unable to handle the request.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/files/permissions/metadata",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "files",
+                            "permissions",
+                            "metadata"
+                          ]
+                        }
+                      },
+                      "status": "Service Unavailable",
+                      "code": 503,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:59:08.000Z",
+                      "updatedAt": "2026-10-22T01:59:08.000Z",
+                      "uid": "35240-3e175b8c-5d70-4240-916f-953e96c1eb12"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:59:08.000Z",
+                  "updatedAt": "2026-10-22T01:59:08.000Z",
+                  "uid": "35240-6042569b-b554-4eeb-a88d-13c4e8e7d7fc"
+                }
+              ],
+              "id": "8a6fd058-6eb5-4d79-b550-2ddf9304fe5d",
+              "createdAt": "2026-10-22T01:59:08.000Z",
+              "updatedAt": "2026-10-22T01:59:08.000Z",
+              "uid": "35240-8a6fd058-6eb5-4d79-b550-2ddf9304fe5d"
+            }
+          ],
+          "id": "7018adfe-0461-45f0-aafc-ad3e6db7fcc0",
+          "createdAt": "2026-10-22T01:59:08.000Z",
+          "updatedAt": "2026-10-22T01:59:08.000Z",
+          "uid": "35240-7018adfe-0461-45f0-aafc-ad3e6db7fcc0"
+        },
+        {
+          "name": "List files",
+          "id": "7a6ca475-bbc6-4b64-8a2c-a4119de49dc6",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/files?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "files"
+              ],
+              "query": [
+                {
+                  "description": "Filter content items by a condition.",
+                  "key": "$filter",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Select which properties to include in the response for the content items.",
+                  "key": "$select",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Order content items by specific fields.",
+                  "key": "$orderby",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Specify the number of content results to return.",
+                  "key": "$top",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "Skip the first n content results.",
+                  "key": "$skip",
+                  "value": "<integer>"
+                }
+              ]
+            },
+            "description": "Retrieve files in a specific node, providing features like querying, filtering, and detailed navigational information including parent folder details and direct download URLs."
+          },
+          "response": [
+            {
+              "id": "cc6410ff-48a5-4e6c-977c-170924901ffa",
+              "name": "Successfully retrieved list of content items with enhanced information.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/files?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "files"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter content items by a condition.",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Select which properties to include in the response for the content items.",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Order content items by specific fields.",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Specify the number of content results to return.",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Skip the first n content results.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"@odata.context\": \"<string>\",\n  \"value\": [\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"last_modified_datetime\": \"<dateTime>\",\n      \"external_url\": \"<string>\",\n      \"status\": \"deleted\",\n      \"custom_attributes\": {\n        \"id_2f9\": \"<string>\",\n        \"adipisicingf\": \"<string>\"\n      },\n      \"last_modified_by\": \"<string>\",\n      \"created_datetime\": \"<dateTime>\",\n      \"created_by\": \"<string>\",\n      \"metadata_url\": \"<string>\",\n      \"content\": {\n        \"mime_type\": \"<string>\",\n        \"download_path\": \"<string>\",\n        \"size\": \"<long>\",\n        \"sha1_hash\": \"<string>\"\n      },\n      \"parent_info\": {\n        \"id\": \"<uuid>\",\n        \"name\": \"<string>\",\n        \"path\": \"<string>\"\n      },\n      \"children_url\": \"<string>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"last_modified_datetime\": \"<dateTime>\",\n      \"external_url\": \"<string>\",\n      \"status\": \"deleted\",\n      \"custom_attributes\": {\n        \"nisi_f9\": \"<string>\",\n        \"id_43d\": \"<string>\"\n      },\n      \"last_modified_by\": \"<string>\",\n      \"created_datetime\": \"<dateTime>\",\n      \"created_by\": \"<string>\",\n      \"metadata_url\": \"<string>\",\n      \"content\": {\n        \"mime_type\": \"<string>\",\n        \"download_path\": \"<string>\",\n        \"size\": \"<long>\",\n        \"sha1_hash\": \"<string>\"\n      },\n      \"parent_info\": {\n        \"id\": \"<uuid>\",\n        \"name\": \"<string>\",\n        \"path\": \"<string>\"\n      },\n      \"children_url\": \"<string>\"\n    }\n  ],\n  \"@odata.nextLink\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:08.000Z",
+              "updatedAt": "2026-10-22T01:59:08.000Z",
+              "uid": "35240-cc6410ff-48a5-4e6c-977c-170924901ffa"
+            },
+            {
+              "id": "8ec04847-9ff8-4a08-8a88-927bcb197f21",
+              "name": "Bad Request - The request could not be understood due to malformed syntax.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/files?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "files"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter content items by a condition.",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Select which properties to include in the response for the content items.",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Order content items by specific fields.",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Specify the number of content results to return.",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Skip the first n content results.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:59:08.000Z",
+              "updatedAt": "2026-10-22T01:59:08.000Z",
+              "uid": "35240-8ec04847-9ff8-4a08-8a88-927bcb197f21"
+            },
+            {
+              "id": "0339f1d9-2f9f-457e-965f-1240ceb9651d",
+              "name": "Unauthorized - Authentication is required and has failed or has not yet been provided.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/files?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "files"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter content items by a condition.",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Select which properties to include in the response for the content items.",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Order content items by specific fields.",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Specify the number of content results to return.",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Skip the first n content results.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:59:08.000Z",
+              "updatedAt": "2026-10-22T01:59:08.000Z",
+              "uid": "35240-0339f1d9-2f9f-457e-965f-1240ceb9651d"
+            },
+            {
+              "id": "e7138196-373c-4b4f-a289-7e5c38c9a63e",
+              "name": "Forbidden - Server understood the request but refuses to authorize it.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/files?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "files"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter content items by a condition.",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Select which properties to include in the response for the content items.",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Order content items by specific fields.",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Specify the number of content results to return.",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Skip the first n content results.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:59:08.000Z",
+              "updatedAt": "2026-10-22T01:59:08.000Z",
+              "uid": "35240-e7138196-373c-4b4f-a289-7e5c38c9a63e"
+            },
+            {
+              "id": "ace82faf-cc42-467c-a564-3a12184729e2",
+              "name": "Not Found - The requested resource could not be found.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/files?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "files"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter content items by a condition.",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Select which properties to include in the response for the content items.",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Order content items by specific fields.",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Specify the number of content results to return.",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Skip the first n content results.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:59:08.000Z",
+              "updatedAt": "2026-10-22T01:59:08.000Z",
+              "uid": "35240-ace82faf-cc42-467c-a564-3a12184729e2"
+            },
+            {
+              "id": "5a0ce42f-1b9d-4c36-b306-4e3a7b6e335b",
+              "name": "Too Many Requests - Rate limit exceeded.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/files?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "files"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter content items by a condition.",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Select which properties to include in the response for the content items.",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Order content items by specific fields.",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Specify the number of content results to return.",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Skip the first n content results.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:59:08.000Z",
+              "updatedAt": "2026-10-22T01:59:08.000Z",
+              "uid": "35240-5a0ce42f-1b9d-4c36-b306-4e3a7b6e335b"
+            }
+          ],
+          "createdAt": "2026-10-22T01:59:08.000Z",
+          "updatedAt": "2026-10-22T01:59:08.000Z",
+          "uid": "35240-7a6ca475-bbc6-4b64-8a2c-a4119de49dc6"
+        }
+      ],
+      "id": "ed79cccd-1170-4a50-97d3-f6ec67bb555d",
+      "createdAt": "2026-10-22T01:59:08.000Z",
+      "updatedAt": "2026-10-22T01:59:08.000Z",
+      "uid": "35240-ed79cccd-1170-4a50-97d3-f6ec67bb555d"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://content-gateway-example.com/v1"
+    }
+  ]
+}

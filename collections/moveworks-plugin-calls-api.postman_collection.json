@@ -1,0 +1,505 @@
+{
+  "info": {
+    "_postman_id": "293b4fe8-7804-443d-8e4e-16312d70fd51",
+    "name": "Data Plugin Calls API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:59:29.000Z",
+    "updatedAt": "2026-10-22T01:59:30.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-293b4fe8-7804-443d-8e4e-16312d70fd51"
+  },
+  "item": [
+    {
+      "name": "plugin-calls",
+      "item": [
+        {
+          "name": "List plugins calls",
+          "id": "d5c06160-ae07-44c0-8701-b9259aeaa535",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/plugin-calls?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "plugin-calls"
+              ],
+              "query": [
+                {
+                  "description": "This option allows the client to filter the resource that is address by request URL",
+                  "key": "$filter",
+                  "value": "<string>"
+                },
+                {
+                  "description": "This option allow the client to request a limited set of properties of an entity",
+                  "key": "$select",
+                  "value": "<string>"
+                },
+                {
+                  "description": "This option allow the client to request resources in either ascending or descending order",
+                  "key": "$orderby",
+                  "value": "<string>"
+                },
+                {
+                  "description": "This option request the number of items to be included in the result",
+                  "key": "$top",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                  "key": "$skip",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                  "key": "$count",
+                  "value": "<boolean>"
+                }
+              ]
+            },
+            "description": "Retrieve all plugins that were called by the Moveworks AI Assistant during an interaction."
+          },
+          "response": [
+            {
+              "id": "30c4e4c4-256e-4313-851e-f1a4b29f68f1",
+              "name": "Successfully retrieved list of plugins calls",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/plugin-calls?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "plugin-calls"
+                  ],
+                  "query": [
+                    {
+                      "description": "This option allows the client to filter the resource that is address by request URL",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request a limited set of properties of an entity",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request resources in either ascending or descending order",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option request the number of items to be included in the result",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"@odata.context\": \"<string>\",\n  \"@odata.nextLink\": \"<string>\",\n  \"value\": [\n    {\n      \"id\": \"<uuid>\",\n      \"interaction_id\": \"<uuid>\",\n      \"conversation_id\": \"<uuid>\",\n      \"plugin_name\": \"<string>\",\n      \"user_id\": \"<uuid>\",\n      \"served\": \"<boolean>\",\n      \"used\": \"<boolean>\",\n      \"plugin_update_time\": \"<dateTime>\",\n      \"created_time\": \"<dateTime>\",\n      \"last_updated_time\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"interaction_id\": \"<uuid>\",\n      \"conversation_id\": \"<uuid>\",\n      \"plugin_name\": \"<string>\",\n      \"user_id\": \"<uuid>\",\n      \"served\": \"<boolean>\",\n      \"used\": \"<boolean>\",\n      \"plugin_update_time\": \"<dateTime>\",\n      \"created_time\": \"<dateTime>\",\n      \"last_updated_time\": \"<dateTime>\"\n    }\n  ]\n}",
+              "createdAt": "2026-10-22T01:59:30.000Z",
+              "updatedAt": "2026-10-22T01:59:30.000Z",
+              "uid": "35240-30c4e4c4-256e-4313-851e-f1a4b29f68f1"
+            },
+            {
+              "id": "bf2608e7-07e1-430f-8294-4dacee5ccbb5",
+              "name": "Bad request error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/plugin-calls?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "plugin-calls"
+                  ],
+                  "query": [
+                    {
+                      "description": "This option allows the client to filter the resource that is address by request URL",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request a limited set of properties of an entity",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request resources in either ascending or descending order",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option request the number of items to be included in the result",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:30.000Z",
+              "updatedAt": "2026-10-22T01:59:30.000Z",
+              "uid": "35240-bf2608e7-07e1-430f-8294-4dacee5ccbb5"
+            },
+            {
+              "id": "083e2540-20f3-42d1-9521-cf46fb6387fd",
+              "name": "Forbidden error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/plugin-calls?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "plugin-calls"
+                  ],
+                  "query": [
+                    {
+                      "description": "This option allows the client to filter the resource that is address by request URL",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request a limited set of properties of an entity",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request resources in either ascending or descending order",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option request the number of items to be included in the result",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:30.000Z",
+              "updatedAt": "2026-10-22T01:59:30.000Z",
+              "uid": "35240-083e2540-20f3-42d1-9521-cf46fb6387fd"
+            },
+            {
+              "id": "66f3a772-607e-4c11-a27d-b3f7cba91b3e",
+              "name": "URL not found error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/plugin-calls?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "plugin-calls"
+                  ],
+                  "query": [
+                    {
+                      "description": "This option allows the client to filter the resource that is address by request URL",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request a limited set of properties of an entity",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request resources in either ascending or descending order",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option request the number of items to be included in the result",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:30.000Z",
+              "updatedAt": "2026-10-22T01:59:30.000Z",
+              "uid": "35240-66f3a772-607e-4c11-a27d-b3f7cba91b3e"
+            },
+            {
+              "id": "c9e3c636-ee53-4b41-9244-1dab8c809585",
+              "name": "Rate limiting exceeding error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/plugin-calls?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "plugin-calls"
+                  ],
+                  "query": [
+                    {
+                      "description": "This option allows the client to filter the resource that is address by request URL",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request a limited set of properties of an entity",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request resources in either ascending or descending order",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option request the number of items to be included in the result",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:30.000Z",
+              "updatedAt": "2026-10-22T01:59:30.000Z",
+              "uid": "35240-c9e3c636-ee53-4b41-9244-1dab8c809585"
+            },
+            {
+              "id": "88e69dfa-812f-43aa-aa25-7376bf637dce",
+              "name": "Internal server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/plugin-calls?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "plugin-calls"
+                  ],
+                  "query": [
+                    {
+                      "description": "This option allows the client to filter the resource that is address by request URL",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request a limited set of properties of an entity",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request resources in either ascending or descending order",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option request the number of items to be included in the result",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:30.000Z",
+              "updatedAt": "2026-10-22T01:59:30.000Z",
+              "uid": "35240-88e69dfa-812f-43aa-aa25-7376bf637dce"
+            }
+          ],
+          "createdAt": "2026-10-22T01:59:30.000Z",
+          "updatedAt": "2026-10-22T01:59:30.000Z",
+          "uid": "35240-d5c06160-ae07-44c0-8701-b9259aeaa535"
+        }
+      ],
+      "id": "1f8bd82d-74c6-40f6-8b90-2351bc84d8fa",
+      "createdAt": "2026-10-22T01:59:30.000Z",
+      "updatedAt": "2026-10-22T01:59:30.000Z",
+      "uid": "35240-1f8bd82d-74c6-40f6-8b90-2351bc84d8fa"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.moveworks.ai/export/v1/records"
+    }
+  ]
+}

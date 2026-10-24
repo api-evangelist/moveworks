@@ -1,0 +1,1129 @@
+{
+  "info": {
+    "_postman_id": "7455f70c-8f0e-42a1-941f-05d7d2f6f555",
+    "name": "Moveworks Data Records API",
+    "description": "The Moveworks Data API lets customers export AI Assistant conversation and interaction data through a read-only REST API. It exposes every interaction \u2014 user utterances, button clicks, link clicks, and UI form submissions \u2014 as OData JSON record collections. This specification is a faithful capture of the endpoints, methods, host, authentication, and response envelope documented at docs.moveworks.com; it is not an official Moveworks-published OpenAPI.\n\nContact Support:\n Name: Moveworks Developer Documentation",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:59:43.000Z",
+    "updatedAt": "2026-10-22T01:59:43.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-7455f70c-8f0e-42a1-941f-05d7d2f6f555"
+  },
+  "item": [
+    {
+      "name": "records",
+      "item": [
+        {
+          "name": "conversations",
+          "item": [
+            {
+              "name": "List conversation records",
+              "id": "de584b62-a28f-4872-b1f4-f561f78dc53d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/records/conversations?$count=<boolean>&@odata.nextLink=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "records",
+                    "conversations"
+                  ],
+                  "query": [
+                    {
+                      "description": "When true, include the total record count in the response.",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                      "key": "@odata.nextLink",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Returns top-level interaction groupings (conversations) between users and the AI Assistant."
+              },
+              "response": [
+                {
+                  "id": "2a0e3056-0e8a-408f-8772-5767d0406544",
+                  "name": "An OData collection of conversation records.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/conversations?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "conversations"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"odata.context\": \"<string>\",\n  \"odata.nextlink\": \"<string>\",\n  \"value\": [\n    {\n      \"nulla3\": true,\n      \"pariaturb0\": -97469429\n    },\n    {\n      \"sed95f\": \"ex tempor quis aliqua\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-2a0e3056-0e8a-408f-8772-5767d0406544"
+                },
+                {
+                  "id": "84c87d28-8cf7-4aaa-922d-a9d9cf08ef06",
+                  "name": "Missing or invalid credentials.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/conversations?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "conversations"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-84c87d28-8cf7-4aaa-922d-a9d9cf08ef06"
+                },
+                {
+                  "id": "30ce7084-1cee-4a5c-ad24-92ca2bd94bbc",
+                  "name": "The requested API version has been deprecated and sunset (RFC-style 410 Gone).",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/conversations?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "conversations"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Gone",
+                  "code": 410,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-30ce7084-1cee-4a5c-ad24-92ca2bd94bbc"
+                }
+              ],
+              "createdAt": "2026-10-22T01:59:43.000Z",
+              "updatedAt": "2026-10-22T01:59:43.000Z",
+              "uid": "35240-de584b62-a28f-4872-b1f4-f561f78dc53d"
+            }
+          ],
+          "id": "9d50ce5e-cc22-4de9-b4d2-dde2bea93eae",
+          "createdAt": "2026-10-22T01:59:43.000Z",
+          "updatedAt": "2026-10-22T01:59:43.000Z",
+          "uid": "35240-9d50ce5e-cc22-4de9-b4d2-dde2bea93eae"
+        },
+        {
+          "name": "interactions",
+          "item": [
+            {
+              "name": "List interaction records",
+              "id": "5c77ebb5-3f4d-42ce-824f-d8cec92cf362",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/records/interactions?$count=<boolean>&@odata.nextLink=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "records",
+                    "interactions"
+                  ],
+                  "query": [
+                    {
+                      "description": "When true, include the total record count in the response.",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                      "key": "@odata.nextLink",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Returns individual user and AI Assistant exchanges within conversations."
+              },
+              "response": [
+                {
+                  "id": "1404aaab-3d35-4771-9f94-27be276e8914",
+                  "name": "An OData collection of interaction records.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/interactions?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "interactions"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"odata.context\": \"<string>\",\n  \"odata.nextlink\": \"<string>\",\n  \"value\": [\n    {\n      \"nulla3\": true,\n      \"pariaturb0\": -97469429\n    },\n    {\n      \"sed95f\": \"ex tempor quis aliqua\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-1404aaab-3d35-4771-9f94-27be276e8914"
+                },
+                {
+                  "id": "8691b1da-1229-4a02-8ebd-0e64779ea4f6",
+                  "name": "Missing or invalid credentials.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/interactions?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "interactions"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-8691b1da-1229-4a02-8ebd-0e64779ea4f6"
+                },
+                {
+                  "id": "88abdbe2-2907-4b76-8b5d-3dacb1ac7de1",
+                  "name": "The requested API version has been deprecated and sunset (RFC-style 410 Gone).",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/interactions?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "interactions"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Gone",
+                  "code": 410,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-88abdbe2-2907-4b76-8b5d-3dacb1ac7de1"
+                }
+              ],
+              "createdAt": "2026-10-22T01:59:43.000Z",
+              "updatedAt": "2026-10-22T01:59:43.000Z",
+              "uid": "35240-5c77ebb5-3f4d-42ce-824f-d8cec92cf362"
+            }
+          ],
+          "id": "1af0f2f3-42c8-49c5-8c5e-ade8496b9fd2",
+          "createdAt": "2026-10-22T01:59:43.000Z",
+          "updatedAt": "2026-10-22T01:59:43.000Z",
+          "uid": "35240-1af0f2f3-42c8-49c5-8c5e-ade8496b9fd2"
+        },
+        {
+          "name": "plugin-calls",
+          "item": [
+            {
+              "name": "List plugin call records",
+              "id": "97a31c9f-c728-4e5d-8643-542a628ebfb9",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/records/plugin-calls?$count=<boolean>&@odata.nextLink=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "records",
+                    "plugin-calls"
+                  ],
+                  "query": [
+                    {
+                      "description": "When true, include the total record count in the response.",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                      "key": "@odata.nextLink",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Returns plugin invocation records produced while resolving interactions."
+              },
+              "response": [
+                {
+                  "id": "38841114-d15f-421c-b5f7-a4bb0fb37bc0",
+                  "name": "An OData collection of plugin call records.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/plugin-calls?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "plugin-calls"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"odata.context\": \"<string>\",\n  \"odata.nextlink\": \"<string>\",\n  \"value\": [\n    {\n      \"nulla3\": true,\n      \"pariaturb0\": -97469429\n    },\n    {\n      \"sed95f\": \"ex tempor quis aliqua\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-38841114-d15f-421c-b5f7-a4bb0fb37bc0"
+                },
+                {
+                  "id": "968f8d5a-a2dd-4b30-bf01-329aa971b0c3",
+                  "name": "Missing or invalid credentials.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/plugin-calls?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "plugin-calls"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-968f8d5a-a2dd-4b30-bf01-329aa971b0c3"
+                },
+                {
+                  "id": "31490091-f39e-454f-967d-039bcda8d52a",
+                  "name": "The requested API version has been deprecated and sunset (RFC-style 410 Gone).",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/plugin-calls?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "plugin-calls"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Gone",
+                  "code": 410,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-31490091-f39e-454f-967d-039bcda8d52a"
+                }
+              ],
+              "createdAt": "2026-10-22T01:59:43.000Z",
+              "updatedAt": "2026-10-22T01:59:43.000Z",
+              "uid": "35240-97a31c9f-c728-4e5d-8643-542a628ebfb9"
+            }
+          ],
+          "id": "8139dca5-1277-4784-9a32-1a40ce276d55",
+          "createdAt": "2026-10-22T01:59:43.000Z",
+          "updatedAt": "2026-10-22T01:59:43.000Z",
+          "uid": "35240-8139dca5-1277-4784-9a32-1a40ce276d55"
+        },
+        {
+          "name": "plugin-resources",
+          "item": [
+            {
+              "name": "List plugin resource records",
+              "id": "1821dc3e-6cbe-4d16-9ab2-c9b037a317ca",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/records/plugin-resources?$count=<boolean>&@odata.nextLink=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "records",
+                    "plugin-resources"
+                  ],
+                  "query": [
+                    {
+                      "description": "When true, include the total record count in the response.",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                      "key": "@odata.nextLink",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Returns the resources used by plugins during interactions."
+              },
+              "response": [
+                {
+                  "id": "98d7f0b2-be4f-4fd6-999f-2ac63a2788cd",
+                  "name": "An OData collection of plugin resource records.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/plugin-resources?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "plugin-resources"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"odata.context\": \"<string>\",\n  \"odata.nextlink\": \"<string>\",\n  \"value\": [\n    {\n      \"nulla3\": true,\n      \"pariaturb0\": -97469429\n    },\n    {\n      \"sed95f\": \"ex tempor quis aliqua\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-98d7f0b2-be4f-4fd6-999f-2ac63a2788cd"
+                },
+                {
+                  "id": "ffe68b17-0a32-4907-a996-a749d726464c",
+                  "name": "Missing or invalid credentials.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/plugin-resources?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "plugin-resources"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-ffe68b17-0a32-4907-a996-a749d726464c"
+                },
+                {
+                  "id": "601c395f-c946-47b4-b2ae-fbf80cb6533f",
+                  "name": "The requested API version has been deprecated and sunset (RFC-style 410 Gone).",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/plugin-resources?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "plugin-resources"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Gone",
+                  "code": 410,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-601c395f-c946-47b4-b2ae-fbf80cb6533f"
+                }
+              ],
+              "createdAt": "2026-10-22T01:59:43.000Z",
+              "updatedAt": "2026-10-22T01:59:43.000Z",
+              "uid": "35240-1821dc3e-6cbe-4d16-9ab2-c9b037a317ca"
+            }
+          ],
+          "id": "c583639c-1230-4bc1-99ce-f36fc8351b03",
+          "createdAt": "2026-10-22T01:59:43.000Z",
+          "updatedAt": "2026-10-22T01:59:43.000Z",
+          "uid": "35240-c583639c-1230-4bc1-99ce-f36fc8351b03"
+        },
+        {
+          "name": "users",
+          "item": [
+            {
+              "name": "List user records",
+              "id": "73092049-47ac-4597-b529-6d7ffbd150b0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/records/users?$count=<boolean>&@odata.nextLink=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "records",
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "description": "When true, include the total record count in the response.",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                      "key": "@odata.nextLink",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Returns the ingested user roster data referenced by interactions."
+              },
+              "response": [
+                {
+                  "id": "2b7bcca0-caf8-461d-9d2e-dec19ba60364",
+                  "name": "An OData collection of user records.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/users?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "users"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"odata.context\": \"<string>\",\n  \"odata.nextlink\": \"<string>\",\n  \"value\": [\n    {\n      \"nulla3\": true,\n      \"pariaturb0\": -97469429\n    },\n    {\n      \"sed95f\": \"ex tempor quis aliqua\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-2b7bcca0-caf8-461d-9d2e-dec19ba60364"
+                },
+                {
+                  "id": "976dcfdd-f2b1-4fbd-a636-0d628e9a2d15",
+                  "name": "Missing or invalid credentials.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/users?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "users"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-976dcfdd-f2b1-4fbd-a636-0d628e9a2d15"
+                },
+                {
+                  "id": "24c220c1-0a43-4be8-aa68-55cc21a42726",
+                  "name": "The requested API version has been deprecated and sunset (RFC-style 410 Gone).",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/records/users?$count=<boolean>&@odata.nextLink=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "records",
+                        "users"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, include the total record count in the response.",
+                          "key": "$count",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Opaque cursor returned by a previous page for server-driven pagination.",
+                          "key": "@odata.nextLink",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Gone",
+                  "code": 410,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:59:43.000Z",
+                  "updatedAt": "2026-10-22T01:59:43.000Z",
+                  "uid": "35240-24c220c1-0a43-4be8-aa68-55cc21a42726"
+                }
+              ],
+              "createdAt": "2026-10-22T01:59:43.000Z",
+              "updatedAt": "2026-10-22T01:59:43.000Z",
+              "uid": "35240-73092049-47ac-4597-b529-6d7ffbd150b0"
+            }
+          ],
+          "id": "564e10b0-d7f0-449d-9f56-626618970e8a",
+          "createdAt": "2026-10-22T01:59:43.000Z",
+          "updatedAt": "2026-10-22T01:59:43.000Z",
+          "uid": "35240-564e10b0-d7f0-449d-9f56-626618970e8a"
+        }
+      ],
+      "id": "91160cf3-4cde-42e9-a920-ad11c259455d",
+      "createdAt": "2026-10-22T01:59:43.000Z",
+      "updatedAt": "2026-10-22T01:59:43.000Z",
+      "uid": "35240-91160cf3-4cde-42e9-a920-ad11c259455d"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.moveworks.ai/export/v1"
+    }
+  ]
+}

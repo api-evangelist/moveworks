@@ -1,430 +1,507 @@
 {
+  "info": {
+    "_postman_id": "8910df92-136a-42f0-8813-325738a6ab6c",
+    "name": "Events Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:57:53.000Z",
+    "updatedAt": "2026-10-22T01:57:54.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8910df92-136a-42f0-8813-325738a6ab6c"
+  },
   "item": [
     {
-      "id": "88c0c93c-2382-4d16-baba-7bc1def637fc",
-      "name": "authentication",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "oauth",
       "item": [
         {
-          "id": "bda31bc8-9406-4e57-a7c9-f30530f8d528",
-          "name": "Create an OAuth token",
-          "request": {
-            "name": "Create an OAuth token",
-            "description": {
-              "content": "Generate an Access Token using OAuth 2.0 Client Credentials for authentication in subsequent API calls to other endpoints. See [Credentials Management - OAuth 2.0 Client](/reference/get-api-keys) for more info.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "oauth",
-                "v1",
-                "token"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"grant_type\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "v1",
+          "item": [
             {
-              "id": "e3eeec38-df40-43f6-8b58-d1cc317a4124",
-              "name": "Token created",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "oauth",
-                    "v1",
-                    "token"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"grant_type\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "token",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "Create an OAuth token",
+                  "id": "d026c1e8-2317-41a6-bbf0-45352acbae16",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"grant_type\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/v1/token",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "v1",
+                        "token"
+                      ]
+                    },
+                    "description": "Generate an Access Token using OAuth 2.0 Client Credentials for authentication in subsequent API calls to other endpoints. See Credentials Management - OAuth 2.0 Client for more info."
+                  },
+                  "response": [
+                    {
+                      "id": "9f547f1e-3241-4a6b-8813-4459ca9903f1",
+                      "name": "Token created",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"grant_type\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth/v1/token",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth",
+                            "v1",
+                            "token"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"data\": {\n    \"access_token\": \"<string>\",\n    \"expires_in\": \"<integer>\",\n    \"token_type\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:57:54.000Z",
+                      "updatedAt": "2026-10-22T01:57:54.000Z",
+                      "uid": "35240-9f547f1e-3241-4a6b-8813-4459ca9903f1"
+                    },
+                    {
+                      "id": "48507e95-b5f8-48ab-89c4-90f3b82eb9cb",
+                      "name": "Bad Request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"grant_type\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth/v1/token",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth",
+                            "v1",
+                            "token"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:57:54.000Z",
+                      "updatedAt": "2026-10-22T01:57:54.000Z",
+                      "uid": "35240-48507e95-b5f8-48ab-89c4-90f3b82eb9cb"
+                    },
+                    {
+                      "id": "c2b1e0d3-72e5-4512-b144-b9b79e671e30",
+                      "name": "Unauthenticated",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"grant_type\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth/v1/token",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth",
+                            "v1",
+                            "token"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:57:54.000Z",
+                      "updatedAt": "2026-10-22T01:57:54.000Z",
+                      "uid": "35240-c2b1e0d3-72e5-4512-b144-b9b79e671e30"
+                    },
+                    {
+                      "id": "273de03a-d721-4299-b738-a2c0c1350fcc",
+                      "name": "Rate Limit Exceeded",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"grant_type\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth/v1/token",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth",
+                            "v1",
+                            "token"
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:57:54.000Z",
+                      "updatedAt": "2026-10-22T01:57:54.000Z",
+                      "uid": "35240-273de03a-d721-4299-b738-a2c0c1350fcc"
+                    },
+                    {
+                      "id": "099fefe6-03e2-4428-84e8-6aad8109010d",
+                      "name": "Internal Server Error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"grant_type\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth/v1/token",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth",
+                            "v1",
+                            "token"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:57:54.000Z",
+                      "updatedAt": "2026-10-22T01:57:54.000Z",
+                      "uid": "35240-099fefe6-03e2-4428-84e8-6aad8109010d"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:57:54.000Z",
+                  "updatedAt": "2026-10-22T01:57:54.000Z",
+                  "uid": "35240-d026c1e8-2317-41a6-bbf0-45352acbae16"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"access_token\": \"string\",\n    \"expires_in\": 9768,\n    \"token_type\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a2b7520c-7785-434d-b23e-831f79a1475a",
-              "name": "Bad Request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "oauth",
-                    "v1",
-                    "token"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"grant_type\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "4eca1146-8438-4ce9-9293-3ee65a58b127",
-              "name": "Unauthenticated",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "oauth",
-                    "v1",
-                    "token"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"grant_type\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "485a03ed-e574-4fbb-8e84-710343b51760",
-              "name": "Rate Limit Exceeded",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "oauth",
-                    "v1",
-                    "token"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"grant_type\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "46a06bf9-25be-42e3-a93b-b7b445423759",
-              "name": "Internal Server Error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "oauth",
-                    "v1",
-                    "token"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"grant_type\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "d78a97a8-7385-4ba9-8412-9bd0d29e6772",
+              "createdAt": "2026-10-22T01:57:54.000Z",
+              "updatedAt": "2026-10-22T01:57:54.000Z",
+              "uid": "35240-d78a97a8-7385-4ba9-8412-9bd0d29e6772"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "71e4886d-ca87-49e5-9c14-db422f97fd7f",
-          "name": "Test API Key",
-          "request": {
-            "name": "Test API Key",
-            "description": {},
-            "url": {
-              "path": [
-                "rest",
-                "v1",
-                "auth",
-                "test"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "b31cce61-3842-4683-b19f-d47864807d57",
-              "name": "Successfully tested",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "auth",
-                    "test"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"Message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3d61371a-8d8e-4513-91a3-009f47a2d617",
-              "name": "Unauthenticated",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "auth",
-                    "test"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "6cf1867b-9582-4ab7-95dd-0ba35ae32668",
+          "createdAt": "2026-10-22T01:57:54.000Z",
+          "updatedAt": "2026-10-22T01:57:54.000Z",
+          "uid": "35240-6cf1867b-9582-4ab7-95dd-0ba35ae32668"
         }
       ],
-      "event": []
+      "id": "cd3fc50a-4ddc-4e6c-bca4-7c243200d9dc",
+      "createdAt": "2026-10-22T01:57:54.000Z",
+      "updatedAt": "2026-10-22T01:57:54.000Z",
+      "uid": "35240-cd3fc50a-4ddc-4e6c-bca4-7c243200d9dc"
+    },
+    {
+      "name": "rest",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "auth",
+              "item": [
+                {
+                  "name": "test",
+                  "item": [
+                    {
+                      "name": "Test API Key",
+                      "id": "59e93dce-f16c-4701-a2ac-5e230f6ba14e",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/rest/v1/auth/test",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "rest",
+                            "v1",
+                            "auth",
+                            "test"
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "6f70f594-eaa0-47da-ba25-73e3b38695ba",
+                          "name": "Successfully tested",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/rest/v1/auth/test",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "rest",
+                                "v1",
+                                "auth",
+                                "test"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"Message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-22T01:57:54.000Z",
+                          "updatedAt": "2026-10-22T01:57:54.000Z",
+                          "uid": "35240-6f70f594-eaa0-47da-ba25-73e3b38695ba"
+                        },
+                        {
+                          "id": "0273bb35-e712-4599-96e2-50d85ef09359",
+                          "name": "Unauthenticated",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/rest/v1/auth/test",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "rest",
+                                "v1",
+                                "auth",
+                                "test"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-22T01:57:54.000Z",
+                          "updatedAt": "2026-10-22T01:57:54.000Z",
+                          "uid": "35240-0273bb35-e712-4599-96e2-50d85ef09359"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T01:57:54.000Z",
+                      "updatedAt": "2026-10-22T01:57:54.000Z",
+                      "uid": "35240-59e93dce-f16c-4701-a2ac-5e230f6ba14e"
+                    }
+                  ],
+                  "id": "afe726fc-0e8d-44e5-80f6-8d2aca740403",
+                  "createdAt": "2026-10-22T01:57:54.000Z",
+                  "updatedAt": "2026-10-22T01:57:54.000Z",
+                  "uid": "35240-afe726fc-0e8d-44e5-80f6-8d2aca740403"
+                }
+              ],
+              "id": "80632420-b090-4b77-b53c-4fcb55366ce2",
+              "createdAt": "2026-10-22T01:57:54.000Z",
+              "updatedAt": "2026-10-22T01:57:54.000Z",
+              "uid": "35240-80632420-b090-4b77-b53c-4fcb55366ce2"
+            }
+          ],
+          "id": "1a4423c0-938e-4167-b47e-1de1ad4ce545",
+          "createdAt": "2026-10-22T01:57:54.000Z",
+          "updatedAt": "2026-10-22T01:57:54.000Z",
+          "uid": "35240-1a4423c0-938e-4167-b47e-1de1ad4ce545"
+        }
+      ],
+      "id": "c5d53698-da11-4df5-a52a-2819e24e404f",
+      "createdAt": "2026-10-22T01:57:54.000Z",
+      "updatedAt": "2026-10-22T01:57:54.000Z",
+      "uid": "35240-c5d53698-da11-4df5-a52a-2819e24e404f"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.moveworks.ai/rest/v1beta1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.moveworks.ai"
     }
-  ],
-  "info": {
-    "_postman_id": "1da734fb-7e84-4228-867d-8df5c5b072e9",
-    "name": "(Beta) Conversations authentication API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

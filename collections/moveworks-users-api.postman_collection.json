@@ -1,0 +1,709 @@
+{
+  "info": {
+    "_postman_id": "83128613-0365-44ba-9182-cfff523939ad",
+    "name": "Moveworks Users API",
+    "description": "Operations tagged Users across 3 of this provider's published API definitions: moveworks-content-gateway-openapi.yaml, moveworks-data-api-openapi.yaml, moveworks-identity-gateway-openapi.yaml. Each path carries the servers of the definition it was published in.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:59:49.000Z",
+    "updatedAt": "2026-10-22T01:59:49.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-83128613-0365-44ba-9182-cfff523939ad"
+  },
+  "item": [
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "{userId}",
+          "item": [
+            {
+              "name": "Get User By ID",
+              "id": "5bd5a29f-60bb-4bbb-86d4-760109b11462",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "71c09820-66a2-425e-9cc1-5ae300f6e8ae",
+                      "key": "userId",
+                      "value": "<string>",
+                      "description": "(Required) ID of user to fetch details for"
+                    }
+                  ]
+                },
+                "description": "Returns user details given their userId. We recommend a rate limit of 5 req/sec for this endpoint."
+              },
+              "response": [
+                {
+                  "id": "d1254411-f846-40dd-87a1-d126eb46c398",
+                  "name": "A single user",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/users/:userId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "users",
+                        ":userId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "userId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"user\": {\n    \"state\": \"ACTIVE\",\n    \"universal_identifier\": \"<string>\",\n    \"email_addr\": \"<email>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"full_name\": \"<string>\",\n    \"work_status\": \"INTERN\",\n    \"employment_info\": {\n      \"employee_start_date_ts\": \"<string>\",\n      \"role\": \"<string>\",\n      \"manager_email\": \"<email>\",\n      \"cost_center_id\": \"<string>\",\n      \"cost_center_name\": \"<string>\",\n      \"department\": \"<string>\",\n      \"office_phone_number\": \"<string>\",\n      \"assistant_full_name\": \"<string>\",\n      \"employment_location\": {\n        \"location\": \"<string>\",\n        \"office\": \"<string>\",\n        \"country_code\": \"<string>\",\n        \"region\": \"<string>\",\n        \"timezone\": \"<string>\"\n      }\n    }\n  },\n  \"system_identity\": {\n    \"id\": \"<string>\",\n    \"username\": \"<string>\"\n  },\n  \"last_updated_at\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:59:50.000Z",
+                  "updatedAt": "2026-10-22T01:59:50.000Z",
+                  "uid": "35240-d1254411-f846-40dd-87a1-d126eb46c398"
+                }
+              ],
+              "createdAt": "2026-10-22T01:59:49.000Z",
+              "updatedAt": "2026-10-22T01:59:49.000Z",
+              "uid": "35240-5bd5a29f-60bb-4bbb-86d4-760109b11462"
+            }
+          ],
+          "id": "1b75ef70-7acb-4aa4-862b-9d297cba02a1",
+          "createdAt": "2026-10-22T01:59:49.000Z",
+          "updatedAt": "2026-10-22T01:59:49.000Z",
+          "uid": "35240-1b75ef70-7acb-4aa4-862b-9d297cba02a1"
+        },
+        {
+          "name": "List users",
+          "id": "b75bcd96-2b6e-468f-92c0-1165e3496aef",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "description": "Number of items to return per page (default pagination)",
+                  "key": "$top",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "Number of items to skip (default pagination offset)",
+                  "key": "$skip",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                  "key": "$skiptoken",
+                  "value": "<string>"
+                },
+                {
+                  "key": "$filter",
+                  "value": "<string>"
+                },
+                {
+                  "key": "$select",
+                  "value": "<string>"
+                },
+                {
+                  "key": "$orderby",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Retrieve a paginated list of users using OData parameters."
+          },
+          "response": [
+            {
+              "id": "b12cd6d4-806f-41f4-ae4b-b905335553c7",
+              "name": "User list response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/users?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items to return per page (default pagination)",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Number of items to skip (default pagination offset)",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                      "key": "$skiptoken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"@odata.context\": \"<string>\",\n  \"value\": [\n    {\n      \"id\": \"<string>\",\n      \"primary_email_addr\": \"<string>\",\n      \"full_name\": \"<string>\",\n      \"state\": \"<string>\",\n      \"last_modified_datetime\": \"<string>\",\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"<string>\",\n      \"primary_email_addr\": \"<string>\",\n      \"full_name\": \"<string>\",\n      \"state\": \"<string>\",\n      \"last_modified_datetime\": \"<string>\",\n      \"metadata\": {}\n    }\n  ],\n  \"@odata.nextLink\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:50.000Z",
+              "updatedAt": "2026-10-22T01:59:50.000Z",
+              "uid": "35240-b12cd6d4-806f-41f4-ae4b-b905335553c7"
+            },
+            {
+              "id": "349a134d-47e3-49e3-bdee-2e28423f76ad",
+              "name": "Bad Request - The request was invalid or cannot be served.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/users?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items to return per page (default pagination)",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Number of items to skip (default pagination offset)",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                      "key": "$skiptoken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:59:50.000Z",
+              "updatedAt": "2026-10-22T01:59:50.000Z",
+              "uid": "35240-349a134d-47e3-49e3-bdee-2e28423f76ad"
+            },
+            {
+              "id": "b5dbe8a3-472a-47dc-8f13-5b0d27ebdea9",
+              "name": "Unauthorized - The request requires user authentication.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/users?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items to return per page (default pagination)",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Number of items to skip (default pagination offset)",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                      "key": "$skiptoken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:59:50.000Z",
+              "updatedAt": "2026-10-22T01:59:50.000Z",
+              "uid": "35240-b5dbe8a3-472a-47dc-8f13-5b0d27ebdea9"
+            },
+            {
+              "id": "fa31d1f8-6fb1-40b6-bfc8-c68ed7ef9a7a",
+              "name": "Forbidden - The server understood the request but refuses to authorize it.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/users?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items to return per page (default pagination)",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Number of items to skip (default pagination offset)",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                      "key": "$skiptoken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:59:50.000Z",
+              "updatedAt": "2026-10-22T01:59:50.000Z",
+              "uid": "35240-fa31d1f8-6fb1-40b6-bfc8-c68ed7ef9a7a"
+            },
+            {
+              "id": "f7c202fc-faab-439f-9d05-15cab3179634",
+              "name": "Not Found - The requested resource could not be found.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/users?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items to return per page (default pagination)",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Number of items to skip (default pagination offset)",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                      "key": "$skiptoken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:59:50.000Z",
+              "updatedAt": "2026-10-22T01:59:50.000Z",
+              "uid": "35240-f7c202fc-faab-439f-9d05-15cab3179634"
+            },
+            {
+              "id": "b6f134bd-bcfd-4626-bf5f-fb4620c2bca5",
+              "name": "Too Many Requests - Rate limit exceeded.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/users?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items to return per page (default pagination)",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Number of items to skip (default pagination offset)",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                      "key": "$skiptoken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:59:50.000Z",
+              "updatedAt": "2026-10-22T01:59:50.000Z",
+              "uid": "35240-b6f134bd-bcfd-4626-bf5f-fb4620c2bca5"
+            },
+            {
+              "id": "42ce7cbe-1e01-4935-afad-d9e62e715225",
+              "name": "Internal Server Error - The server encountered an unexpected condition.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/users?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items to return per page (default pagination)",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Number of items to skip (default pagination offset)",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                      "key": "$skiptoken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:59:50.000Z",
+              "updatedAt": "2026-10-22T01:59:50.000Z",
+              "uid": "35240-42ce7cbe-1e01-4935-afad-d9e62e715225"
+            },
+            {
+              "id": "74070a2b-d52b-45da-838f-d56c77b26a80",
+              "name": "Service Unavailable - The server is currently unable to handle the request.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/users?$top=<integer>&$skip=<integer>&$skiptoken=<string>&$filter=<string>&$select=<string>&$orderby=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of items to return per page (default pagination)",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Number of items to skip (default pagination offset)",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Used when the query parameters can be memoized into an encoded string containing filtering and pagination parameters. If the endpoint supports memoized paging, the first call can use $top and $skip, while @odata.nextLink will return with $skiptoken. If memoized querying is not supported, $top and $skip should be sufficient.",
+                      "key": "$skiptoken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:59:50.000Z",
+              "updatedAt": "2026-10-22T01:59:50.000Z",
+              "uid": "35240-74070a2b-d52b-45da-838f-d56c77b26a80"
+            }
+          ],
+          "createdAt": "2026-10-22T01:59:49.000Z",
+          "updatedAt": "2026-10-22T01:59:49.000Z",
+          "uid": "35240-b75bcd96-2b6e-468f-92c0-1165e3496aef"
+        }
+      ],
+      "id": "d4eda304-87f4-4f7f-8206-eb989fdfa13a",
+      "createdAt": "2026-10-22T01:59:49.000Z",
+      "updatedAt": "2026-10-22T01:59:49.000Z",
+      "uid": "35240-d4eda304-87f4-4f7f-8206-eb989fdfa13a"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://content-gateway-example.com/v1"
+    }
+  ]
+}

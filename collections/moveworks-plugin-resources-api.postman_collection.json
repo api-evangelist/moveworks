@@ -1,0 +1,505 @@
+{
+  "info": {
+    "_postman_id": "855e6478-3be5-40c5-b7f3-050a52d2e5f7",
+    "name": "Data Plugin Resources API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:59:36.000Z",
+    "updatedAt": "2026-10-22T01:59:36.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-855e6478-3be5-40c5-b7f3-050a52d2e5f7"
+  },
+  "item": [
+    {
+      "name": "plugin-resources",
+      "item": [
+        {
+          "name": "List Plugin Resources",
+          "id": "5c042512-1771-435a-9297-e719e6f15bc7",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/plugin-resources?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "plugin-resources"
+              ],
+              "query": [
+                {
+                  "description": "This option allows the client to filter the resource that is address by request URL",
+                  "key": "$filter",
+                  "value": "<string>"
+                },
+                {
+                  "description": "This option allow the client to request a limited set of properties of an entity",
+                  "key": "$select",
+                  "value": "<string>"
+                },
+                {
+                  "description": "This option allow the client to request resources in either ascending or descending order",
+                  "key": "$orderby",
+                  "value": "<string>"
+                },
+                {
+                  "description": "This option request the number of items to be included in the result",
+                  "key": "$top",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                  "key": "$skip",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                  "key": "$count",
+                  "value": "<boolean>"
+                }
+              ]
+            },
+            "description": "Retrieve all resources used by AI Assistant during an interaction."
+          },
+          "response": [
+            {
+              "id": "fb0e087a-d282-44f8-86d4-647920322cea",
+              "name": "Successfully retrieved list of interactions",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/plugin-resources?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "plugin-resources"
+                  ],
+                  "query": [
+                    {
+                      "description": "This option allows the client to filter the resource that is address by request URL",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request a limited set of properties of an entity",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request resources in either ascending or descending order",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option request the number of items to be included in the result",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"@odata.context\": \"<string>\",\n  \"@odata.nextLink\": \"<string>\",\n  \"value\": [\n    {\n      \"id\": \"<uuid>\",\n      \"resource_id\": \"<uuid>\",\n      \"type\": \"<uuid>\",\n      \"plugin_call_id\": \"<uuid>\",\n      \"interaction_id\": \"<uuid>\",\n      \"user_id\": \"<uuid>\",\n      \"conversation_id\": \"<uuid>\",\n      \"detail\": {\n        \"domain\": \"<string>\",\n        \"external_resource_id\": \"<uuid>\",\n        \"name\": \"<string>\",\n        \"snippet\": \"<string>\",\n        \"source\": \"<string>\",\n        \"type\": \"<string>\",\n        \"url\": \"<string>\"\n      },\n      \"cited\": \"<boolean>\",\n      \"created_time\": \"<dateTime>\",\n      \"last_updated_time\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"resource_id\": \"<uuid>\",\n      \"type\": \"<uuid>\",\n      \"plugin_call_id\": \"<uuid>\",\n      \"interaction_id\": \"<uuid>\",\n      \"user_id\": \"<uuid>\",\n      \"conversation_id\": \"<uuid>\",\n      \"detail\": {\n        \"domain\": \"<string>\",\n        \"external_resource_id\": \"<uuid>\",\n        \"name\": \"<string>\",\n        \"snippet\": \"<string>\",\n        \"source\": \"<string>\",\n        \"type\": \"<string>\",\n        \"url\": \"<string>\"\n      },\n      \"cited\": \"<boolean>\",\n      \"created_time\": \"<dateTime>\",\n      \"last_updated_time\": \"<dateTime>\"\n    }\n  ]\n}",
+              "createdAt": "2026-10-22T01:59:36.000Z",
+              "updatedAt": "2026-10-22T01:59:36.000Z",
+              "uid": "35240-fb0e087a-d282-44f8-86d4-647920322cea"
+            },
+            {
+              "id": "a5131b47-700b-4397-8627-6a0cb5edbb72",
+              "name": "Bad request error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/plugin-resources?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "plugin-resources"
+                  ],
+                  "query": [
+                    {
+                      "description": "This option allows the client to filter the resource that is address by request URL",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request a limited set of properties of an entity",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request resources in either ascending or descending order",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option request the number of items to be included in the result",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:36.000Z",
+              "updatedAt": "2026-10-22T01:59:36.000Z",
+              "uid": "35240-a5131b47-700b-4397-8627-6a0cb5edbb72"
+            },
+            {
+              "id": "129e96a9-b7d5-4e06-8b83-1ebc9869b63e",
+              "name": "Forbidden error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/plugin-resources?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "plugin-resources"
+                  ],
+                  "query": [
+                    {
+                      "description": "This option allows the client to filter the resource that is address by request URL",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request a limited set of properties of an entity",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request resources in either ascending or descending order",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option request the number of items to be included in the result",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:36.000Z",
+              "updatedAt": "2026-10-22T01:59:36.000Z",
+              "uid": "35240-129e96a9-b7d5-4e06-8b83-1ebc9869b63e"
+            },
+            {
+              "id": "95282d5d-6b28-4008-a390-ca464d975dad",
+              "name": "URL not found error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/plugin-resources?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "plugin-resources"
+                  ],
+                  "query": [
+                    {
+                      "description": "This option allows the client to filter the resource that is address by request URL",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request a limited set of properties of an entity",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request resources in either ascending or descending order",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option request the number of items to be included in the result",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:36.000Z",
+              "updatedAt": "2026-10-22T01:59:36.000Z",
+              "uid": "35240-95282d5d-6b28-4008-a390-ca464d975dad"
+            },
+            {
+              "id": "2cdc1699-a77b-4bc0-bc1c-c9f754ac61f3",
+              "name": "Rate limiting exceeding error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/plugin-resources?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "plugin-resources"
+                  ],
+                  "query": [
+                    {
+                      "description": "This option allows the client to filter the resource that is address by request URL",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request a limited set of properties of an entity",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request resources in either ascending or descending order",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option request the number of items to be included in the result",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:36.000Z",
+              "updatedAt": "2026-10-22T01:59:36.000Z",
+              "uid": "35240-2cdc1699-a77b-4bc0-bc1c-c9f754ac61f3"
+            },
+            {
+              "id": "8e9b0a01-d91c-47c2-ae7e-a20c819c10c4",
+              "name": "Internal server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/plugin-resources?$filter=<string>&$select=<string>&$orderby=<string>&$top=<integer>&$skip=<integer>&$count=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "plugin-resources"
+                  ],
+                  "query": [
+                    {
+                      "description": "This option allows the client to filter the resource that is address by request URL",
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request a limited set of properties of an entity",
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option allow the client to request resources in either ascending or descending order",
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "This option request the number of items to be included in the result",
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This query option requests the number of items in the queried collection that are to be skipped and not included in the result.",
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "This option allows clients to request a count of the matching resources included with the resources in the result",
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:36.000Z",
+              "updatedAt": "2026-10-22T01:59:36.000Z",
+              "uid": "35240-8e9b0a01-d91c-47c2-ae7e-a20c819c10c4"
+            }
+          ],
+          "createdAt": "2026-10-22T01:59:36.000Z",
+          "updatedAt": "2026-10-22T01:59:36.000Z",
+          "uid": "35240-5c042512-1771-435a-9297-e719e6f15bc7"
+        }
+      ],
+      "id": "62afcfe8-5443-4fb1-88cf-0f7e8da63458",
+      "createdAt": "2026-10-22T01:59:36.000Z",
+      "updatedAt": "2026-10-22T01:59:36.000Z",
+      "uid": "35240-62afcfe8-5443-4fb1-88cf-0f7e8da63458"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.moveworks.ai/export/v1/records"
+    }
+  ]
+}

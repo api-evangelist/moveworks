@@ -1,0 +1,130 @@
+{
+  "info": {
+    "_postman_id": "c65c0d6f-039d-41ae-ad08-9a8f239bf9b2",
+    "name": "Knowledge Gateway Articles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:58:59.000Z",
+    "updatedAt": "2026-10-22T01:59:00.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c65c0d6f-039d-41ae-ad08-9a8f239bf9b2"
+  },
+  "item": [
+    {
+      "name": "articles",
+      "item": [
+        {
+          "name": "List Articles",
+          "id": "b4f87c1d-4705-467c-99e8-e08007315903",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/articles?pageToken=<string>&pageSize=<long>&filter=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "articles"
+              ],
+              "query": [
+                {
+                  "description": "`pageToken` is used to paginate query results. <br> If `pageToken` is not used in a request, the response should default to the first page. <br> <br> The response should always include a `next_page_token` field. <br> To obtain the next page of results, the client will use `next_page_token` as the value of `pageToken` in the next request.\n\n    \nWhen combining the filter parameter with the `pageToken` parameter, servers must ensure that the client uses the appropriate `pageToken` value for the specified filter string. Failure to do so should result in the server throwing an \"INPUT_VALIDATION_FAILED\".",
+                  "key": "pageToken",
+                  "value": "<string>"
+                },
+                {
+                  "description": "`pageSize` defines the maximum number of articles to return in a single query.  <br> <br> Moveworks will take a max of 1000 articles in a single response. However, the server can return less than 1000 if desired.\n",
+                  "key": "pageSize",
+                  "value": "<long>"
+                },
+                {
+                  "description": "Defines a filter expression that narrows down the returned set of items. It allows you to specify criteria, such as numeric comparisons or string matching, to filter the items based on the values of their properties.\n\nThe filter parameter must include at least one valid Boolean expression. Each expression should consist of an attribute name, followed by an attribute operator and a value. You have the flexibility to combine multiple expressions using logical operators, and you can also group expressions together using parentheses \u201c()\u201d.\n\nHere are the available attribute operators and their descriptions:\n\n- **`eq`** (equal): The attribute and operator values must be identical for a match.\n- **`ne`** (not equal): The attribute and operator values are not identical.\n- **`gt`** (greater than): If the attribute value is greater than the operator value, there is a match. The actual comparison depends on the attribute type.\n- **`lt`** (less than): If the attribute value is less than the operator value, there is a match. The actual comparison depends on the attribute type.\n\nThe boolean operators available for combining expressions are:\n\n- **`and`** (Logical AND): The filter is considered a match only if both expressions evaluate to true.\n- **`or`** (Logical OR): The filter is considered a match if either of the expressions evaluates to true.\n\nParentheses **`()`** can be used to group boolean expressions and alter the standard order of operations. By grouping expressions with parentheses, you can control how the logical OR operation is evaluated and prioritize certain conditions over others. This allows for more flexibility and precision in constructing complex boolean expressions.\n\nAttribute names and attribute operators used in filters are case insensitive.  For example, the following two expressions will evaluate to the same logical value:\nfilter=article.state Eq \"ACTIVE\"\nfilter=article.State eq \"ACTIVE\"\n\nThe evaluation of filters follows a standard order of operations. Attribute operators take precedence over other operators, followed by the grouping operator (parentheses), then the logical AND operator, and finally the logical OR operator.\n\nIf the requested filter operation is not recognised, providers must refuse to filter the results and return an HTTP 400 error with an appropriate human readable response.\n\n**Here are some examples of filter expressions:**\nIn the provided examples, we have utilised the suggested response structure as defined in the response section. However, it's important to note that these expressions may differ if you opt for an alternative response format or structure.\n\n- filter=last_modified_at gt \"2011-05-13T04:42:34Z\"\n- filter=article.state ne \u201cINACTIVE\u201d and last_modified_at gt \"2011-05-13T04:42:34Z\"\n",
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Description:\nThe endpoint should return a list of articles in deterministic order.\nWe recommend a rate limit of 10 req/sec for this endpoint.\n\nUsage:\n\nMoveworks will call this endpoint to ingest articles every 4 hours.\nAsk your CSE if you wish to increase or decrease the polling frequency."
+          },
+          "response": [
+            {
+              "id": "0ae67fc4-b81e-4bf3-af91-e56ebbab6661",
+              "name": "List of articles\n",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/articles?pageToken=<string>&pageSize=<long>&filter=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "articles"
+                  ],
+                  "query": [
+                    {
+                      "description": "`pageToken` is used to paginate query results. <br> If `pageToken` is not used in a request, the response should default to the first page. <br> <br> The response should always include a `next_page_token` field. <br> To obtain the next page of results, the client will use `next_page_token` as the value of `pageToken` in the next request.\n\n    \nWhen combining the filter parameter with the `pageToken` parameter, servers must ensure that the client uses the appropriate `pageToken` value for the specified filter string. Failure to do so should result in the server throwing an \"INPUT_VALIDATION_FAILED\".",
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "`pageSize` defines the maximum number of articles to return in a single query.  <br> <br> Moveworks will take a max of 1000 articles in a single response. However, the server can return less than 1000 if desired.\n",
+                      "key": "pageSize",
+                      "value": "<long>"
+                    },
+                    {
+                      "description": "Defines a filter expression that narrows down the returned set of items. It allows you to specify criteria, such as numeric comparisons or string matching, to filter the items based on the values of their properties.\n\nThe filter parameter must include at least one valid Boolean expression. Each expression should consist of an attribute name, followed by an attribute operator and a value. You have the flexibility to combine multiple expressions using logical operators, and you can also group expressions together using parentheses \u201c()\u201d.\n\nHere are the available attribute operators and their descriptions:\n\n- **`eq`** (equal): The attribute and operator values must be identical for a match.\n- **`ne`** (not equal): The attribute and operator values are not identical.\n- **`gt`** (greater than): If the attribute value is greater than the operator value, there is a match. The actual comparison depends on the attribute type.\n- **`lt`** (less than): If the attribute value is less than the operator value, there is a match. The actual comparison depends on the attribute type.\n\nThe boolean operators available for combining expressions are:\n\n- **`and`** (Logical AND): The filter is considered a match only if both expressions evaluate to true.\n- **`or`** (Logical OR): The filter is considered a match if either of the expressions evaluates to true.\n\nParentheses **`()`** can be used to group boolean expressions and alter the standard order of operations. By grouping expressions with parentheses, you can control how the logical OR operation is evaluated and prioritize certain conditions over others. This allows for more flexibility and precision in constructing complex boolean expressions.\n\nAttribute names and attribute operators used in filters are case insensitive.  For example, the following two expressions will evaluate to the same logical value:\nfilter=article.state Eq \"ACTIVE\"\nfilter=article.State eq \"ACTIVE\"\n\nThe evaluation of filters follows a standard order of operations. Attribute operators take precedence over other operators, followed by the grouping operator (parentheses), then the logical AND operator, and finally the logical OR operator.\n\nIf the requested filter operation is not recognised, providers must refuse to filter the results and return an HTTP 400 error with an appropriate human readable response.\n\n**Here are some examples of filter expressions:**\nIn the provided examples, we have utilised the suggested response structure as defined in the response section. However, it's important to note that these expressions may differ if you opt for an alternative response format or structure.\n\n- filter=last_modified_at gt \"2011-05-13T04:42:34Z\"\n- filter=article.state ne \u201cINACTIVE\u201d and last_modified_at gt \"2011-05-13T04:42:34Z\"\n",
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"results\": [\n    {\n      \"id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"body\": \"<string>\",\n      \"link\": \"<string>\",\n      \"created_at\": \"<string>\",\n      \"updated_at\": \"<string>\",\n      \"created_by\": \"<string>\",\n      \"updated_by\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"body\": \"<string>\",\n      \"link\": \"<string>\",\n      \"created_at\": \"<string>\",\n      \"updated_at\": \"<string>\",\n      \"created_by\": \"<string>\",\n      \"updated_by\": \"<string>\"\n    }\n  ],\n  \"next_page_token\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:59:00.000Z",
+              "updatedAt": "2026-10-22T01:59:00.000Z",
+              "uid": "35240-0ae67fc4-b81e-4bf3-af91-e56ebbab6661"
+            }
+          ],
+          "createdAt": "2026-10-22T01:59:00.000Z",
+          "updatedAt": "2026-10-22T01:59:00.000Z",
+          "uid": "35240-b4f87c1d-4705-467c-99e8-e08007315903"
+        }
+      ],
+      "id": "d082b34b-92fd-43dd-aafa-5c0419f1f77a",
+      "createdAt": "2026-10-22T01:59:00.000Z",
+      "updatedAt": "2026-10-22T01:59:00.000Z",
+      "uid": "35240-d082b34b-92fd-43dd-aafa-5c0419f1f77a"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/myinstance1"
+    }
+  ]
+}

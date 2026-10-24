@@ -1,465 +1,497 @@
 {
+  "info": {
+    "_postman_id": "31a705df-54e9-43e8-a64c-fa143ee034bb",
+    "name": "Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:58:16.000Z",
+    "updatedAt": "2026-10-22T01:58:17.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-31a705df-54e9-43e8-a64c-fa143ee034bb"
+  },
   "item": [
     {
-      "id": "c2f4eecf-b5cb-4f97-b2ab-bf2fc385c8b4",
-      "name": "events",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "rest",
       "item": [
         {
-          "id": "4433e96a-3a80-4d9f-94a0-2e9732cc23ba",
-          "name": "Send a message for an event",
-          "request": {
-            "name": "Send a message for an event",
-            "description": {
-              "content": "Send a message to a list of recipients for an event. The event must be defined in the Events Workspace.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "rest",
-                "v1",
-                "events",
-                ":event_id",
-                "messages",
-                "send"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "event_id",
-                  "description": "(Required) ID of the event to notify for"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "v1",
+          "item": [
             {
-              "id": "51ec5f8e-6e9e-462d-9c30-964eaa4992a8",
-              "name": "Successfully scheduled",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "events",
-                    ":event_id",
-                    "messages",
-                    "send"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "event_id",
-                      "description": "(Required) ID of the event to notify for"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "events",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "{event_id}",
+                  "item": [
+                    {
+                      "name": "messages",
+                      "item": [
+                        {
+                          "name": "send",
+                          "item": [
+                            {
+                              "name": "Send a message for an event",
+                              "id": "da2d16a1-5101-4a1c-b067-689246ca7bd6",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/rest/v1/events/:event_id/messages/send",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "rest",
+                                    "v1",
+                                    "events",
+                                    ":event_id",
+                                    "messages",
+                                    "send"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "317c0719-b045-4cc9-a593-483f11ed980d",
+                                      "key": "event_id",
+                                      "value": "<uuid>",
+                                      "description": "(Required) ID of the event to notify for"
+                                    }
+                                  ]
+                                },
+                                "description": "Send a message to a list of recipients for an event. The event must be defined in the Events Workspace."
+                              },
+                              "response": [
+                                {
+                                  "id": "5b5635d1-15a7-4843-94cc-c491f80b7ea3",
+                                  "name": "Successfully scheduled",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/rest/v1/events/:event_id/messages/send",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "rest",
+                                        "v1",
+                                        "events",
+                                        ":event_id",
+                                        "messages",
+                                        "send"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "event_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"data\": {\n    \"status\": \"RECEIVED\"\n  }\n}",
+                                  "createdAt": "2026-10-22T01:58:17.000Z",
+                                  "updatedAt": "2026-10-22T01:58:17.000Z",
+                                  "uid": "35240-5b5635d1-15a7-4843-94cc-c491f80b7ea3"
+                                },
+                                {
+                                  "id": "c72689f8-037a-4c34-8e37-d189a69c6ee0",
+                                  "name": "Bad Request",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/rest/v1/events/:event_id/messages/send",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "rest",
+                                        "v1",
+                                        "events",
+                                        ":event_id",
+                                        "messages",
+                                        "send"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "event_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-22T01:58:17.000Z",
+                                  "updatedAt": "2026-10-22T01:58:17.000Z",
+                                  "uid": "35240-c72689f8-037a-4c34-8e37-d189a69c6ee0"
+                                },
+                                {
+                                  "id": "01fff951-6951-4cc3-9315-0a627d82d1e3",
+                                  "name": "Unauthenticated",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/rest/v1/events/:event_id/messages/send",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "rest",
+                                        "v1",
+                                        "events",
+                                        ":event_id",
+                                        "messages",
+                                        "send"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "event_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-22T01:58:17.000Z",
+                                  "updatedAt": "2026-10-22T01:58:17.000Z",
+                                  "uid": "35240-01fff951-6951-4cc3-9315-0a627d82d1e3"
+                                },
+                                {
+                                  "id": "5aa7ceec-1510-4854-9fa0-7ff414a740d2",
+                                  "name": "Unauthorized",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/rest/v1/events/:event_id/messages/send",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "rest",
+                                        "v1",
+                                        "events",
+                                        ":event_id",
+                                        "messages",
+                                        "send"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "event_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Forbidden",
+                                  "code": 403,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-22T01:58:17.000Z",
+                                  "updatedAt": "2026-10-22T01:58:17.000Z",
+                                  "uid": "35240-5aa7ceec-1510-4854-9fa0-7ff414a740d2"
+                                },
+                                {
+                                  "id": "7e2b5dbe-3b45-4866-b4e5-b9defa23744e",
+                                  "name": "Event not found",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/rest/v1/events/:event_id/messages/send",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "rest",
+                                        "v1",
+                                        "events",
+                                        ":event_id",
+                                        "messages",
+                                        "send"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "event_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-22T01:58:17.000Z",
+                                  "updatedAt": "2026-10-22T01:58:17.000Z",
+                                  "uid": "35240-7e2b5dbe-3b45-4866-b4e5-b9defa23744e"
+                                },
+                                {
+                                  "id": "266f5057-5c87-4ac6-b50d-08df479897fa",
+                                  "name": "Rate Limit Exceeded",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/rest/v1/events/:event_id/messages/send",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "rest",
+                                        "v1",
+                                        "events",
+                                        ":event_id",
+                                        "messages",
+                                        "send"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "event_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Too Many Requests",
+                                  "code": 429,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-22T01:58:17.000Z",
+                                  "updatedAt": "2026-10-22T01:58:17.000Z",
+                                  "uid": "35240-266f5057-5c87-4ac6-b50d-08df479897fa"
+                                }
+                              ],
+                              "createdAt": "2026-10-22T01:58:17.000Z",
+                              "updatedAt": "2026-10-22T01:58:17.000Z",
+                              "uid": "35240-da2d16a1-5101-4a1c-b067-689246ca7bd6"
+                            }
+                          ],
+                          "id": "f656f0bd-aa46-4d89-a86a-f557344a2e45",
+                          "createdAt": "2026-10-22T01:58:17.000Z",
+                          "updatedAt": "2026-10-22T01:58:17.000Z",
+                          "uid": "35240-f656f0bd-aa46-4d89-a86a-f557344a2e45"
+                        }
+                      ],
+                      "id": "fb21708c-b933-40a0-901a-9cbf6ef2616e",
+                      "createdAt": "2026-10-22T01:58:17.000Z",
+                      "updatedAt": "2026-10-22T01:58:17.000Z",
+                      "uid": "35240-fb21708c-b933-40a0-901a-9cbf6ef2616e"
+                    }
+                  ],
+                  "id": "b6069ce8-7db4-4d54-8a11-85c24d33744a",
+                  "createdAt": "2026-10-22T01:58:17.000Z",
+                  "updatedAt": "2026-10-22T01:58:17.000Z",
+                  "uid": "35240-b6069ce8-7db4-4d54-8a11-85c24d33744a"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"status\": \"RECEIVED\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3d8f67ea-0aaf-4daf-ab1f-8bee43dbf96f",
-              "name": "Bad Request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "events",
-                    ":event_id",
-                    "messages",
-                    "send"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "event_id",
-                      "description": "(Required) ID of the event to notify for"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f40e3d3e-33e8-4067-8f02-43b0d7713696",
-              "name": "Unauthenticated",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "events",
-                    ":event_id",
-                    "messages",
-                    "send"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "event_id",
-                      "description": "(Required) ID of the event to notify for"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "65cfae7d-fadb-4845-8c48-6bc51d2b18cc",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "events",
-                    ":event_id",
-                    "messages",
-                    "send"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "event_id",
-                      "description": "(Required) ID of the event to notify for"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "342514d3-4504-4b2a-94a9-af520a8ccf61",
-              "name": "Event not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "events",
-                    ":event_id",
-                    "messages",
-                    "send"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "event_id",
-                      "description": "(Required) ID of the event to notify for"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "fe7b2d80-0a7c-45f9-be2b-0ab04bc76d03",
-              "name": "Rate Limit Exceeded",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "events",
-                    ":event_id",
-                    "messages",
-                    "send"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "event_id",
-                      "description": "(Required) ID of the event to notify for"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"context\": {\n    \"slots\": {}\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "118db4dc-22b8-43a9-aaa7-42e17242ef66",
+              "createdAt": "2026-10-22T01:58:17.000Z",
+              "updatedAt": "2026-10-22T01:58:17.000Z",
+              "uid": "35240-118db4dc-22b8-43a9-aaa7-42e17242ef66"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "08e41d1d-bc4f-4753-bc65-1bc1299e4e66",
+          "createdAt": "2026-10-22T01:58:17.000Z",
+          "updatedAt": "2026-10-22T01:58:17.000Z",
+          "uid": "35240-08e41d1d-bc4f-4753-bc65-1bc1299e4e66"
         }
       ],
-      "event": []
+      "id": "d937d8e8-5513-4cbe-967f-b802cdb872d4",
+      "createdAt": "2026-10-22T01:58:17.000Z",
+      "updatedAt": "2026-10-22T01:58:17.000Z",
+      "uid": "35240-d937d8e8-5513-4cbe-967f-b802cdb872d4"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.moveworks.ai/rest/v1beta1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.moveworks.ai"
     }
-  ],
-  "info": {
-    "_postman_id": "bfac9ba3-b0a9-4ab1-bc07-0f6e5d847744",
-    "name": "(Beta) Conversations authentication events API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

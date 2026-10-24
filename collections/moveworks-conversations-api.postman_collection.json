@@ -1,54 +1,1295 @@
 {
+  "info": {
+    "_postman_id": "ecb31fd0-2a0e-4230-836e-d6e0f9b8b166",
+    "name": "Moveworks Conversations API",
+    "description": "Operations tagged conversations across 2 of this provider's published API definitions: moveworks-beta-conversations-api-openapi.yaml, moveworks-data-api-openapi.yaml. Each path carries the servers of the definition it was published in.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:58:05.000Z",
+    "updatedAt": "2026-10-22T01:58:05.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ecb31fd0-2a0e-4230-836e-d6e0f9b8b166"
+  },
   "item": [
     {
-      "id": "9778ffe0-f9e1-4b0d-b96c-bd89f54ee5a9",
       "name": "conversations",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
       "item": [
         {
-          "id": "e099a72b-f0d1-4eb1-9bdc-5e127175c09f",
-          "name": "List conversations",
-          "request": {
-            "name": "List conversations",
-            "description": {
-              "content": "Retrieves a paginated list of conversations in descending order by `updated_at` time (last accessed first). Only unarchived conversations are retrieved by default.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "conversations"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
+          "name": "{conversation_id}",
+          "item": [
+            {
+              "name": "events",
+              "item": [
                 {
-                  "disabled": false,
-                  "key": "cursor",
-                  "value": "<string>",
-                  "description": "Opaque cursor for pagination (obtained from previous response)"
-                },
-                {
-                  "disabled": false,
-                  "key": "limit",
-                  "value": "20",
-                  "description": "Maximum number of conversations to return (1-100)"
-                },
-                {
-                  "disabled": false,
-                  "key": "archived",
-                  "value": "false",
-                  "description": "Filter by archived status"
+                  "name": "List conversation events",
+                  "id": "7e836496-309f-443e-a52c-0ea32d74ebc2",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id/events?starting_after=<string>&ending_at=<string>&cursor=<string>&limit=20",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id",
+                        "events"
+                      ],
+                      "query": [
+                        {
+                          "description": "Exclusive lower bound. Only events after this event ID are returned. Typically the last event ID from a previous poll.",
+                          "key": "starting_after",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Inclusive upper bound. Only events up to and including this event ID are returned. Must be greater than starting_after.",
+                          "key": "ending_at",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Pagination cursor from a previous response.",
+                          "key": "cursor",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Maximum number of events to return per page (1-100, default: 20).",
+                          "key": "limit",
+                          "value": "20"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "1202f990-42cd-477a-8c86-2c7fce4f45aa",
+                          "key": "conversation_id",
+                          "value": "<string>",
+                          "description": "(Required) Conversation identifier. Use \"-\" to read events across all conversations."
+                        }
+                      ]
+                    },
+                    "description": "Returns system-initiated messages (async responses and proactive notifications) for a conversation. Only final messages are returned, not transient or reasoning messages.\n\nUse `conversation_id = \"-\"` to query across all conversations. This is useful for reconciliation after receiving a webhook event, to fetch the full set of messages that may have been missed.\n\nResults are ordered chronologically. Use `starting_after` and `ending_at` to define a time range based on previously seen event IDs."
+                  },
+                  "response": [
+                    {
+                      "id": "5f505311-2112-492f-97b0-5ae1ec82a697",
+                      "name": "List of events",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                            "key": "Assistant-Name",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/conversations/:conversation_id/events?starting_after=<string>&ending_at=<string>&cursor=<string>&limit=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "conversations",
+                            ":conversation_id",
+                            "events"
+                          ],
+                          "query": [
+                            {
+                              "description": "Exclusive lower bound. Only events after this event ID are returned. Typically the last event ID from a previous poll.",
+                              "key": "starting_after",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Inclusive upper bound. Only events up to and including this event ID are returned. Must be greater than starting_after.",
+                              "key": "ending_at",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Pagination cursor from a previous response.",
+                              "key": "cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of events to return per page (1-100, default: 20).",
+                              "key": "limit",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "conversation_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"events\": [\n    {\n      \"event_id\": \"<string>\",\n      \"conversation_id\": \"<string>\",\n      \"event_payload\": {\n        \"type\": \"MESSAGE_EVENT\",\n        \"message\": {\n          \"message_id\": \"<string>\",\n          \"conversation_id\": \"<string>\",\n          \"response_id\": \"<string>\",\n          \"actor\": \"USER\",\n          \"content\": {\n            \"type\": \"PLAIN_TEXT\",\n            \"plain_text\": {\n              \"text\": \"<string>\"\n            }\n          },\n          \"created_at\": \"<dateTime>\",\n          \"citations\": \"<array,null>\",\n          \"content_references\": \"<array,null>\",\n          \"feedback\": {\n            \"helpful\": {\n              \"callback_id\": \"<string>\"\n            },\n            \"unhelpful\": {\n              \"callback_id\": \"<string>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"event_id\": \"<string>\",\n      \"conversation_id\": \"<string>\",\n      \"event_payload\": {\n        \"type\": \"MESSAGE_EVENT\",\n        \"message\": {\n          \"message_id\": \"<string>\",\n          \"conversation_id\": \"<string>\",\n          \"response_id\": \"<string>\",\n          \"actor\": \"USER\",\n          \"content\": {\n            \"type\": \"PLAIN_TEXT\",\n            \"plain_text\": {\n              \"text\": \"<string>\"\n            }\n          },\n          \"created_at\": \"<dateTime>\",\n          \"citations\": \"<array,null>\",\n          \"content_references\": \"<array,null>\",\n          \"feedback\": {\n            \"helpful\": {\n              \"callback_id\": \"<string>\"\n            },\n            \"unhelpful\": {\n              \"callback_id\": \"<string>\"\n            }\n          }\n        }\n      }\n    }\n  ],\n  \"metadata\": {\n    \"next_cursor\": \"<string,null>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:58:06.000Z",
+                      "updatedAt": "2026-10-22T01:58:06.000Z",
+                      "uid": "35240-5f505311-2112-492f-97b0-5ae1ec82a697"
+                    },
+                    {
+                      "id": "e8477240-3067-43e3-b1a7-8c08f6283505",
+                      "name": "Unauthorized - Invalid or missing authentication",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                            "key": "Assistant-Name",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/conversations/:conversation_id/events?starting_after=<string>&ending_at=<string>&cursor=<string>&limit=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "conversations",
+                            ":conversation_id",
+                            "events"
+                          ],
+                          "query": [
+                            {
+                              "description": "Exclusive lower bound. Only events after this event ID are returned. Typically the last event ID from a previous poll.",
+                              "key": "starting_after",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Inclusive upper bound. Only events up to and including this event ID are returned. Must be greater than starting_after.",
+                              "key": "ending_at",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Pagination cursor from a previous response.",
+                              "key": "cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of events to return per page (1-100, default: 20).",
+                              "key": "limit",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "conversation_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:58:06.000Z",
+                      "updatedAt": "2026-10-22T01:58:06.000Z",
+                      "uid": "35240-e8477240-3067-43e3-b1a7-8c08f6283505"
+                    },
+                    {
+                      "id": "669004a3-79fc-48a3-9609-8e8617ed04f6",
+                      "name": "Not found - Conversation does not exist",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                            "key": "Assistant-Name",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/conversations/:conversation_id/events?starting_after=<string>&ending_at=<string>&cursor=<string>&limit=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "conversations",
+                            ":conversation_id",
+                            "events"
+                          ],
+                          "query": [
+                            {
+                              "description": "Exclusive lower bound. Only events after this event ID are returned. Typically the last event ID from a previous poll.",
+                              "key": "starting_after",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Inclusive upper bound. Only events up to and including this event ID are returned. Must be greater than starting_after.",
+                              "key": "ending_at",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Pagination cursor from a previous response.",
+                              "key": "cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of events to return per page (1-100, default: 20).",
+                              "key": "limit",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "conversation_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"NOT_FOUND\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:58:06.000Z",
+                      "updatedAt": "2026-10-22T01:58:06.000Z",
+                      "uid": "35240-669004a3-79fc-48a3-9609-8e8617ed04f6"
+                    },
+                    {
+                      "id": "38857135-577a-40b6-a364-d9810bc8538c",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                            "key": "Assistant-Name",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/conversations/:conversation_id/events?starting_after=<string>&ending_at=<string>&cursor=<string>&limit=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "conversations",
+                            ":conversation_id",
+                            "events"
+                          ],
+                          "query": [
+                            {
+                              "description": "Exclusive lower bound. Only events after this event ID are returned. Typically the last event ID from a previous poll.",
+                              "key": "starting_after",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Inclusive upper bound. Only events up to and including this event ID are returned. Must be greater than starting_after.",
+                              "key": "ending_at",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Pagination cursor from a previous response.",
+                              "key": "cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of events to return per page (1-100, default: 20).",
+                              "key": "limit",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "conversation_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"RATE_LIMIT_EXCEEDED\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:58:06.000Z",
+                      "updatedAt": "2026-10-22T01:58:06.000Z",
+                      "uid": "35240-38857135-577a-40b6-a364-d9810bc8538c"
+                    },
+                    {
+                      "id": "0eb89dae-cc81-4fa8-84a5-4711cfff2b80",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                            "key": "Assistant-Name",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/conversations/:conversation_id/events?starting_after=<string>&ending_at=<string>&cursor=<string>&limit=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "conversations",
+                            ":conversation_id",
+                            "events"
+                          ],
+                          "query": [
+                            {
+                              "description": "Exclusive lower bound. Only events after this event ID are returned. Typically the last event ID from a previous poll.",
+                              "key": "starting_after",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Inclusive upper bound. Only events up to and including this event ID are returned. Must be greater than starting_after.",
+                              "key": "ending_at",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Pagination cursor from a previous response.",
+                              "key": "cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of events to return per page (1-100, default: 20).",
+                              "key": "limit",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "conversation_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"code\": \"INTERNAL_ERROR\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-22T01:58:06.000Z",
+                      "updatedAt": "2026-10-22T01:58:06.000Z",
+                      "uid": "35240-0eb89dae-cc81-4fa8-84a5-4711cfff2b80"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:58:05.000Z",
+                  "updatedAt": "2026-10-22T01:58:05.000Z",
+                  "uid": "35240-7e836496-309f-443e-a52c-0ea32d74ebc2"
                 }
               ],
-              "variable": []
+              "id": "3022c421-7d54-40b9-8542-a1e269b4d420",
+              "createdAt": "2026-10-22T01:58:05.000Z",
+              "updatedAt": "2026-10-22T01:58:05.000Z",
+              "uid": "35240-3022c421-7d54-40b9-8542-a1e269b4d420"
             },
+            {
+              "name": "Get conversation",
+              "id": "048a91d8-2a08-4c89-b532-ca5b53b71f23",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                    "key": "Assistant-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/conversations/:conversation_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations",
+                    ":conversation_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "642b9cb0-5568-41dd-9cba-faa28424bdeb",
+                      "key": "conversation_id",
+                      "value": "<string>",
+                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
+                    }
+                  ]
+                },
+                "description": "Retrieves a specific conversation."
+              },
+              "response": [
+                {
+                  "id": "70f7bd3e-b979-4f8d-9c0d-a771f5100245",
+                  "name": "Conversation retrieved successfully",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"conversation_id\": \"<string>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-70f7bd3e-b979-4f8d-9c0d-a771f5100245"
+                },
+                {
+                  "id": "37bdf000-9404-42ae-853f-f54b2be8d8e2",
+                  "name": "Unauthorized - Invalid or missing authentication",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-37bdf000-9404-42ae-853f-f54b2be8d8e2"
+                },
+                {
+                  "id": "29fddf53-b5ad-4650-b57c-d114965b5712",
+                  "name": "Forbidden - Invalid assistant",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"FORBIDDEN\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-29fddf53-b5ad-4650-b57c-d114965b5712"
+                },
+                {
+                  "id": "44a02c70-3137-42ee-9c95-1baa4f7d993a",
+                  "name": "Not found - Resource does not exist",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"NOT_FOUND\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-44a02c70-3137-42ee-9c95-1baa4f7d993a"
+                },
+                {
+                  "id": "7df476ae-e160-46f8-b180-69e29d758a11",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"RATE_LIMIT_EXCEEDED\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-7df476ae-e160-46f8-b180-69e29d758a11"
+                },
+                {
+                  "id": "3506af9a-f900-484b-a584-3e26ce65021c",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"INTERNAL_ERROR\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-3506af9a-f900-484b-a584-3e26ce65021c"
+                }
+              ],
+              "createdAt": "2026-10-22T01:58:05.000Z",
+              "updatedAt": "2026-10-22T01:58:05.000Z",
+              "uid": "35240-048a91d8-2a08-4c89-b532-ca5b53b71f23"
+            },
+            {
+              "name": "Update conversation",
+              "id": "48357507-1b3e-4af7-9640-2c168840c457",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                    "key": "Assistant-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/conversations/:conversation_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations",
+                    ":conversation_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "167fd5e5-4440-4d24-87f1-2dc21aedd64a",
+                      "key": "conversation_id",
+                      "value": "<string>",
+                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
+                    }
+                  ]
+                },
+                "description": "Updates title, or archive a conversation."
+              },
+              "response": [
+                {
+                  "id": "ab36a3cd-dbd2-474a-a6fc-2676d17f1744",
+                  "name": "Conversation updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"conversation_id\": \"<string>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-ab36a3cd-dbd2-474a-a6fc-2676d17f1744"
+                },
+                {
+                  "id": "bbeca300-8f6c-4f09-b029-331a2af8939a",
+                  "name": "Bad request - Invalid input parameters",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"INVALID_INPUT\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-bbeca300-8f6c-4f09-b029-331a2af8939a"
+                },
+                {
+                  "id": "df71145b-bffe-41d3-8bf6-d5fee3ac3be3",
+                  "name": "Unauthorized - Invalid or missing authentication",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-df71145b-bffe-41d3-8bf6-d5fee3ac3be3"
+                },
+                {
+                  "id": "a882f060-6322-4c70-b7ff-816e5263f2a4",
+                  "name": "Forbidden - Invalid assistant",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"FORBIDDEN\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-a882f060-6322-4c70-b7ff-816e5263f2a4"
+                },
+                {
+                  "id": "e05a5730-ab2a-4770-86c3-b19fc1f9a7c2",
+                  "name": "Not found - Resource does not exist",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"NOT_FOUND\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-e05a5730-ab2a-4770-86c3-b19fc1f9a7c2"
+                },
+                {
+                  "id": "624dcf41-4d55-4871-b5e2-62aadfcadc9b",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"RATE_LIMIT_EXCEEDED\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-624dcf41-4d55-4871-b5e2-62aadfcadc9b"
+                },
+                {
+                  "id": "aa4fff20-e932-4aff-8e29-3b3084e94f63",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                        "key": "Assistant-Name",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/conversations/:conversation_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "conversations",
+                        ":conversation_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "conversation_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"INTERNAL_ERROR\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:58:06.000Z",
+                  "updatedAt": "2026-10-22T01:58:06.000Z",
+                  "uid": "35240-aa4fff20-e932-4aff-8e29-3b3084e94f63"
+                }
+              ],
+              "createdAt": "2026-10-22T01:58:05.000Z",
+              "updatedAt": "2026-10-22T01:58:05.000Z",
+              "uid": "35240-48357507-1b3e-4af7-9640-2c168840c457"
+            }
+          ],
+          "id": "4ca19345-b114-45c6-8a3f-e9132611f057",
+          "createdAt": "2026-10-22T01:58:05.000Z",
+          "updatedAt": "2026-10-22T01:58:05.000Z",
+          "uid": "35240-4ca19345-b114-45c6-8a3f-e9132611f057"
+        },
+        {
+          "name": "List conversations",
+          "id": "15538d1f-4d59-4d6e-8656-5fb5c4433a0c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
             "header": [
               {
-                "disabled": false,
                 "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
                 "key": "Assistant-Name",
                 "value": "<string>"
@@ -58,398 +1299,404 @@
                 "value": "application/json"
               }
             ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "7c995859-f135-40dc-b6d0-91c08eb8da33",
-              "name": "List of conversations",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "20"
-                    },
-                    {
-                      "key": "archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"conversations\": [\n    {\n      \"conversation_id\": \"string\",\n      \"created_at\": \"1953-06-01T13:04:12.572Z\",\n      \"updated_at\": \"1948-04-22T22:52:59.847Z\",\n      \"title\": \"string\",\n      \"archived\": false\n    },\n    {\n      \"conversation_id\": \"string\",\n      \"created_at\": \"1988-02-12T06:58:21.385Z\",\n      \"updated_at\": \"1958-10-07T03:59:58.534Z\",\n      \"title\": \"string\",\n      \"archived\": false\n    }\n  ],\n  \"metadata\": {\n    \"next_cursor\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "4e1e1e72-9c08-4f67-8672-6557e9e1bbc3",
-              "name": "Bad request - Invalid input parameters",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "20"
-                    },
-                    {
-                      "key": "archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"INVALID_CURSOR\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "5c6f2963-8c35-4104-b25a-f772a99480c7",
-              "name": "Unauthorized - Invalid or missing authentication",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "20"
-                    },
-                    {
-                      "key": "archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "794082c5-b38b-440f-baf5-6bc06e4e7906",
-              "name": "Forbidden - Invalid assistant",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "20"
-                    },
-                    {
-                      "key": "archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"FORBIDDEN\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "24fa3341-2a74-4a82-a133-d1a4967b3bfd",
-              "name": "Rate limit exceeded",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "20"
-                    },
-                    {
-                      "key": "archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"RATE_LIMIT_EXCEEDED\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9568abd9-a210-444c-a940-effeea7de014",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "20"
-                    },
-                    {
-                      "key": "archived",
-                      "value": "false"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"INTERNAL_ERROR\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "89847015-246a-4a2a-9b6d-ccaa6c507238",
-          "name": "Create conversation",
-          "request": {
-            "name": "Create conversation",
-            "description": {
-              "content": "Creates a new conversation thread. Returns the created Conversation object with a unique `conversation_id`. If `title` is not provided, an AI generated title will be assigned based on the first response.",
-              "type": "text/plain"
-            },
             "url": {
-              "path": [
-                "conversations"
-              ],
+              "raw": "{{baseUrl}}/conversations?cursor=<string>&limit=20&archived=false",
               "host": [
                 "{{baseUrl}}"
               ],
-              "query": [],
-              "variable": []
+              "path": [
+                "conversations"
+              ],
+              "query": [
+                {
+                  "description": "Opaque cursor for pagination (obtained from previous response)",
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Maximum number of conversations to return (1-100)",
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "description": "Filter by archived status",
+                  "key": "archived",
+                  "value": "false"
+                }
+              ]
             },
+            "description": "Retrieves a paginated list of conversations in descending order by `updated_at` time (last accessed first). Only unarchived conversations are retrieved by default."
+          },
+          "response": [
+            {
+              "id": "1afcf3f9-9f7e-4bf5-8c62-a14e7506fea9",
+              "name": "List of conversations",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                    "key": "Assistant-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/conversations?cursor=<string>&limit=20&archived=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations"
+                  ],
+                  "query": [
+                    {
+                      "description": "Opaque cursor for pagination (obtained from previous response)",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of conversations to return (1-100)",
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Filter by archived status",
+                      "key": "archived",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"conversations\": [\n    {\n      \"conversation_id\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"title\": \"<string>\",\n      \"archived\": \"<boolean>\"\n    },\n    {\n      \"conversation_id\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"title\": \"<string>\",\n      \"archived\": \"<boolean>\"\n    }\n  ],\n  \"metadata\": {\n    \"next_cursor\": \"<string,null>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:58:06.000Z",
+              "updatedAt": "2026-10-22T01:58:06.000Z",
+              "uid": "35240-1afcf3f9-9f7e-4bf5-8c62-a14e7506fea9"
+            },
+            {
+              "id": "8811eae0-e6a6-4d61-a941-ecd084436620",
+              "name": "Bad request - Invalid input parameters",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                    "key": "Assistant-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/conversations?cursor=<string>&limit=20&archived=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations"
+                  ],
+                  "query": [
+                    {
+                      "description": "Opaque cursor for pagination (obtained from previous response)",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of conversations to return (1-100)",
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Filter by archived status",
+                      "key": "archived",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"INVALID_CURSOR\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:58:06.000Z",
+              "updatedAt": "2026-10-22T01:58:06.000Z",
+              "uid": "35240-8811eae0-e6a6-4d61-a941-ecd084436620"
+            },
+            {
+              "id": "abca2098-0375-4977-93c5-2e57cfeca509",
+              "name": "Unauthorized - Invalid or missing authentication",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                    "key": "Assistant-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/conversations?cursor=<string>&limit=20&archived=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations"
+                  ],
+                  "query": [
+                    {
+                      "description": "Opaque cursor for pagination (obtained from previous response)",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of conversations to return (1-100)",
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Filter by archived status",
+                      "key": "archived",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:58:06.000Z",
+              "updatedAt": "2026-10-22T01:58:06.000Z",
+              "uid": "35240-abca2098-0375-4977-93c5-2e57cfeca509"
+            },
+            {
+              "id": "c121642a-2c90-4c36-9db9-60836e385b73",
+              "name": "Forbidden - Invalid assistant",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                    "key": "Assistant-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/conversations?cursor=<string>&limit=20&archived=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations"
+                  ],
+                  "query": [
+                    {
+                      "description": "Opaque cursor for pagination (obtained from previous response)",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of conversations to return (1-100)",
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Filter by archived status",
+                      "key": "archived",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"FORBIDDEN\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:58:06.000Z",
+              "updatedAt": "2026-10-22T01:58:06.000Z",
+              "uid": "35240-c121642a-2c90-4c36-9db9-60836e385b73"
+            },
+            {
+              "id": "68a79320-fd09-42fc-bcc3-eb33780ceaed",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                    "key": "Assistant-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/conversations?cursor=<string>&limit=20&archived=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations"
+                  ],
+                  "query": [
+                    {
+                      "description": "Opaque cursor for pagination (obtained from previous response)",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of conversations to return (1-100)",
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Filter by archived status",
+                      "key": "archived",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"RATE_LIMIT_EXCEEDED\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:58:06.000Z",
+              "updatedAt": "2026-10-22T01:58:06.000Z",
+              "uid": "35240-68a79320-fd09-42fc-bcc3-eb33780ceaed"
+            },
+            {
+              "id": "0b9f1cee-7a58-45bf-843e-ed14bd91c69a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
+                    "key": "Assistant-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/conversations?cursor=<string>&limit=20&archived=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations"
+                  ],
+                  "query": [
+                    {
+                      "description": "Opaque cursor for pagination (obtained from previous response)",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of conversations to return (1-100)",
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "description": "Filter by archived status",
+                      "key": "archived",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"INTERNAL_ERROR\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:58:06.000Z",
+              "updatedAt": "2026-10-22T01:58:06.000Z",
+              "uid": "35240-0b9f1cee-7a58-45bf-843e-ed14bd91c69a"
+            }
+          ],
+          "createdAt": "2026-10-22T01:58:05.000Z",
+          "updatedAt": "2026-10-22T01:58:05.000Z",
+          "uid": "35240-15538d1f-4d59-4d6e-8656-5fb5c4433a0c"
+        },
+        {
+          "name": "Create conversation",
+          "id": "1104972b-e4ef-4d5e-8141-b085eb4169fa",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
             "header": [
               {
-                "disabled": false,
                 "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
                 "key": "Assistant-Name",
                 "value": "<string>"
@@ -463,1717 +1710,380 @@
                 "value": "application/json"
               }
             ],
-            "method": "POST",
-            "auth": null,
             "body": {
               "mode": "raw",
               "raw": "{\n  \"title\": \"<string>\"\n}",
               "options": {
                 "raw": {
+                  "headerFamily": "json",
                   "language": "json"
                 }
               }
-            }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/conversations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "conversations"
+              ]
+            },
+            "description": "Creates a new conversation thread. Returns the created Conversation object with a unique `conversation_id`. If `title` is not provided, an AI generated title will be assigned based on the first response."
           },
           "response": [
             {
-              "id": "186a24c3-66ca-4d19-9023-2afda9547274",
+              "id": "e00cfd02-7eb7-41fc-94b5-9cf6c58ceff2",
               "name": "Conversation created successfully",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
                     "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
                     "key": "Assistant-Name",
                     "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"title\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/conversations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations"
+                  ]
                 }
               },
               "status": "Created",
               "code": 201,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"conversation_id\": \"string\",\n  \"created_at\": \"2017-02-01T02:09:24.099Z\",\n  \"updated_at\": \"1978-05-15T10:21:27.093Z\",\n  \"title\": \"string\",\n  \"archived\": false\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"conversation_id\": \"<string>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+              "createdAt": "2026-10-22T01:58:06.000Z",
+              "updatedAt": "2026-10-22T01:58:06.000Z",
+              "uid": "35240-e00cfd02-7eb7-41fc-94b5-9cf6c58ceff2"
             },
             {
-              "id": "08b4aa8c-f50b-4e48-b5f8-245c0e41d6f4",
+              "id": "12931875-2868-47c4-ae56-b7b609fb38d7",
               "name": "Bad request - Invalid input parameters",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
                     "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
                     "key": "Assistant-Name",
                     "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"title\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/conversations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations"
+                  ]
                 }
               },
               "status": "Bad Request",
               "code": 400,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"code\": \"INVALID_INPUT\",\n    \"message\": \"string\"\n  }\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"INVALID_INPUT\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:58:06.000Z",
+              "updatedAt": "2026-10-22T01:58:06.000Z",
+              "uid": "35240-12931875-2868-47c4-ae56-b7b609fb38d7"
             },
             {
-              "id": "43f6c24a-a102-473a-9d5f-7934be4b7486",
+              "id": "c51881ca-6569-4bbc-9ea5-81aff535e197",
               "name": "Unauthorized - Invalid or missing authentication",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
                     "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
                     "key": "Assistant-Name",
                     "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"title\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/conversations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations"
+                  ]
                 }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"string\"\n  }\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:58:06.000Z",
+              "updatedAt": "2026-10-22T01:58:06.000Z",
+              "uid": "35240-c51881ca-6569-4bbc-9ea5-81aff535e197"
             },
             {
-              "id": "c21535d1-5fa5-4878-b17f-98175b51d55f",
+              "id": "f05ea7b9-adc8-4844-9a46-f9eb54db5185",
               "name": "Forbidden - Invalid assistant",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
                     "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
                     "key": "Assistant-Name",
                     "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"title\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/conversations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations"
+                  ]
                 }
               },
               "status": "Forbidden",
               "code": 403,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"code\": \"FORBIDDEN\",\n    \"message\": \"string\"\n  }\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"FORBIDDEN\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:58:06.000Z",
+              "updatedAt": "2026-10-22T01:58:06.000Z",
+              "uid": "35240-f05ea7b9-adc8-4844-9a46-f9eb54db5185"
             },
             {
-              "id": "86cdbefa-7972-46c1-b330-19a648e17998",
+              "id": "282df914-da81-482f-a736-0ce88947f2c9",
               "name": "Rate limit exceeded",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
                     "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
                     "key": "Assistant-Name",
                     "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"title\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/conversations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations"
+                  ]
                 }
               },
               "status": "Too Many Requests",
               "code": 429,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"code\": \"RATE_LIMIT_EXCEEDED\",\n    \"message\": \"string\"\n  }\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"RATE_LIMIT_EXCEEDED\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:58:06.000Z",
+              "updatedAt": "2026-10-22T01:58:06.000Z",
+              "uid": "35240-282df914-da81-482f-a736-0ce88947f2c9"
             },
             {
-              "id": "0823ba98-5532-4a12-9c09-d4f83b46a680",
+              "id": "3591a3e4-73a3-4e73-a311-d889dfac0d1a",
               "name": "Internal server error",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
                     "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
                     "key": "Assistant-Name",
                     "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"title\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/conversations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations"
+                  ]
                 }
               },
               "status": "Internal Server Error",
               "code": 500,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"code\": \"INTERNAL_ERROR\",\n    \"message\": \"string\"\n  }\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"INTERNAL_ERROR\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:58:06.000Z",
+              "updatedAt": "2026-10-22T01:58:06.000Z",
+              "uid": "35240-3591a3e4-73a3-4e73-a311-d889dfac0d1a"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "eb04520b-ef20-4ac5-bb98-b58473105202",
-          "name": "Get conversation",
-          "request": {
-            "name": "Get conversation",
-            "description": {
-              "content": "Retrieves a specific conversation.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "conversations",
-                ":conversation_id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "conversation_id",
-                  "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                "key": "Assistant-Name",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "3d95025d-248f-4ea7-8840-aa06c2bb78ab",
-              "name": "Conversation retrieved successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"conversation_id\": \"string\",\n  \"created_at\": \"2017-02-01T02:09:24.099Z\",\n  \"updated_at\": \"1978-05-15T10:21:27.093Z\",\n  \"title\": \"string\",\n  \"archived\": false\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f0fd16f4-a6e8-4f27-b17e-ab07895c28de",
-              "name": "Unauthorized - Invalid or missing authentication",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "0dd063ab-f1dd-48f9-a7f4-e77e4eeb5298",
-              "name": "Forbidden - Invalid assistant",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"FORBIDDEN\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8e458c15-6ac4-47b4-8194-af6781fc9b00",
-              "name": "Not found - Resource does not exist",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"NOT_FOUND\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "48bebb3e-def1-4445-bed9-cb48ed87fed2",
-              "name": "Rate limit exceeded",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"RATE_LIMIT_EXCEEDED\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9600ac9a-ff84-4762-b7b4-0244913adcb4",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"INTERNAL_ERROR\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "f80a268e-5c8c-4141-abcf-c9cc8c1cdad2",
-          "name": "Update conversation",
-          "request": {
-            "name": "Update conversation",
-            "description": {
-              "content": "Updates title, or archive a conversation.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "conversations",
-                ":conversation_id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "conversation_id",
-                  "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                "key": "Assistant-Name",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PATCH",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "6d69fd44-6581-4cc9-8174-a831e5f4b3ca",
-              "name": "Conversation updated successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"conversation_id\": \"string\",\n  \"created_at\": \"2017-02-01T02:09:24.099Z\",\n  \"updated_at\": \"1978-05-15T10:21:27.093Z\",\n  \"title\": \"string\",\n  \"archived\": false\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "540e44ad-b3f6-4804-b205-45aef3bca5a5",
-              "name": "Bad request - Invalid input parameters",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"INVALID_INPUT\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "4f5d5a8e-4211-4ed2-aae3-3be9739ea012",
-              "name": "Unauthorized - Invalid or missing authentication",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8c44e038-00f8-4e0c-b91b-1401e3ff88fd",
-              "name": "Forbidden - Invalid assistant",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"FORBIDDEN\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "75cce616-e178-4da2-a244-db16b15208e9",
-              "name": "Not found - Resource does not exist",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"NOT_FOUND\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "40228eb6-fd79-4312-810f-71047f36d51a",
-              "name": "Rate limit exceeded",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"RATE_LIMIT_EXCEEDED\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "6693b090-3c59-4450-aebb-73229a942092",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) A base-62 identifier prefixed by a short resource type"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"INTERNAL_ERROR\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "41c19190-515f-491b-89b8-79763b4ca080",
-          "name": "List conversation events",
-          "request": {
-            "name": "List conversation events",
-            "description": {
-              "content": "Returns system-initiated messages (async responses and proactive notifications) for a conversation. Only final messages are returned, not transient or reasoning messages.\n\nUse `conversation_id = \"-\"` to query across all conversations. This is useful for reconciliation after receiving a webhook event, to fetch the full set of messages that may have been missed.\n\nResults are ordered chronologically. Use `starting_after` and `ending_at` to define a time range based on previously seen event IDs.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "conversations",
-                ":conversation_id",
-                "events"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "starting_after",
-                  "value": "<string>",
-                  "description": "Exclusive lower bound. Only events after this event ID are returned. Typically the last event ID from a previous poll."
-                },
-                {
-                  "disabled": false,
-                  "key": "ending_at",
-                  "value": "<string>",
-                  "description": "Inclusive upper bound. Only events up to and including this event ID are returned. Must be greater than starting_after."
-                },
-                {
-                  "disabled": false,
-                  "key": "cursor",
-                  "value": "<string>",
-                  "description": "Pagination cursor from a previous response."
-                },
-                {
-                  "disabled": false,
-                  "key": "limit",
-                  "value": "20",
-                  "description": "Maximum number of events to return per page (1-100, default: 20)."
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "conversation_id",
-                  "description": "(Required) Conversation identifier. Use \"-\" to read events across all conversations."
-                }
-              ]
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                "key": "Assistant-Name",
-                "value": "<string>"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "02a86832-5782-4426-8c93-6de048d9cd0a",
-              "name": "List of events",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id",
-                    "events"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "starting_after",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "ending_at",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) Conversation identifier. Use \"-\" to read events across all conversations."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"events\": [\n    {\n      \"event_id\": \"string\",\n      \"conversation_id\": \"string\",\n      \"event_payload\": {\n        \"type\": \"MESSAGE_EVENT\",\n        \"message\": {\n          \"message_id\": \"string\",\n          \"conversation_id\": \"string\",\n          \"response_id\": \"string\",\n          \"actor\": \"ASSISTANT\",\n          \"content\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": \"1990-03-04T07:45:22.594Z\",\n          \"citations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"content_references\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"feedback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    {\n      \"event_id\": \"string\",\n      \"conversation_id\": \"string\",\n      \"event_payload\": {\n        \"type\": \"MESSAGE_EVENT\",\n        \"message\": {\n          \"message_id\": \"string\",\n          \"conversation_id\": \"string\",\n          \"response_id\": \"string\",\n          \"actor\": \"ASSISTANT\",\n          \"content\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": \"1958-12-07T17:53:49.231Z\",\n          \"citations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"content_references\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"feedback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  ],\n  \"metadata\": {\n    \"next_cursor\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a7bd247f-f836-4ceb-8b15-d5b7ff72a9f5",
-              "name": "Unauthorized - Invalid or missing authentication",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id",
-                    "events"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "starting_after",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "ending_at",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) Conversation identifier. Use \"-\" to read events across all conversations."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "dad3a9ad-55d6-4e02-8bae-4df990cb0aa9",
-              "name": "Not found - Conversation does not exist",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id",
-                    "events"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "starting_after",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "ending_at",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) Conversation identifier. Use \"-\" to read events across all conversations."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"NOT_FOUND\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "98cc5aec-d764-43a1-95ab-eb353ba889e6",
-              "name": "Rate limit exceeded",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id",
-                    "events"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "starting_after",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "ending_at",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) Conversation identifier. Use \"-\" to read events across all conversations."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"RATE_LIMIT_EXCEEDED\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e5a9efa5-2055-470e-a507-e97f78107701",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "conversations",
-                    ":conversation_id",
-                    "events"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "starting_after",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "ending_at",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "20"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "conversation_id",
-                      "description": "(Required) Conversation identifier. Use \"-\" to read events across all conversations."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) JWT bearer token authentication. Obtain an access token from the Moveworks auth endpoint and include it in the Authorization header as 'Bearer <token>'.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) The Moveworks assistant identifier that was configured for your organization.",
-                    "key": "Assistant-Name",
-                    "value": "<string>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"INTERNAL_ERROR\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T01:58:05.000Z",
+          "updatedAt": "2026-10-22T01:58:05.000Z",
+          "uid": "35240-1104972b-e4ef-4d5e-8141-b085eb4169fa"
         }
       ],
-      "event": []
+      "id": "5db8cd05-cbb0-419e-9b0a-de2ca5b53c33",
+      "createdAt": "2026-10-22T01:58:05.000Z",
+      "updatedAt": "2026-10-22T01:58:05.000Z",
+      "uid": "35240-5db8cd05-cbb0-419e-9b0a-de2ca5b53c33"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.moveworks.ai/rest/v1beta1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.moveworks.ai/rest/v1beta1"
     }
-  ],
-  "info": {
-    "_postman_id": "088da975-8904-4fb3-93ca-ff47a0260620",
-    "name": "(Beta) authentication conversations API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

@@ -1,275 +1,301 @@
 {
+  "info": {
+    "_postman_id": "b64e521d-fc1b-4874-925d-402112edad7b",
+    "name": "Webhook Listeners Webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:58:54.000Z",
+    "updatedAt": "2026-10-22T01:58:54.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b64e521d-fc1b-4874-925d-402112edad7b"
+  },
   "item": [
     {
-      "id": "64c80c97-45c9-43b7-a1b5-a5298a16cdba",
       "name": "webhooks",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
       "item": [
         {
-          "id": "2566ad8f-9927-490b-9fb0-615097ea6c1c",
-          "name": "Send a webhook to a webhook listener",
-          "request": {
-            "name": "Send a webhook to a webhook listener",
-            "description": {
-              "content": "Sends a webhook to a webhook listener. The listener must be defined in Agent Studio.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "webhooks",
-                "v1",
-                "listeners",
-                ":listener_id",
-                "notify"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "listener_id",
-                  "description": "(Required) The unique identifier of the webhook listener."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"key_0\": {}\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "v1",
+          "item": [
             {
-              "id": "1ab159a6-ee94-4ec4-9505-4e8dd23361af",
-              "name": "OK. The event was received successfully by the listener.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "webhooks",
-                    "v1",
-                    "listeners",
-                    ":listener_id",
-                    "notify"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "listener_id",
-                      "description": "(Required) The unique identifier of the webhook listener."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) API Key in the form of a JWT Bearer token.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"key_0\": {},\n  \"key_1\": {}\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "listeners",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "{listener_id}",
+                  "item": [
+                    {
+                      "name": "notify",
+                      "item": [
+                        {
+                          "name": "Send a webhook to a webhook listener",
+                          "id": "217da826-eb66-4c09-baec-f1d14ff482dd",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"in_b\": {\n    \"description\": \"Any type\"\n  },\n  \"est_4\": {\n    \"description\": \"Any type\"\n  },\n  \"cupidatat_1\": {\n    \"description\": \"Any type\"\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/webhooks/v1/listeners/:listener_id/notify",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "webhooks",
+                                "v1",
+                                "listeners",
+                                ":listener_id",
+                                "notify"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "b5c58f18-95c0-4d55-8a46-eb79959cb2be",
+                                  "key": "listener_id",
+                                  "value": "<uuid>",
+                                  "description": "(Required) The unique identifier of the webhook listener."
+                                }
+                              ]
+                            },
+                            "description": "Sends a webhook to a webhook listener. The listener must be defined in Agent Studio."
+                          },
+                          "response": [
+                            {
+                              "id": "a4d4cdd6-bf37-474e-a2a9-e30ccf6ec3f6",
+                              "name": "OK. The event was received successfully by the listener.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"in_b\": {\n    \"description\": \"Any type\"\n  },\n  \"est_4\": {\n    \"description\": \"Any type\"\n  },\n  \"cupidatat_1\": {\n    \"description\": \"Any type\"\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/webhooks/v1/listeners/:listener_id/notify",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "webhooks",
+                                    "v1",
+                                    "listeners",
+                                    ":listener_id",
+                                    "notify"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "listener_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"message\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+                              "createdAt": "2026-10-22T01:58:54.000Z",
+                              "updatedAt": "2026-10-22T01:58:54.000Z",
+                              "uid": "35240-a4d4cdd6-bf37-474e-a2a9-e30ccf6ec3f6"
+                            },
+                            {
+                              "id": "b93fcc9c-9f86-4cdb-a53c-45dbbd4b375d",
+                              "name": "Unauthorized. The request lacks valid authentication credentials.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"in_b\": {\n    \"description\": \"Any type\"\n  },\n  \"est_4\": {\n    \"description\": \"Any type\"\n  },\n  \"cupidatat_1\": {\n    \"description\": \"Any type\"\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/webhooks/v1/listeners/:listener_id/notify",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "webhooks",
+                                    "v1",
+                                    "listeners",
+                                    ":listener_id",
+                                    "notify"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "listener_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                              "createdAt": "2026-10-22T01:58:54.000Z",
+                              "updatedAt": "2026-10-22T01:58:54.000Z",
+                              "uid": "35240-b93fcc9c-9f86-4cdb-a53c-45dbbd4b375d"
+                            },
+                            {
+                              "id": "0d4cc1a4-1392-44d6-8bdc-9ae84df8b363",
+                              "name": "Not Found. The specified listener_id does not exist. The response body is empty.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"in_b\": {\n    \"description\": \"Any type\"\n  },\n  \"est_4\": {\n    \"description\": \"Any type\"\n  },\n  \"cupidatat_1\": {\n    \"description\": \"Any type\"\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/webhooks/v1/listeners/:listener_id/notify",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "webhooks",
+                                    "v1",
+                                    "listeners",
+                                    ":listener_id",
+                                    "notify"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "listener_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"description\": \"Any type\"\n}",
+                              "createdAt": "2026-10-22T01:58:54.000Z",
+                              "updatedAt": "2026-10-22T01:58:54.000Z",
+                              "uid": "35240-0d4cc1a4-1392-44d6-8bdc-9ae84df8b363"
+                            }
+                          ],
+                          "createdAt": "2026-10-22T01:58:54.000Z",
+                          "updatedAt": "2026-10-22T01:58:54.000Z",
+                          "uid": "35240-217da826-eb66-4c09-baec-f1d14ff482dd"
+                        }
+                      ],
+                      "id": "006cb02b-4250-4d9e-8124-b8b2a5801219",
+                      "createdAt": "2026-10-22T01:58:54.000Z",
+                      "updatedAt": "2026-10-22T01:58:54.000Z",
+                      "uid": "35240-006cb02b-4250-4d9e-8124-b8b2a5801219"
+                    }
+                  ],
+                  "id": "6a2e2c25-2cb8-4f8e-96c4-e91a49fcd781",
+                  "createdAt": "2026-10-22T01:58:54.000Z",
+                  "updatedAt": "2026-10-22T01:58:54.000Z",
+                  "uid": "35240-6a2e2c25-2cb8-4f8e-96c4-e91a49fcd781"
                 }
               ],
-              "body": "{\n  \"message\": \"string\",\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a394a612-9f99-4032-912a-81d3e021ad99",
-              "name": "Unauthorized. The request lacks valid authentication credentials.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "webhooks",
-                    "v1",
-                    "listeners",
-                    ":listener_id",
-                    "notify"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "listener_id",
-                      "description": "(Required) The unique identifier of the webhook listener."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) API Key in the form of a JWT Bearer token.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"key_0\": {},\n  \"key_1\": {}\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f0ff017a-466a-493d-8fdb-2f07356ac71c",
-              "name": "Not Found. The specified listener_id does not exist. The response body is empty.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "webhooks",
-                    "v1",
-                    "listeners",
-                    ":listener_id",
-                    "notify"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "listener_id",
-                      "description": "(Required) The unique identifier of the webhook listener."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) API Key in the form of a JWT Bearer token.",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"key_0\": {},\n  \"key_1\": {}\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "d68259bb-e376-4337-9971-57fcd516d609",
+              "createdAt": "2026-10-22T01:58:54.000Z",
+              "updatedAt": "2026-10-22T01:58:54.000Z",
+              "uid": "35240-d68259bb-e376-4337-9971-57fcd516d609"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "5dd2a5ba-895a-4f63-8806-2027406544e3",
+          "createdAt": "2026-10-22T01:58:54.000Z",
+          "updatedAt": "2026-10-22T01:58:54.000Z",
+          "uid": "35240-5dd2a5ba-895a-4f63-8806-2027406544e3"
         }
       ],
-      "event": []
+      "id": "1a0cc752-3278-483b-b24e-d9e98659d4eb",
+      "createdAt": "2026-10-22T01:58:54.000Z",
+      "updatedAt": "2026-10-22T01:58:54.000Z",
+      "uid": "35240-1a0cc752-3278-483b-b24e-d9e98659d4eb"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.moveworks.ai/rest/v1beta1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.moveworks.ai"
     }
-  ],
-  "info": {
-    "_postman_id": "1d5fa0be-a71b-4902-8bc8-aadfe0d3b7c7",
-    "name": "(Beta) Conversations authentication webhooks API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

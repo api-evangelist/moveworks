@@ -1,339 +1,364 @@
 {
+  "info": {
+    "_postman_id": "bb41a703-4665-45dd-b7f3-fe6f4ed01a70",
+    "name": "Events Deprecated API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:58:12.000Z",
+    "updatedAt": "2026-10-22T01:58:12.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-bb41a703-4665-45dd-b7f3-fe6f4ed01a70"
+  },
   "item": [
     {
-      "id": "8b7570bd-b79c-4c26-88a9-4a7b311c3469",
-      "name": "deprecated",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "rest",
       "item": [
         {
-          "id": "b5bf8ccd-4cc8-4d3b-93da-b787f2594762",
-          "name": "[Deprecated] Send a message",
-          "request": {
-            "name": "[Deprecated] Send a message",
-            "description": {
-              "content": "Send a message to users. This endpoint is deprecated, but existing integrations will continue to work.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "rest",
-                "v1",
-                "messages",
-                "send"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "v1",
+          "item": [
             {
-              "id": "3042f5aa-ba40-4979-97b2-b720267700b3",
-              "name": "Successful response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "messages",
-                    "send"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "messages",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
+                  "name": "send",
+                  "item": [
+                    {
+                      "name": "[Deprecated] Send a message",
+                      "id": "d89e481d-aa61-4b84-bd3d-e7ddc82220d6",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/rest/v1/messages/send",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "rest",
+                            "v1",
+                            "messages",
+                            "send"
+                          ]
+                        },
+                        "description": "Send a message to users. This endpoint is deprecated, but existing integrations will continue to work."
+                      },
+                      "response": [
+                        {
+                          "id": "e4bde4e7-8230-491e-9887-e746772a1b60",
+                          "name": "Successful response",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/rest/v1/messages/send",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "rest",
+                                "v1",
+                                "messages",
+                                "send"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-22T01:58:13.000Z",
+                          "updatedAt": "2026-10-22T01:58:13.000Z",
+                          "uid": "35240-e4bde4e7-8230-491e-9887-e746772a1b60"
+                        },
+                        {
+                          "id": "8f5c1a09-d7ce-4998-8fff-dbed7c931756",
+                          "name": "Bad Request",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/rest/v1/messages/send",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "rest",
+                                "v1",
+                                "messages",
+                                "send"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-22T01:58:13.000Z",
+                          "updatedAt": "2026-10-22T01:58:13.000Z",
+                          "uid": "35240-8f5c1a09-d7ce-4998-8fff-dbed7c931756"
+                        },
+                        {
+                          "id": "b7dad3e9-8598-449b-942e-b111ca7ae612",
+                          "name": "Unauthenticated",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/rest/v1/messages/send",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "rest",
+                                "v1",
+                                "messages",
+                                "send"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-22T01:58:13.000Z",
+                          "updatedAt": "2026-10-22T01:58:13.000Z",
+                          "uid": "35240-b7dad3e9-8598-449b-942e-b111ca7ae612"
+                        },
+                        {
+                          "id": "1ffb4721-fd8c-41d0-ac40-54dd7edf1ed3",
+                          "name": "Unauthorized",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/rest/v1/messages/send",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "rest",
+                                "v1",
+                                "messages",
+                                "send"
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-22T01:58:13.000Z",
+                          "updatedAt": "2026-10-22T01:58:13.000Z",
+                          "uid": "35240-1ffb4721-fd8c-41d0-ac40-54dd7edf1ed3"
+                        },
+                        {
+                          "id": "e68cc26c-2cd6-4dd6-bd92-f706dc987b4e",
+                          "name": "Rate Limit Exceeded",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/rest/v1/messages/send",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "rest",
+                                "v1",
+                                "messages",
+                                "send"
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-22T01:58:13.000Z",
+                          "updatedAt": "2026-10-22T01:58:13.000Z",
+                          "uid": "35240-e68cc26c-2cd6-4dd6-bd92-f706dc987b4e"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T01:58:13.000Z",
+                      "updatedAt": "2026-10-22T01:58:13.000Z",
+                      "uid": "35240-d89e481d-aa61-4b84-bd3d-e7ddc82220d6"
+                    }
+                  ],
+                  "id": "3e1689d6-d909-4fd8-829c-96e06651e382",
+                  "createdAt": "2026-10-22T01:58:13.000Z",
+                  "updatedAt": "2026-10-22T01:58:13.000Z",
+                  "uid": "35240-3e1689d6-d909-4fd8-829c-96e06651e382"
                 }
               ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "bb349b9d-627f-4dec-93ed-80b196e1cc3f",
-              "name": "Bad Request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "messages",
-                    "send"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b097c100-b744-4bd5-95f0-0cd6e9d75843",
-              "name": "Unauthenticated",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "messages",
-                    "send"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3410af1b-fd42-451e-baca-2a5e29fe7c9b",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "messages",
-                    "send"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "09dbd077-ff4d-4104-b90e-5395eb035771",
-              "name": "Rate Limit Exceeded",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "rest",
-                    "v1",
-                    "messages",
-                    "send"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": "(Required) Bearer authentication",
-                    "key": "Authorization",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"message\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "20730697-b470-4592-abbc-79b2626db290",
+              "createdAt": "2026-10-22T01:58:13.000Z",
+              "updatedAt": "2026-10-22T01:58:13.000Z",
+              "uid": "35240-20730697-b470-4592-abbc-79b2626db290"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "ddc1c238-ab01-4c0a-8d92-3097dd86e6ed",
+          "createdAt": "2026-10-22T01:58:13.000Z",
+          "updatedAt": "2026-10-22T01:58:13.000Z",
+          "uid": "35240-ddc1c238-ab01-4c0a-8d92-3097dd86e6ed"
         }
       ],
-      "event": []
+      "id": "f9ac114d-5771-4b58-b31a-4e01fb375990",
+      "createdAt": "2026-10-22T01:58:13.000Z",
+      "updatedAt": "2026-10-22T01:58:13.000Z",
+      "uid": "35240-f9ac114d-5771-4b58-b31a-4e01fb375990"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.moveworks.ai/rest/v1beta1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.moveworks.ai"
     }
-  ],
-  "info": {
-    "_postman_id": "37036065-f936-421f-b78c-ebe493f716e9",
-    "name": "(Beta) Conversations authentication deprecated API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
-    }
-  }
+  ]
 }
