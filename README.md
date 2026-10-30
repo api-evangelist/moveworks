@@ -64,6 +64,137 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Moveworks is a company surfaced as a portfolio company of kleiner-perkins and added to the API Evangelist network as a stub for enrichment. Sector: ai. This profile is a lead awaiting the enrichment pipeline.
+> **Acquired or rebranded.** This company was acquired, merged or renamed. Its API, if it still exists, is offered under another name. This profile is kept as a historical record and is not maintained or rated.
 
-Source: portfolio company of [kleiner-perkins](https://github.com/api-evangelist/kleiner-perkins) — https://www.moveworks.com
+Moveworks is an enterprise agentic AI assistant platform that lets employees search and act across 100+ business applications (Slack, ServiceNow, Workday, Jira, Salesforce, SAP, Microsoft) through conversational AI agents. Its "Build with Moveworks" developer platform and Agent Studio expose REST APIs to send events and proactive messages, drive AI Assistant conversations (including streaming), export analytics data, and receive inbound webhooks, plus a set of customer-hosted gateways (Content, Identity, Knowledge, Forms) that feed enterprise data to the AI. All APIs use HTTP Bearer authentication with OAuth 2.0 Client Credentials issuing short-lived access tokens, are published as OpenAPI 3.1 with a discoverable /.well-known/api-catalog, and are deployed across US, EU, Canada, GovCloud (FedRAMP), Japan and UK regions.
+
+**Areas:** Company · Artificial Intelligence · AI Agents · AI Assistant · Enterprise Automation · Conversational AI · Employee Experience · ITSM · Enterprise Search
+
+## Moveworks on APIs.io (historical record)
+
+Everything profiled for Moveworks is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/moveworks/](https://apis.io/providers/moveworks/)** — or go straight to one of the APIs or properties below.
+
+### APIs (16)
+
+- [Moveworks Authentication API](https://apis.io/apis/moveworks/moveworks-authentication-api/) — The authentication API from Moveworks — 2 operation(s) for authentication.
+- [Moveworks Conversations API](https://apis.io/apis/moveworks/moveworks-conversations-api/) — The conversations API from Moveworks — 3 operation(s) for conversations.
+- [Moveworks Deprecated API](https://apis.io/apis/moveworks/moveworks-deprecated-api/) — The deprecated API from Moveworks — 1 operation(s) for deprecated.
+- [Moveworks Events API](https://apis.io/apis/moveworks/moveworks-events-api/) — The events API from Moveworks — 1 operation(s) for events.
+- [Moveworks Messages API](https://apis.io/apis/moveworks/moveworks-messages-api/) — The messages API from Moveworks — 3 operation(s) for messages.
+- [Moveworks Responses API](https://apis.io/apis/moveworks/moveworks-responses-api/) — The responses API from Moveworks — 3 operation(s) for responses.
+- [Moveworks Smart Forms API](https://apis.io/apis/moveworks/moveworks-smartforms-api/) — The smartForms API from Moveworks — 3 operation(s) for smartforms.
+- [Moveworks Webhooks API](https://apis.io/apis/moveworks/moveworks-webhooks-api/) — The webhooks API from Moveworks — 1 operation(s) for webhooks.
+- [Moveworks Articles API](https://apis.io/apis/moveworks/moveworks-articles-api/) — The Articles API from Moveworks — 1 operation(s) for articles.
+- [Moveworks Files API](https://apis.io/apis/moveworks/moveworks-files-api/) — The Files API from Moveworks — 5 operation(s) for files.
+- [Moveworks Groups API](https://apis.io/apis/moveworks/moveworks-groups-api/) — The Groups API from Moveworks — 2 operation(s) for groups.
+- [Moveworks Interactions API](https://apis.io/apis/moveworks/moveworks-interactions-api/) — The Interactions API from Moveworks — 1 operation(s) for interactions.
+- [Moveworks Plugin Calls API](https://apis.io/apis/moveworks/moveworks-plugin-calls-api/) — The Plugin Calls API from Moveworks — 1 operation(s) for plugin calls.
+- [Moveworks Plugin Resources API](https://apis.io/apis/moveworks/moveworks-plugin-resources-api/) — The Plugin Resources API from Moveworks — 1 operation(s) for plugin resources.
+- [Moveworks Records API](https://apis.io/apis/moveworks/moveworks-records-api/) — Exported AI Assistant interaction records
+- [Moveworks Users API](https://apis.io/apis/moveworks/moveworks-users-api/) — The Users API from Moveworks — 2 operation(s) for users.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Arazzo workflows (2)
+
+Multi-step workflows that chain operations into a business task.
+
+- [Moveworks — start an AI Assistant conversation and read the reply](https://apis.io/arazzos/moveworks/moveworks-conversation/)
+- [Moveworks — authenticate and notify employees for an event](https://apis.io/arazzos/moveworks/moveworks-notify-employees/)
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Moveworks Webhooks](https://apis.io/asyncapis/moveworks/moveworks-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [moveworks-mcp.yml](https://apis.io/servers/moveworks/moveworks-mcp-yml/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Moveworks Agentic Access](https://apis.io/agentic-access/moveworks/moveworks-agentic-access/)
+
+#### Collections (9)
+
+Postman and Open Collection request collections.
+
+- [(Beta) Conversations authentication API](https://apis.io/collections/moveworks/open-moveworks-authentication-api/)
+- [(Beta) authentication conversations API](https://apis.io/collections/moveworks/open-moveworks-conversations-api/)
+- [(Beta) Conversations authentication  API](https://apis.io/collections/moveworks/open-moveworks-default-api/)
+- [(Beta) Conversations authentication deprecated API](https://apis.io/collections/moveworks/open-moveworks-deprecated-api/)
+- [(Beta) Conversations authentication events API](https://apis.io/collections/moveworks/open-moveworks-events-api/)
+- [(Beta) Conversations authentication messages API](https://apis.io/collections/moveworks/open-moveworks-messages-api/)
+- [(Beta) Conversations authentication responses API](https://apis.io/collections/moveworks/open-moveworks-responses-api/)
+- [(Beta) Conversations authentication smartForms API](https://apis.io/collections/moveworks/open-moveworks-smartforms-api/)
+- [(Beta) Conversations authentication webhooks API](https://apis.io/collections/moveworks/open-moveworks-webhooks-api/)
+
+#### Overlays (9)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Moveworks Beta Conversations Api Overlay](https://apis.io/overlays/moveworks/moveworks-beta-conversations-api-overlay/)
+- [Moveworks Content Gateway Overlay](https://apis.io/overlays/moveworks/moveworks-content-gateway-overlay/)
+- [Moveworks Conversations Api Overlay](https://apis.io/overlays/moveworks/moveworks-conversations-api-overlay/)
+- [Moveworks Data Api Overlay](https://apis.io/overlays/moveworks/moveworks-data-api-overlay/)
+- [Moveworks Events Api Overlay](https://apis.io/overlays/moveworks/moveworks-events-api-overlay/)
+- [Moveworks Forms Gateway Overlay](https://apis.io/overlays/moveworks/moveworks-forms-gateway-overlay/)
+- [Moveworks Identity Gateway Overlay](https://apis.io/overlays/moveworks/moveworks-identity-gateway-overlay/)
+- [Moveworks Knowledge Gateway Overlay](https://apis.io/overlays/moveworks/moveworks-knowledge-gateway-overlay/)
+- [Moveworks Webhook Listeners Overlay](https://apis.io/overlays/moveworks/moveworks-webhook-listeners-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Moveworks Authentication](https://apis.io/security/moveworks/moveworks-authentication/)
+- [Moveworks Domain Security](https://apis.io/security/moveworks/moveworks-domain-security/)
+- [Moveworks Trust Center](https://apis.io/security/moveworks/moveworks-trust-center/)
+- [Moveworks Vulnerability Disclosure](https://apis.io/security/moveworks/moveworks-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Moveworks Plans Pricing](https://apis.io/plans/moveworks/moveworks-plans-pricing/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.moveworks.com)
+- [Documentation](https://docs.moveworks.com)
+- [Getting started](https://docs.moveworks.com/agent-studio/quickstart-guide)
+- [API reference](https://docs.moveworks.com/api-reference/overview)
+- [Pricing](https://www.moveworks.com/us/en/pricing)
+- [Support](https://help.moveworks.com/docs/support)
+- [Blog](https://www.moveworks.com/us/en/resources/blog)
+- [Security](https://www.moveworks.com/us/en/platform/security)
+- [Compliance](https://www.moveworks.com/us/en/platform/security)
+- [Terms of service](https://www.moveworks.com/us/en/legal)
+- [Privacy policy](https://www.moveworks.com/us/en/legal/privacy-policy)
+- [GitHub](https://github.com/moveworks)
+- [Status](https://status.moveworks.com)
+
+## API Evangelist rating
+
+**Not rated** — this company is recorded as acquired or rebranded, so no score is published. If it is in fact operating, say so on this repository and it will be re-profiled.
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Moveworks: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/moveworks/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
